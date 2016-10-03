@@ -6,26 +6,34 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Dimensions
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import Toast from '../util/toast';
+import PicturePage from '../component/picturePage';
+import {getPictureList} from '../api/picture';
+import ViewPager from 'react-native-viewpager';
+import {leftAddon, rightAddon} from '../component/pictureViewPagerAddons';
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
+
 });
 
 class PictureContainer extends BaseComponent {
+
+  constructor(props) {
+    super(props);
+    this.renderViewPagerItem = this.renderViewPagerItem.bind(this);
+    this.onBeyondRange = this.onBeyondRange.bind(this);
+    this.state = {
+      dataSource: new ViewPager.DataSource({
+        pageHasChanged: (p1, p2) => p1 !== p2,
+      })
+    };
+  }
 
   getNavigationBarProps() {
     return {
@@ -34,16 +42,46 @@ class PictureContainer extends BaseComponent {
     };
   }
 
+  componentDidMount() {
+    getPictureList('2016-10').then(dataList => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithPages(dataList)
+      });
+    });
+  }
+
   renderBody() {
+    if (this.state.dataSource.getPageCount() == 0) {
+      return null;
+    }
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          I'm picture container
-        </Text>
-        <Text style={styles.welcome}>
-          under construction ( 该页面正在施工 )
-        </Text>
-      </View>
+      <ViewPager
+        style={{flex: 1}}
+        onBeyondRange={this.onBeyondRange}
+        dataSource={this.state.dataSource}
+        renderPage={this.renderViewPagerItem}
+        renderPageIndicator={false}/>
+    );
+  }
+
+  onBeyondRange(num) {
+    if (num < 0) {
+      Toast.show('右拉刷新界面');
+    } else {
+      Toast.show('左滑进入往期列表');
+    }
+  }
+
+  /**
+   *
+   * @param data
+   * @param pageID string类型
+   * @returns {XML}
+   */
+  renderViewPagerItem(data, pageID) {
+
+    return (
+      <PicturePage data={data}/>
     );
   }
 
