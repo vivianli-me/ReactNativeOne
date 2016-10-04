@@ -9,6 +9,7 @@ import MainContainer from './container/mainContainer';
 import BeforeMonthList from './component/beforeMonthList';
 import BeforePictureList from './component/beforePictureList';
 import PicturePage from './component/picturePage';
+import ImageViewer from './component/imageViewer';
 
 let navigator;
 
@@ -18,6 +19,7 @@ routeMap.set('MainContainer', MainContainer);
 routeMap.set('BeforeMonthList', BeforeMonthList);
 routeMap.set('BeforePictureList', BeforePictureList);
 routeMap.set('PicturePage', PicturePage);
+routeMap.set('ImageViewer', ImageViewer);
 
 //后退键处理
 if (Platform.OS === 'android') {

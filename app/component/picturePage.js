@@ -17,6 +17,7 @@ import weekArray from '../constant/week';
 import monthArray from '../constant/month';
 import { parseDate } from '../util/dateUtil';
 import BaseComponent from '../base/baseComponent';
+import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -101,7 +102,9 @@ class PicturePage extends BaseComponent {
       <ScrollView style={styles.scrollView}>
         <View>
           <View style={styles.topViewContainer}>
-            <Image style={styles.contentImage} source={{uri: data.hp_img_url}}/>
+            <TouchableOpacity onPress={() => this.onImagePress(data.hp_img_url)} activeOpacity={1}>
+              <Image style={styles.contentImage} source={{uri: data.hp_img_url}}/>
+            </TouchableOpacity>
             <View style={styles.pictureInfoContainer}>
               <Text style={styles.pictureInfoText}>{data.hp_title}</Text>
               <Text style={styles.pictureInfoText}>{data.hp_author}</Text>
@@ -142,6 +145,13 @@ class PicturePage extends BaseComponent {
   sharePicture() {
     //分享
     Toast.show('分享');
+  }
+
+  onImagePress(uri) {
+    getNavigator().push({
+      source: {uri},
+      name: 'ImageViewer'
+    });
   }
 
 }
