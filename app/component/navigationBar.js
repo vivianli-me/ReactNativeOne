@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     width: 55,
     // backgroundColor: 'red',//test
     justifyContent: 'center',//主轴
-    alignItems: 'center'//TODO why 这里如果设置flex-start时图片偏右, 设置flex-end时图片偏左, 原因不明
+    alignItems: 'flex-end'//TODO why 这里如果设置flex-start时图片偏右, 设置flex-end时图片偏左, 原因不明
   },
   rightButton: {
     position: 'absolute',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     width: 55,
     // backgroundColor: 'red',//test
     justifyContent: 'center',//主轴
-    alignItems: 'center'//
+    alignItems: 'flex-start'//
 
   },
   rightButtonTextStyle: {

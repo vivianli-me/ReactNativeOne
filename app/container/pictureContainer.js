@@ -7,16 +7,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import Toast from '../util/toast';
 import PicturePage from '../component/picturePage';
 import {getPictureList} from '../api/picture';
 import ViewPager from 'react-native-viewpager';
-import {leftAddon, rightAddon} from '../component/pictureViewPagerAddons';
-
-const windowWidth = Dimensions.get('window').width;
+import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
 
@@ -69,6 +66,8 @@ class PictureContainer extends BaseComponent {
       Toast.show('右拉刷新界面');
     } else {
       Toast.show('左滑进入往期列表');
+      getNavigator().push({name: 'BeforeMonthList'});
+      
     }
   }
 

@@ -4,51 +4,78 @@
 
 import React from 'react';
 import {
-  StyleSheet
+  StyleSheet,
+  Navigator,
+  Text,
+  View,
+  StatusBar
 } from 'react-native';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-import PictureContainer from './container/pictureContainer';
-import ReadingContainer from './container/readingContainer';
-import MusicContainer from './container/musicContainer';
-import MovieContainer from './container/movieContainer';
-import TabBar from './component/tabBar';
+import {getRouteMap, registerNavigator} from './route';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  navigator: {
+    flex: 1
+  },
+  errorView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white'
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16
+  }
 
 });
 
-//tabbar图片资源
-const tabBarResources = [
-  [require('./image/home.png'), require('./image/home_active.png')],
-  [require('./image/reading.png'), require('./image/reading_active.png')],
-  [require('./image/music.png'), require('./image/music_active.png')],
-  [require('./image/movie.png'), require('./image/movie_active.png')]
-];
-class MainContainer extends React.Component {
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.renderScene = this.renderScene.bind(this);
+  }
 
   render() {
     return (
-      <ScrollableTabView
-        tabBarPosition="bottom"
-        locked={true}
-        scrollWithoutAnimation={true}
-        renderTabBar={() => {
-          return <TabBar tabBarResources={tabBarResources}/>
-        }}>
-        <PictureContainer/>
-        <ReadingContainer/>
-        <MusicContainer/>
-        <MovieContainer/>
-      </ScrollableTabView>
+      <View style={styles.container}>
+        <StatusBar
+          backgroundColor="black"
+          barStyle="light-content"
+        />
+        <Navigator
+          style={styles.navigator}
+          configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+          renderScene={this.renderScene}
+          initialRoute={{
+            name: 'MainContainer',
+          }}/>
+      </View>
+    );
+  }
+
+  renderScene(route, navigator) {
+    registerNavigator(navigator);
+    //Each component name should start with an uppercase letter
+    //jsx中的组件都得是大写字母开头, 否则将报错, expected a component class, got [object Object]
+    let Component = getRouteMap().get(route.name);
+    if (!Component) {
+      return (
+        <View style={styles.errorView}>
+          <Text style={styles.errorText}>您所启动的Component未在routeMap中注册</Text>
+        </View>
+      );
+    }
+    return (
+      <Component {...route}/>
     );
   }
 }
 
-MainContainer.propTypes = {
-
-};
-
-export default MainContainer;
+export default App;
 
 
 

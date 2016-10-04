@@ -44,8 +44,11 @@ const getParam = data => {
 /**
  * @param path 相对路径
  */
-export const get = path => {
+export const get = (path, data) => {
   let url = `${baseUrl}${path}`;
+  if (data) {
+    url.append(`?${getParam(data)}`)
+  }
   return loggerWrap(`GET  ${url}`)(() => {
     return getFetch(url);
   });
