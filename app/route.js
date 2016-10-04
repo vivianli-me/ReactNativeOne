@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import MainContainer from './container/mainContainer';
 import BeforeMonthList from './component/beforeMonthList';
+import BeforePictureList from './component/beforePictureList';
+import PicturePage from './component/picturePage';
 
 let navigator;
 
@@ -14,6 +16,8 @@ const routeMap = new Map();
 
 routeMap.set('MainContainer', MainContainer);
 routeMap.set('BeforeMonthList', BeforeMonthList);
+routeMap.set('BeforePictureList', BeforePictureList);
+routeMap.set('PicturePage', PicturePage);
 
 //后退键处理
 if (Platform.OS === 'android') {

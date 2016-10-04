@@ -16,6 +16,7 @@ import Toast from '../util/toast';
 import weekArray from '../constant/week';
 import monthArray from '../constant/month';
 import { parseDate } from '../util/dateUtil';
+import BaseComponent from '../base/baseComponent';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class PicturePage extends React.Component {
+class PicturePage extends BaseComponent {
 
   constructor(props) {
     super(props);
@@ -82,7 +83,17 @@ class PicturePage extends React.Component {
     this.sharePicture = this.sharePicture.bind(this);
   }
 
-  render() {
+  getNavigationBarProps() {
+    return {
+      hideNav: this.props.hideNav === undefined ? true : this.props.hideNav,
+      hideLeftButton: false,
+      hideRightButton: true,
+      title: '图文',
+      leftButtonImage: require('../image/return.png')
+    };
+  }
+
+  renderBody() {
     var {data} = this.props;
     var date = parseDate(data.hp_makettime);
     var dateStr = weekArray[date.getDay()] + '  ' + date.getDate() + ' ' + monthArray[date.getMonth()] + '.' + date.getFullYear();

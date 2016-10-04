@@ -10,6 +10,7 @@ import {
   StyleSheet
 } from 'react-native';
 import NavigationBar from '../component/navigationBar';
+import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
 
@@ -67,7 +68,7 @@ class BaseComponent extends Component {
   }
 
   onLeftPressed() {
-    console.log('onLeftPressed');
+    getNavigator().pop();
   }
 
   onRightPressed() {

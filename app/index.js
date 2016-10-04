@@ -51,7 +51,7 @@ class App extends React.Component {
           configureScene={() => Navigator.SceneConfigs.FadeAndroid}
           renderScene={this.renderScene}
           initialRoute={{
-            name: 'MainContainer',
+            name: 'MainContainer',//MainContainer
           }}/>
       </View>
     );

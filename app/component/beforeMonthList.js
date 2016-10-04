@@ -117,10 +117,11 @@ class BeforeMonthList extends BaseComponent {
     // rowData[0] year
     // rowData[1] month 0~11
     //跳转到新的页面
-  }
-
-  onLeftPressed() {
-    getNavigator().pop();
+    getNavigator().push({
+      name: 'BeforePictureList',
+      year: rowData[0],
+      month: rowData[1]
+    });
   }
 
 }
