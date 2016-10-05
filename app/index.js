@@ -8,7 +8,9 @@ import {
   Navigator,
   Text,
   View,
-  StatusBar
+  StatusBar,
+  BackAndroid,
+  Platform
 } from 'react-native';
 import {getRouteMap, registerNavigator} from './route';
 
@@ -38,6 +40,18 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.renderScene = this.renderScene.bind(this);
+    this.onBackAndroid = this.onBackAndroid.bind(this);
+  }
+
+  componentWillMount() {
+    if (Platform.OS === 'android') {
+      BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
+    }
+  }
+  componentWillUnmount() {
+    if (Platform.OS === 'android') {
+      BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+    }
   }
 
   render() {
@@ -59,6 +73,7 @@ class App extends React.Component {
   }
 
   renderScene(route, navigator) {
+    this.navigator = navigator;
     registerNavigator(navigator);
     //Each component name should start with an uppercase letter
     //jsx中的组件都得是大写字母开头, 否则将报错, expected a component class, got [object Object]
@@ -73,6 +88,16 @@ class App extends React.Component {
     return (
       <Component {...route}/>
     );
+  }
+
+  onBackAndroid() {
+    const routers = this.navigator.getCurrentRoutes();
+    if (routers.length > 1) {
+      this.navigator.pop();
+      return true;
+    }
+    BackAndroid.exitApp();
+    return false;
   }
 }
 

@@ -3,7 +3,6 @@
  */
 import {
   Platform,
-  BackAndroid
 } from 'react-native';
 import MainContainer from './container/mainContainer';
 import BeforeMonthList from './component/beforeMonthList';
@@ -27,17 +26,6 @@ routeMap.set('ReadingCarouselDetail', ReadingCarouselDetail);
 routeMap.set('ReadingBeforeMonthList', ReadingBeforeMonthList);
 routeMap.set('ReadingArticleList', ReadingArticleList);
 
-//后退键处理
-if (Platform.OS === 'android') {
-  BackAndroid.addEventListener('hardwareBackPress', () => {
-    const routers = navigator.getCurrentRoutes();
-    if (routers.length > 1) {
-      navigator.pop();
-      return true;
-    }
-    return false;
-  });
-}
 
 export function registerNavigator(tempNavigator) {
   if (navigator) {
