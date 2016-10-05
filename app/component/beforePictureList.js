@@ -28,7 +28,6 @@ const singleItemWidth = (windowWidth - (itemsPerRow + 1) * horizontalMargin) / i
 const styles = StyleSheet.create({
   listView: {
     flex: 1,
-    backgroundColor: 'white',
     padding: horizontalMargin
   },
   itemContainer: {
@@ -73,7 +72,7 @@ class BeforePictureList extends BaseComponent {
   getNavigationBarProps() {
     return {
       hideRightButton: true,
-      title: this.props.title || '往期列表',
+      title: '往期列表',
       leftButtonImage: require('../image/return.png')
     };
   }
@@ -169,21 +168,3 @@ BeforePictureList.propTypes = {
 };
 
 export default BeforePictureList;
-
-const test_data = {
-  "hpcontent_id": "1476",
-  "hp_title": "VOL.1455",
-  "author_id": "-1",
-  "hp_img_url": "http://image.wufazhuce.com/FqaRcSYDy8MCkaKuVEKLDJNr9zQ6",
-  "hp_img_original_url": "http://image.wufazhuce.com/FqaRcSYDy8MCkaKuVEKLDJNr9zQ6",
-  "hp_author": "摩纳哥皇宫外&张维托 作品",
-  "ipad_url": "http://image.wufazhuce.com/FpLwnN9A8X4o5GtuDm8R4oLmUHqM",
-  "hp_content": "不管活到什么岁数，总有太多思索、烦恼与迷惘，一个人如果失去这些，安于现状，才是真正意义上的青春的完结。 by 渡边淳一",
-  "hp_makettime": "2016-09-30 23:00:00",
-  "last_update_date": "2016-09-21 15:28:50",
-  "web_url": "http://m.wufazhuce.com/one/1476",
-  "wb_img_url": "",
-  "praisenum": 19510,
-  "sharenum": 1585,
-  "commentnum": 0
-};

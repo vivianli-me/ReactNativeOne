@@ -22,7 +22,6 @@ import {getNavigator} from '../route';
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: 'white',
     padding: 10
   },
   topViewContainer: {
@@ -86,7 +85,7 @@ class PicturePage extends BaseComponent {
 
   getNavigationBarProps() {
     return {
-      hideNav: this.props.hideNav === undefined ? true : this.props.hideNav,
+      hideNav: false,
       hideLeftButton: false,
       hideRightButton: true,
       title: '图文',

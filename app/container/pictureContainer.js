@@ -14,6 +14,7 @@ import PicturePage from '../component/picturePage';
 import {getPictureList} from '../api/picture';
 import ViewPager from 'react-native-viewpager';
 import {getNavigator} from '../route';
+import appearTime from '../constant/appearTime';
 
 const styles = StyleSheet.create({
 
@@ -66,9 +67,24 @@ class PictureContainer extends BaseComponent {
       Toast.show('右拉刷新界面');
     } else {
       Toast.show('左滑进入往期列表');
-      getNavigator().push({name: 'BeforeMonthList'});
+      getNavigator().push({
+        name: 'BeforeMonthList',
+        ...(appearTime.picture),
+        onPress: this.onPress
+      });
       
     }
+  }
+
+  onPress(rowData) {
+    // rowData[0] year
+    // rowData[1] month 0~11
+    //跳转到新的页面
+    getNavigator().push({
+      name: 'BeforePictureList',
+      year: rowData[0],
+      month: rowData[1]
+    });
   }
 
   /**
@@ -78,9 +94,8 @@ class PictureContainer extends BaseComponent {
    * @returns {XML}
    */
   renderViewPagerItem(data, pageID) {
-
     return (
-      <PicturePage data={data}/>
+      <PicturePage data={data} hideNav={true}/>
     );
   }
 

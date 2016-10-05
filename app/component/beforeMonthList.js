@@ -3,7 +3,7 @@
  * 往期列表, 使用ListView展示从2012年十月到当前月份的列表
  */
 
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {
   ListView,
   View,
@@ -16,11 +16,11 @@ import monthArray from '../constant/month';
 import BaseComponent from '../base/baseComponent';
 import {getNavigator} from '../route';
 import commonStyle from '../style/commonStyle';
+import {getDateStrListBeforeNow} from '../util/dateUtil';
 
 const styles = StyleSheet.create({
   listView: {
     flex: 1,
-    backgroundColor: 'white'
   },
   itemView: {
     flexDirection: 'row',
@@ -44,33 +44,14 @@ const styles = StyleSheet.create({
   }
 });
 
-let dateList = [];
-let date = new Date();
-let currentMonth = date.getMonth();//当前月份
-let currentYear = date.getFullYear();//当前年份
-let endMonth = 9;
-let endYear = 2012;
-for (let year = currentYear, month = currentMonth; (year > endYear || month > endMonth - 1);) {
-
-  console.log(`${year}年${month + 1}月`);
-  dateList.push([year, month]);
-
-  if (month === 0) {
-    month = 11;
-    year = year - 1;
-  } else {
-    month = month - 1;
-  }
-}
-
-
 class BeforeMonthList extends BaseComponent {
 
   constructor(props) {
     super(props);
     this.renderRow = this.renderRow.bind(this);
     this.renderSeparator = this.renderSeparator.bind(this);
-    this.onPress = this.onPress.bind(this);
+
+    let dateList = getDateStrListBeforeNow(this.props.beginYear, this.props.beginMonth);
     const dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: dataSource.cloneWithRows(dateList)
@@ -85,6 +66,27 @@ class BeforeMonthList extends BaseComponent {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.beginYear != this.props.beginYear || nextProps.beginMonth != this.props.beginMonth) {
+      let dateList = getDateStrListBeforeNow(nextProps.beginYear, nextProps.beginMonth);
+      this.state = {
+        dataSource: this.state.dataSource.cloneWithRows(dateList)
+      }
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState ) {
+    /*if (nextState !== this.state) {
+      return true;
+    }
+    if (nextProps.beginYear != this.props.beginYear || nextProps.beginMonth != this.props.beginMonth) {
+      return true;
+    }
+    return false;*/
+    return true;
+  }
+
+
   renderBody() {
     return (
       <ListView
@@ -98,7 +100,7 @@ class BeforeMonthList extends BaseComponent {
   renderRow(rowData, sectionID, rowID) {
     var dateStr = rowID == 0 ? '本月' : `${monthArray[rowData[1]]}.${rowData[0]}` ;
     return (
-      <TouchableOpacity key={rowID} onPress={() => this.onPress(rowData)}>
+      <TouchableOpacity key={rowID} onPress={() => this.props.onPress(rowData)}>
         <View style={styles.itemView}>
           <Text style={styles.itemText}>{dateStr}</Text>
           <Image style={styles.itemImage} source={require('../image/forward.png')}/>
@@ -113,17 +115,12 @@ class BeforeMonthList extends BaseComponent {
     );
   }
 
-  onPress(rowData) {
-    // rowData[0] year
-    // rowData[1] month 0~11
-    //跳转到新的页面
-    getNavigator().push({
-      name: 'BeforePictureList',
-      year: rowData[0],
-      month: rowData[1]
-    });
-  }
-
 }
+
+BeforeMonthList.propTypes = {
+  beginMonth: PropTypes.number.isRequired,
+  beginYear: PropTypes.number.isRequired,
+  onPress: PropTypes.func.isRequired,
+};
 
 export default BeforeMonthList;

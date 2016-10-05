@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   navigator: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white'
   },
   errorView: {
     flex: 1,

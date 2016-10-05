@@ -38,7 +38,7 @@ class BaseComponent extends Component {
 
   renderNavigationBar() {
     let navigationBarProps = this.getNavigationBarProps();
-    Object.assign(navigationBarProps, this.props.navBarStyle);
+    Object.assign(navigationBarProps, this.props);
     return (
       <NavigationBar
         navigationBarProps={navigationBarProps}

@@ -12,14 +12,13 @@ import {
 import BaseComponent from '../base/baseComponent';
 import Toast from '../util/toast';
 import ReadingTopViewPager from '../component/readingTopViewPager';
-import {getNavigator} from '../route';
+import ReadingBottomViewPager from '../component/readingBottomViewPager'
 
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
 });
 
@@ -36,14 +35,11 @@ class ReadingContainer extends BaseComponent {
     };
   }
 
-/*<View style={{width: windowWidth, height: 150}}>
-<ReadingTopViewPager/>
-</View>*/
-
   renderBody() {
     return (
       <View style={styles.container}>
         <ReadingTopViewPager/>
+        <ReadingBottomViewPager/>
       </View>
     );
   }

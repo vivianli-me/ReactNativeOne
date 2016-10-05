@@ -81,14 +81,12 @@ class ReadingTopViewPager extends Component {
     getNavigator().push({
       name: 'ReadingCarouselDetail',
       data,
-      navBarStyle: {
-        navigationBar: {
-          backgroundColor: data.bgcolor,
-          borderBottomWidth: 0
-        },
-        navigationBarTitle: {
-          color: 'white'
-        }
+      navigationBar: {
+        backgroundColor: data.bgcolor,
+        borderBottomWidth: 0
+      },
+      navigationBarTitle: {
+        color: 'white'
       }
     });
   }

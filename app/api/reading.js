@@ -16,6 +16,13 @@ export function getReadingImageDetail(id) {
 }
 
 //底部的短篇连载问答列表
-export function getReadingIndexList() {
+export function getLatestArticleList() {
   return get('/reading/index');
+}
+
+//essay serialcontent question
+const articleType = ['essay', 'serialcontent', 'question'];
+export function getSpecifiedTypeArticleList(year, month, index) {
+  month = month + 1;//程序里月份表示范围是0~11, 所以要加一
+  return get(`/${articleType[index]}/bymonth/${year}-${month}`);
 }

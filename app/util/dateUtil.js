@@ -11,3 +11,33 @@ export function parseDate(dateStr) {
   var date = new Date(arrayOne[0], arrayOne[1] - 1, arrayOne[2], arrayTwo[0], arrayTwo[1], arrayTwo[2]);
   return date;
 }
+
+
+/**
+ * 这个函数写得不好, 待改进
+ * 返回一个二维数组
+ * @param beginYear
+ * @param beginMonth 范围为0 ~ 11
+ */
+export function getDateStrListBeforeNow(beginYear, beginMonth) {
+  let dateList = [];
+  let date = new Date();
+  let currentMonth = date.getMonth();//当前月份
+  let currentYear = date.getFullYear();//当前年份
+  for (let year = currentYear, month = currentMonth;;) {
+    dateList.push([year, month]);
+    if (month === 0) {
+      if (year < beginYear + 1) {
+        break;
+      }
+      month = 11;
+      year = year - 1;
+    } else {
+      month = month - 1;
+    }
+    if (year < beginYear + 1 && month < beginMonth) {
+      break;
+    }
+  }
+  return dateList;
+}

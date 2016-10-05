@@ -14,7 +14,6 @@ const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   leftContainer: {
-    backgroundColor: 'white',
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
@@ -22,7 +21,6 @@ const styles = StyleSheet.create({
     marginRight: windowWidth,
   },
   rightContainer: {
-    backgroundColor: 'white',
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'center'
