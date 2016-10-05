@@ -6,41 +6,53 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Dimensions
 } from 'react-native';
+import BaseComponent from '../base/baseComponent';
+import Toast from '../util/toast';
+import ReadingTopViewPager from '../component/readingTopViewPager';
+import {getNavigator} from '../route';
 
-class ReadingContainer extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          I'm reading container
-        </Text>
-        <Text style={styles.welcome}>
-          under construction ( 该页面正在施工 )
-        </Text>
-      </View>
-    );
-  }
-}
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
 });
+
+class ReadingContainer extends BaseComponent {
+
+  constructor(props) {
+    super(props);
+  }
+
+  getNavigationBarProps() {
+    return {
+      leftButtonImage: require('../image/search_min.png'),
+      rightButtonImage: require('../image/individual_center.png')
+    };
+  }
+
+/*<View style={{width: windowWidth, height: 150}}>
+<ReadingTopViewPager/>
+</View>*/
+
+  renderBody() {
+    return (
+      <View style={styles.container}>
+        <ReadingTopViewPager/>
+      </View>
+    );
+  }
+
+  onLeftPressed() {
+    Toast.show('搜索');
+  }
+}
+
+
 
 export default ReadingContainer;

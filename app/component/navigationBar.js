@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: commonStyle.GRAY_COLOR
   },
-  navigationTitle: {
+  navigationBarTitle: {
     color: commonStyle.TEXT_COLOR,
     fontSize: 22,
     textAlign: 'center',
@@ -92,7 +92,7 @@ class NavigationBar extends Component {
     }
     var {onLeftPressed} = this.props;
     return (
-      <TouchableOpacity onPress={onLeftPressed} style={styles.leftButton}>
+      <TouchableOpacity onPress={onLeftPressed} style={[styles.leftButton, this.navigationBarProps.leftButton]}>
         <Image style={{height: defaultButtonHeight, resizeMode: 'contain'}} source={this.navigationBarProps.leftButtonImage}/>
       </TouchableOpacity>
     );
@@ -112,14 +112,14 @@ class NavigationBar extends Component {
     }
     else if (this.navigationBarProps.rightTitle && this.navigationBarProps.rightTitle !== '') {
       component = (
-        <Text style={styles.rightButtonTextStyle}>{this.navigationBarProps.rightTitle}</Text>
+        <Text style={[styles.rightButtonTextStyle, this.navigationBarProps.rightButtonTextStyle]}>{this.navigationBarProps.rightTitle}</Text>
       );
     } else {
       return null;
     }
 
     return (
-      <TouchableOpacity onPress={onRightPressed} style={styles.rightButton}>
+      <TouchableOpacity onPress={onRightPressed} style={[styles.rightButton, this.navigationBarProps.rightButton]}>
         {component}
       </TouchableOpacity>
     );
@@ -131,10 +131,10 @@ class NavigationBar extends Component {
       return null;
     }
     return (
-      <View style={styles.navigationBar}>
+      <View style={[styles.navigationBar, this.navigationBarProps.navigationBar]}>
         {this.renderLeftButton()}
         {this.renderRightButton()}
-        <Text numberOfLines={1} style={styles.navigationTitle}>{title}</Text>
+        <Text numberOfLines={1} style={[styles.navigationBarTitle, this.navigationBarProps.navigationBarTitle]}>{title}</Text>
       </View>
     );
   }

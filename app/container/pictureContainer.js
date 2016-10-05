@@ -89,7 +89,6 @@ class PictureContainer extends BaseComponent {
   }
 
   onLeftPressed() {
-    console.log('onLeftPressed');
     Toast.show('搜索');
   }
 

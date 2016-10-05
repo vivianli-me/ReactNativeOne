@@ -10,6 +10,7 @@ import BeforeMonthList from './component/beforeMonthList';
 import BeforePictureList from './component/beforePictureList';
 import PicturePage from './component/picturePage';
 import ImageViewer from './component/imageViewer';
+import ReadingCarouselDetail from './component/readingCarouselDetail';
 
 let navigator;
 
@@ -20,6 +21,7 @@ routeMap.set('BeforeMonthList', BeforeMonthList);
 routeMap.set('BeforePictureList', BeforePictureList);
 routeMap.set('PicturePage', PicturePage);
 routeMap.set('ImageViewer', ImageViewer);
+routeMap.set('ReadingCarouselDetail', ReadingCarouselDetail);
 
 //后退键处理
 if (Platform.OS === 'android') {
