@@ -16,6 +16,7 @@ import {
 import BaseComponent from '../base/baseComponent';
 import {getReadingImageDetail} from '../api/reading';
 import ReadingCarouselDetailItem from './readingCarouselDetailItem';
+import {getNavigator} from '../route'
 
 const windowWidth  = Dimensions.get('window').width;
 
@@ -99,8 +100,21 @@ class ReadingCarouselDetail extends BaseComponent {
   }
 
   onPress(detailData) {
-    
+    let type = detailData.type;
+    let componentName;
+    if (type == 1) {
+      componentName = 'ReadingEssayDetail';
+    } else if (type == 2) {
+      componentName = 'ReadingSerialDetail';
+    } else if (type == 3) {
+      componentName = 'ReadingQuestionDetail';
+    }
+    getNavigator().push({
+      name: componentName,
+      id: parseInt(detailData.item_id)
+    });
   }
+
 
   renderFooter() {
     const {cover, bottom_text} = this.props.data;

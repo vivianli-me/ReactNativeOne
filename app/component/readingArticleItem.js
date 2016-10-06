@@ -75,20 +75,18 @@ class ReadingArticleItem extends React.Component {
   }
 
   onPress(data) {
-
+    let name, id;
     if (data.content_id) {
-      getNavigator().push({
-        name: 'ReadingEssayDetail',
-        simpleData: data
-      });
+      name = 'ReadingEssayDetail';
+      id = data.content_id;
     } else if (data.serial_id) {
-      getNavigator().push({
-        name: 'ReadingSerialDetail',
-        simpleData: data
-      });
+      name = 'ReadingSerialDetail';
+      id = data.id;
     } else if (data.question_id) {
-
+      name = 'ReadingQuestionDetail';
+      id = data.question_id;
     }
+    getNavigator().push({name,id: parseInt(id)});
 
   }
 }

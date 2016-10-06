@@ -67,4 +67,5 @@ ReadingCarouselDetailItem.propTypes = {
   onPress: PropTypes.func.isRequired
 };
 
-export default ReadingCarouselDetailItem
+export default ReadingCarouselDetailItem;
+

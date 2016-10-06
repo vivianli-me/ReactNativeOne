@@ -80,12 +80,12 @@ class ReadingSerialDetail extends BaseComponent {
   }
 
   fetchData() {
-    if (this.props.simpleData){
-      getSerialDetailInfo(this.props.simpleData.id).then(detailData => {
+    if (this.props.id){
+      getSerialDetailInfo(this.props.id).then(detailData => {
         this.setState({detailData});
       });
     } else {
-      console.warn(`the component 'ReadingSerialDetail' should has 'this.props.simpleData'`);
+      console.warn(`the component 'ReadingSerialDetail' should has 'this.props.id'`);
     }
   }
 
@@ -130,7 +130,7 @@ class ReadingSerialDetail extends BaseComponent {
 }
 
 ReadingSerialDetail.propTypes = {
-  simpleData: PropTypes.object.isRequired
+  id: PropTypes.number.isRequired
 };
 
 export default ReadingSerialDetail;

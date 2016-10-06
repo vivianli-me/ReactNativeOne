@@ -11,6 +11,7 @@ import ReadingBeforeMonthList from './component/readingBeforeMonthList'
 import ReadingArticleList from './component/readingArticleList';
 import ReadingEssayDetail from './component/readingEssayDetail';
 import ReadingSerialDetail from './component/readingSerialDetail';
+import ReadingQuestionDetail from './component/readingQuestionDetail';
 
 let navigator;
 
@@ -26,6 +27,7 @@ routeMap.set('ReadingBeforeMonthList', ReadingBeforeMonthList);
 routeMap.set('ReadingArticleList', ReadingArticleList);
 routeMap.set('ReadingEssayDetail', ReadingEssayDetail);
 routeMap.set('ReadingSerialDetail', ReadingSerialDetail);
+routeMap.set('ReadingQuestionDetail', ReadingQuestionDetail);
 
 
 export function registerNavigator(tempNavigator) {
