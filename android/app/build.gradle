@@ -114,9 +114,13 @@ android {
     }
     buildTypes {
         release {
+            getManifestPlaceholders().put("APP_NAME","一个");
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
+        }
+        debug {
+            getManifestPlaceholders().put("APP_NAME","一个(debug)");
         }
     }
     // applicationVariants are e.g. debug, release
