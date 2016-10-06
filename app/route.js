@@ -9,7 +9,8 @@ import ImageViewer from './component/imageViewer';
 import ReadingCarouselDetail from './component/readingCarouselDetail';
 import ReadingBeforeMonthList from './component/readingBeforeMonthList'
 import ReadingArticleList from './component/readingArticleList';
-import ReadingEssayDetail from './component/readingEssayDetail'
+import ReadingEssayDetail from './component/readingEssayDetail';
+import ReadingSerialDetail from './component/readingSerialDetail';
 
 let navigator;
 
@@ -24,6 +25,7 @@ routeMap.set('ReadingCarouselDetail', ReadingCarouselDetail);
 routeMap.set('ReadingBeforeMonthList', ReadingBeforeMonthList);
 routeMap.set('ReadingArticleList', ReadingArticleList);
 routeMap.set('ReadingEssayDetail', ReadingEssayDetail);
+routeMap.set('ReadingSerialDetail', ReadingSerialDetail);
 
 
 export function registerNavigator(tempNavigator) {

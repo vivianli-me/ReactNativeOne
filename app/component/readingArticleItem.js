@@ -82,7 +82,10 @@ class ReadingArticleItem extends React.Component {
         simpleData: data
       });
     } else if (data.serial_id) {
-
+      getNavigator().push({
+        name: 'ReadingSerialDetail',
+        simpleData: data
+      });
     } else if (data.question_id) {
 
     }

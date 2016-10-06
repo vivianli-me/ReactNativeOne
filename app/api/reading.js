@@ -29,10 +29,13 @@ export function getSpecifiedTypeArticleList(year, month, index) {
 
 //获取短篇详细信息
 export function getEssayDetailInfo(id) {
-  return get(`/essay/${id}`).then(detailData => {
-    detailData.hp_content = detailData.hp_content.replace(new RegExp('<br>', 'g'), '');//去除掉文本中的<br>
-    return detailData;
-  });
+  return get(`/essay/${id}`);
+  /*
+   .then(detailData => {
+   detailData.hp_content = detailData.hp_content.replace(new RegExp('<br>', 'g'), '');//去除掉文本中的<br>
+   return detailData;
+   })
+   */
 }
 
 //获取连载详细信息
