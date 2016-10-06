@@ -15,6 +15,7 @@ import BeforeMonthList from './beforeMonthList';
 import appearTime from '../constant/appearTime';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {getNavigator} from '../route';
+import commonStyle from '../style/commonStyle';
 
 const articleType = ['essay', 'serial', 'question'];
 const articleTypeText = ['短篇', '连载', '问题'];
@@ -48,7 +49,7 @@ class ReadingBeforeMonthList extends BaseComponent {
 
   renderBody() {
     return (
-      <ScrollableTabView tabBarActiveTextColor="#00ced1" tabBarUnderlineStyle={{backgroundColor: '#00ced1'}}>
+      <ScrollableTabView tabBarActiveTextColor={commonStyle.LIGHT_BLUE_COLOR} tabBarUnderlineStyle={{backgroundColor: commonStyle.LIGHT_BLUE_COLOR}}>
         <BeforeMonthList
           beginYear={appearTime.essay.beginYear}
           beginMonth={appearTime.essay.beginMonth}

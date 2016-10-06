@@ -96,7 +96,11 @@ class PicturePage extends BaseComponent {
   renderBody() {
     var {data} = this.props;
     var date = parseDate(data.hp_makettime);
-    var dateStr = weekArray[date.getDay()] + '  ' + date.getDate() + ' ' + monthArray[date.getMonth()] + '.' + date.getFullYear();
+    var day = date.getDate();
+    if (day < 10) {
+      day = `0${day}`;//不足两位补全两位
+    }
+    var dateStr = weekArray[date.getDay()] + ' ' + day + ' ' + monthArray[date.getMonth()] + '.' + date.getFullYear();
     return (
       <ScrollView style={styles.scrollView}>
         <View>

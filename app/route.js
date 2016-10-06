@@ -1,9 +1,6 @@
 /**
  * Created by lipeiwei on 16/10/4.
  */
-import {
-  Platform,
-} from 'react-native';
 import MainContainer from './container/mainContainer';
 import BeforeMonthList from './component/beforeMonthList';
 import BeforePictureList from './component/beforePictureList';
@@ -12,6 +9,7 @@ import ImageViewer from './component/imageViewer';
 import ReadingCarouselDetail from './component/readingCarouselDetail';
 import ReadingBeforeMonthList from './component/readingBeforeMonthList'
 import ReadingArticleList from './component/readingArticleList';
+import ReadingEssayDetail from './component/readingEssayDetail'
 
 let navigator;
 
@@ -25,6 +23,7 @@ routeMap.set('ImageViewer', ImageViewer);
 routeMap.set('ReadingCarouselDetail', ReadingCarouselDetail);
 routeMap.set('ReadingBeforeMonthList', ReadingBeforeMonthList);
 routeMap.set('ReadingArticleList', ReadingArticleList);
+routeMap.set('ReadingEssayDetail', ReadingEssayDetail);
 
 
 export function registerNavigator(tempNavigator) {

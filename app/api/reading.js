@@ -26,3 +26,21 @@ export function getSpecifiedTypeArticleList(year, month, index) {
   month = month + 1;//程序里月份表示范围是0~11, 所以要加一
   return get(`/${articleType[index]}/bymonth/${year}-${month}`);
 }
+
+//获取短篇详细信息
+export function getEssayDetailInfo(id) {
+  return get(`/essay/${id}`).then(detailData => {
+    detailData.hp_content = detailData.hp_content.replace(new RegExp('<br>', 'g'), '');//去除掉文本中的<br>
+    return detailData;
+  });
+}
+
+//获取连载详细信息
+export function getSerialDetailInfo(id) {
+  return get(`/serialcontent/${id}`);
+}
+
+//获取问答详细信息
+export function getQuestionDetailInfo(id) {
+  return get(`/question/${id}`);
+}

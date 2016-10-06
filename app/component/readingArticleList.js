@@ -75,12 +75,8 @@ class ReadingArticleList extends BaseComponent {
 
   renderRow(data) {
     return (
-      <ReadingArticleItem onPress={() => this.onPress(data)} data={data}/>
+      <ReadingArticleItem data={data}/>
     );
-  }
-
-  onPress(data) {
-
   }
 
 }

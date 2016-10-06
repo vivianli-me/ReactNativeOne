@@ -12,10 +12,11 @@ import {
   View
 } from 'react-native';
 import commonStyle from '../style/commonStyle';
+import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
   touchableOpacity: {
-    margin: 15
+    padding: 15,//使用padding而不用margin是为了增大可按压区域
   },
   rowContainer: {
     flexDirection: 'row',
@@ -34,12 +35,13 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 25,
+    width: 60,
   }
 });
 
 class ReadingArticleItem extends React.Component {
   render() {
-    const {data, onPress} = this.props;
+    const {data} = this.props;
     let title, authorName, content;
     let imageSource;
     if (data.content_id) {
@@ -59,7 +61,7 @@ class ReadingArticleItem extends React.Component {
       imageSource = require('../image/question_image.png');
     }
     return (
-      <TouchableOpacity style={styles.touchableOpacity}>
+      <TouchableOpacity style={styles.touchableOpacity} onPress={() => this.onPress(data)}>
         <View>
           <View style={styles.rowContainer}>
             <Text style={styles.titleText}>{title}</Text>
@@ -71,11 +73,25 @@ class ReadingArticleItem extends React.Component {
       </TouchableOpacity>
     );
   }
+
+  onPress(data) {
+
+    if (data.content_id) {
+      getNavigator().push({
+        name: 'ReadingEssayDetail',
+        simpleData: data
+      });
+    } else if (data.serial_id) {
+
+    } else if (data.question_id) {
+
+    }
+
+  }
 }
 
 ReadingArticleItem.propTypes = {
   data: PropTypes.object.isRequired,
-  onPress: PropTypes.func.isRequired
 };
 
 export default ReadingArticleItem;
