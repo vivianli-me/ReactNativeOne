@@ -64,9 +64,14 @@ class ReadingArticleList extends BaseComponent {
     }
   }
 
+  //在iOS平台下
+  //react-native-scrollable-tab-view嵌套react-native-viewpager
+  //react-native-viewpager再嵌套ListView的情况下, 必须得加removeClippedSubviews={false}
+  //否则ViewPager表现不正常 ,原因至今未明
   renderBody() {
     return (
       <ListView
+        removeClippedSubviews={false}
         style={styles.listView}
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}/>
