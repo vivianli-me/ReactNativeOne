@@ -14,7 +14,14 @@ import MovieContainer from './movieContainer';
 import TabBar from '../component/tabBar';
 
 const styles = StyleSheet.create({
-
+  /**
+   * iOS平台下, react-native-scrollable-tab-view是用ScrollView实现的
+   * 当react-native-scrollable-tab-view嵌套react-native-viewpager时, 需要给react-native-scrollable-tab-view的子View设置overflow='hidden',
+   * ScrollView的removeClippedSubviews才能起作用, 将不在屏幕可视范围的视图移除掉.
+   */
+  subView: {
+    overflow: 'hidden'
+  }
 });
 
 //tabbar图片资源
@@ -40,10 +47,10 @@ class MainContainer extends React.Component {
         renderTabBar={() => {
           return <TabBar tabBarResources={tabBarResources}/>
         }}>
-        <PictureContainer/>
-        <ReadingContainer/>
-        <MusicContainer/>
-        <MovieContainer/>
+        <PictureContainer style={styles.subView}/>
+        <ReadingContainer style={styles.subView}/>
+        <MusicContainer style={styles.subView}/>
+        <MovieContainer style={styles.subView}/>
       </ScrollableTabView>
     );
   }

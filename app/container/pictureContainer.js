@@ -41,7 +41,8 @@ class PictureContainer extends BaseComponent {
   }
 
   componentDidMount() {
-    getPictureList('2016-10').then(dataList => {
+    var date = new Date();
+    getPictureList(date.getFullYear(), date.getMonth()).then(dataList => {
       this.setState({
         dataSource: this.state.dataSource.cloneWithPages(dataList)
       });

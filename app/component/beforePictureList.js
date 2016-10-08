@@ -96,8 +96,7 @@ class BeforePictureList extends BaseComponent {
   }
 
   componentDidMount() {
-    let dateStr = `${this.props.year}-${this.props.month + 1}`;
-    getPictureList(dateStr).then(dataList => {
+    getPictureList(this.props.year, this.props.month).then(dataList => {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(this.refactorData(dataList))
       });

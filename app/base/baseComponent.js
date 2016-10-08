@@ -13,7 +13,10 @@ import NavigationBar from '../component/navigationBar';
 import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  }
 });
 
 class BaseComponent extends Component {
@@ -54,7 +57,7 @@ class BaseComponent extends Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={[styles.container, this.props.style]}>
         {this.renderNavigationBar()}
         {this.renderBody()}
       </View>
