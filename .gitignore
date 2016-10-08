@@ -41,3 +41,6 @@ android/app/libs
 android/keystores/debug.keystore
 
 temp-resource/
+
+#忽略Android签名文件
+*.jks
