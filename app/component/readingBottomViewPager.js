@@ -38,7 +38,7 @@ class ReadingBottomViewPager extends Component {
     for (let i = 0; i < length; i++) {
       newDataList.push([data.essay[i], data.serial[i], data.question[i]]);
     }
-    return newDataList;
+    return newDataList;//二维数组
   }
 
   fetchData() {

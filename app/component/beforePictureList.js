@@ -72,7 +72,7 @@ class BeforePictureList extends BaseComponent {
   getNavigationBarProps() {
     return {
       hideRightButton: true,
-      title: '往期列表',
+      title: `${monthArray[this.props.month]}.${this.props.year}`,
       leftButtonImage: require('../image/return.png')
     };
   }
