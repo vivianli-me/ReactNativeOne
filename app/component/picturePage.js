@@ -95,6 +95,9 @@ class PicturePage extends BaseComponent {
 
   renderBody() {
     var {data} = this.props;
+    if (!data) {
+      return null;
+    }
     var date = parseDate(data.hp_makettime);
     var day = date.getDate();
     if (day < 10) {

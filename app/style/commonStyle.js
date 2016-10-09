@@ -11,7 +11,7 @@ const colors = {
   TEXT_GRAY_COLOR: '#79767C',
   TEXT_COLOR: '#443046',
   BACKGROUND_COLOR: '#F7F7F7',
-  LIGHT_BLUE_COLOR: '#87ceeb'//浅蓝色
+  LIGHT_BLUE_COLOR: '#ADD8E6'//浅蓝色
 };
 
 

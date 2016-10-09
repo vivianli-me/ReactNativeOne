@@ -9,11 +9,13 @@ import {
   View,
   Image,
   Dimensions,
-  ListView
+  ListView,
+  TouchableOpacity
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import GiftedListView from '../widget/giftedListView';
 import {getMovieList} from '../api/movie';
+import {getNavigator} from '../route';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -28,11 +30,19 @@ const styles = StyleSheet.create({
   bottomTextContainer: {
     position: 'absolute',
     bottom: 0,
-    right: 0
+    right: 0,
+    width: 100,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   bottomText: {
     color: 'red',
-    fontSize: 20
+    fontSize: 20,
+  },
+  bottomImage: {
+    height: 20,
+    width: 80
   },
   separatorView: {
     height: 10,
@@ -52,9 +62,10 @@ class MovieContainer extends BaseComponent {
       hasMore: true,
       movieList: []
     };
-    this.fetchLatestData = this.fetchLatestData.bind(this);
-    this.fetchMoreData = this.fetchMoreData.bind(this);
+    this.renderRow = this.renderRow.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.fetchMoreData = this.fetchMoreData.bind(this);
+    this.fetchLatestData = this.fetchLatestData.bind(this);
   }
 
   getNavigationBarProps() {
@@ -82,7 +93,7 @@ class MovieContainer extends BaseComponent {
   //加载更多
   fetchMoreData() {
     this.fetchData(this.lastOneId).then(newMovieList => {
-      movieList = this.state.movieList.concat(newMovieList);//为什么不能用push
+      movieList = this.state.movieList.concat(newMovieList);//push只能传元素.concat才能传数组
       this.setState({
         movieList,
         hasMore: newMovieList.length != 0
@@ -103,17 +114,26 @@ class MovieContainer extends BaseComponent {
 
   renderRow(movieData, sectionID, rowID) {
     return (
-      <View  key={rowID}>
-        <Image style={styles.image} resizeMode="cover" source={{uri: movieData.cover}}/>
-        <View style={styles.bottomTextContainer}>
-          <Text style={styles.bottomText}>{movieData.score}</Text>
-          <Text style={[styles.bottomText, {marginTop: 0}]}>_________</Text>
+      <TouchableOpacity key={rowID} onPress={() => this.onPress(movieData)}>
+        <View>
+          <Image style={styles.image} resizeMode="cover" source={{uri: movieData.cover}}/>
+          <View style={styles.bottomTextContainer}>
+            <Text style={styles.bottomText}>{movieData.score}</Text>
+            <Image resizeMode="cover" style={styles.bottomImage} source={require('../image/score_line.png')}/>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
-  renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
+  onPress(movieData) {
+    getNavigator().push({
+      name: 'MovieDetailPage',
+      simpleMovieData: movieData
+    });
+  }
+
+  renderSeparator(sectionID, rowID) {
     return (
       <View key={rowID} style={styles.separatorView}/>
     );
