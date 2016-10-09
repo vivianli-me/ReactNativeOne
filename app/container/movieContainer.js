@@ -16,33 +16,13 @@ import BaseComponent from '../base/baseComponent';
 import GiftedListView from '../widget/giftedListView';
 import {getMovieList} from '../api/movie';
 import {getNavigator} from '../route';
+import MovieListItem from '../component/movieListItem'
 
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   itemContainer: {
 
-  },
-  image: {
-    width: windowWidth,
-    height: 150,
-  },
-  bottomTextContainer: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 100,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  bottomText: {
-    color: 'red',
-    fontSize: 20,
-  },
-  bottomImage: {
-    height: 20,
-    width: 80
   },
   separatorView: {
     height: 10,
@@ -114,15 +94,7 @@ class MovieContainer extends BaseComponent {
 
   renderRow(movieData, sectionID, rowID) {
     return (
-      <TouchableOpacity key={rowID} onPress={() => this.onPress(movieData)}>
-        <View>
-          <Image style={styles.image} resizeMode="cover" source={{uri: movieData.cover}}/>
-          <View style={styles.bottomTextContainer}>
-            <Text style={styles.bottomText}>{movieData.score}</Text>
-            <Image resizeMode="cover" style={styles.bottomImage} source={require('../image/score_line.png')}/>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <MovieListItem rowID={rowID} cover={movieData.cover} score={movieData.score} onPress={() => this.onPress(movieData)}/>
     );
   }
 

@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   avatarImage: {
-    height: 40,
-    width: 40,
-    borderRadius: 20
+    height: 50,
+    width: 50,
+    borderRadius: 25
   },
   authorInfo: {
     marginLeft: 10
@@ -107,7 +107,7 @@ class ReadingSerialDetail extends BaseComponent {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity onPress={this.onAvatarImagePress}>
               <Image style={styles.avatarImage} source={{uri: detailData.author.web_url}}/>
             </TouchableOpacity>

@@ -11,3 +11,7 @@ export function getMovieList(id) {
 export function getMovieDetail(id) {
   return get(`/movie/detail/${id}`);
 }
+
+export function getMovieStory(id) {
+  return get(`/movie/${id}/story/1/0`);
+}
