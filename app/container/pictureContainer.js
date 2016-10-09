@@ -36,7 +36,8 @@ class PictureContainer extends BaseComponent {
   getNavigationBarProps() {
     return {
       leftButtonImage: require('../image/search_min.png'),
-      rightButtonImage: require('../image/individual_center.png')
+      rightButtonImage: require('../image/individual_center.png'),
+      title: 'ONE'
     };
   }
 

@@ -68,7 +68,7 @@ const defaultNavigationBarProps = {
   hideNav: false,
   hideLeftButton: false,
   hideRightButton: false,
-  title: 'ONE',
+  // title: 'ONE',
   // leftButtonImage:
   // rightButtonImage:
   // rightTitle: '点击'
