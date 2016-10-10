@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   smallIcon: {
     width: 45,
     height: 45,
-    resizeMode: 'contain',
   },
   bottomText: {
     fontSize: 14,
@@ -122,7 +121,7 @@ class PicturePage extends BaseComponent {
             {this.renderTouchableBlock(require('../image/diary.png'), '小记', this.toEditDiary)}
             {this.renderTouchableBlock(require('../image/laud.png'), data.praisenum, this.praise, {marginLeft: 120})}
             <TouchableOpacity style={styles.shareImage} activeOpacity={0} onPress={this.sharePicture}>
-              <Image style={styles.smallIcon} source={require('../image/share_image.png')}/>
+              <Image style={styles.smallIcon} resizeMode="contain" source={require('../image/share_image.png')}/>
             </TouchableOpacity>
           </View>
         </View>

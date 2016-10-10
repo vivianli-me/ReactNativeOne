@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 20,
     height: 20,
-    resizeMode: 'contain'
   },
   separatorLine: {
     height: 1,
@@ -103,7 +102,7 @@ class BeforeMonthList extends BaseComponent {
       <TouchableOpacity key={rowID} onPress={() => this.props.onPress(rowData)}>
         <View style={styles.itemView}>
           <Text style={styles.itemText}>{dateStr}</Text>
-          <Image style={styles.itemImage} source={require('../image/forward.png')}/>
+          <Image style={styles.itemImage} resizeMode="contain" source={require('../image/forward.png')}/>
         </View>
       </TouchableOpacity>
     );

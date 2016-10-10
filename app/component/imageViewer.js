@@ -38,7 +38,7 @@ class ImageViewer extends React.Component {
   render() {
     return (
       <TouchableOpacity  style={styles.container} activeOpacity={1} onPress={this.onPress}>
-        <Image style={styles.image} source={this.props.source}/>
+        <Image style={styles.image} resizeMode="contain" source={this.props.source}/>
       </TouchableOpacity>
     );
   }

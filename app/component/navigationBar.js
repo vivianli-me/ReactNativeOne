@@ -93,7 +93,7 @@ class NavigationBar extends Component {
     var {onLeftPressed} = this.props;
     return (
       <TouchableOpacity onPress={onLeftPressed} style={[styles.leftButton, this.navigationBarProps.leftButton]}>
-        <Image style={{height: defaultButtonHeight, resizeMode: 'contain'}} source={this.navigationBarProps.leftButtonImage}/>
+        <Image style={{height: defaultButtonHeight}} resizeMode="contain" source={this.navigationBarProps.leftButtonImage}/>
       </TouchableOpacity>
     );
   }
@@ -107,7 +107,7 @@ class NavigationBar extends Component {
     var component;
     if (this.navigationBarProps.rightButtonImage) {
       component = (
-        <Image style={{height: defaultButtonHeight, resizeMode: 'contain'}} source={this.navigationBarProps.rightButtonImage}/>
+        <Image style={{height: defaultButtonHeight}} resizeMode="contain" source={this.navigationBarProps.rightButtonImage}/>
       );
     }
     else if (this.navigationBarProps.rightTitle && this.navigationBarProps.rightTitle !== '') {

@@ -16,6 +16,7 @@ import MovieListItem from './movieListItem';
 import commonStyle from '../style/commonStyle';
 import {parseDate} from '../util/dateUtil';
 import monthArray from '../constant/month';
+import MovieInfo from './movieInfo';
 
 const styles = StyleSheet.create({
   avatarImage: {
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
   grayViewContainer: {
     paddingHorizontal: 10,
     paddingVertical: 10,
-    backgroundColor: '#cccccc44',
+    backgroundColor: commonStyle.LIGHT_GRAY_COLOR,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -69,7 +70,6 @@ const styles = StyleSheet.create({
   smallIcon: {
     width: 45,
     height: 45,
-    resizeMode: 'contain',
   },
 });
 
@@ -145,12 +145,13 @@ class MovieDetailPage extends BaseComponent {
               </View>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image style={styles.smallIcon} source={require('../image/laud.png')}/>
+              <Image style={styles.smallIcon} resizeMode="contain" source={require('../image/laud.png')}/>
               <Text style={{color: commonStyle.TEXT_GRAY_COLOR}}>{movieStory.praisenum}</Text>
             </View>
           </View>
           <Text style={styles.titleText}>{movieStory.title}</Text>
           <Text style={styles.contentText}>{movieStory.content}</Text>
+          <MovieInfo detailMovieData={detailMovieData}/>
         </View>
       </ScrollView>
     );
