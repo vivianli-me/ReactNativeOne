@@ -23,6 +23,16 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 25
   },
+  rowContainer: {
+    margin: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  authorInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   authorInfo: {
     marginLeft: 10
   },
@@ -43,7 +53,24 @@ const styles = StyleSheet.create({
     color: commonStyle.TEXT_COLOR,
     fontSize: 16,
     margin: 10
-  }
+  },
+  grayViewContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: '#cccccc44',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  lightGrayText: {
+    color: commonStyle.TEXT_GRAY_COLOR,
+    fontSize: 14
+  },
+  smallIcon: {
+    width: 45,
+    height: 45,
+    resizeMode: 'contain',
+  },
 });
 
 class MovieDetailPage extends BaseComponent {
@@ -104,9 +131,11 @@ class MovieDetailPage extends BaseComponent {
           <View style={{height: 40}}>
 
           </View>
-          <Text>电影故事</Text>
-          <View style={{margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.grayViewContainer}>
+            <Text style={styles.lightGrayText}>电影故事</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <View style={styles.authorInfoContainer}>
               <TouchableOpacity onPress={this.onAvatarImagePress}>
                 <Image style={styles.avatarImage} source={{uri: movieStory.user.web_url}}/>
               </TouchableOpacity>
@@ -115,8 +144,9 @@ class MovieDetailPage extends BaseComponent {
                 <Text style={styles.timeText}>{dateStr}</Text>
               </View>
             </View>
-            <View>
-              <Text>点赞数</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image style={styles.smallIcon} source={require('../image/laud.png')}/>
+              <Text style={{color: commonStyle.TEXT_GRAY_COLOR}}>{movieStory.praisenum}</Text>
             </View>
           </View>
           <Text style={styles.titleText}>{movieStory.title}</Text>
