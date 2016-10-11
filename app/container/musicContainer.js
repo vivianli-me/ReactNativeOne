@@ -9,34 +9,57 @@ import {
   View
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
+import MusicDetailPage from '../component/musicDetailPage';
+import {getMusicIdList} from '../api/music';
 
-class MusicContainer extends Component {
-  render() {
+const styles = StyleSheet.create({
+
+});
+
+class MusicContainer extends BaseComponent {
+
+  constructor(props) {
+    super(props);
+    this.fetchData = this.fetchData.bind(this);
+    this.state = {
+      idList: []
+    };
+  }
+
+  getNavigationBarProps() {
+    return {
+      leftButtonImage: require('../image/search_min.png'),
+      rightButtonImage: require('../image/individual_center.png'),
+      title: '音乐'
+    };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    getMusicIdList().then(idList => {
+      this.setState({idList});
+    });
+  }
+
+  renderBody() {
+    const {idList} = this.state;
+    if (idList.length > 0) {
+      return this.renderPage(idList[2]);
+    }
+    return null;
+  }
+
+  renderPage(id) {
+    id = parseInt(id);
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          I'm Music
-        </Text>
-        <Text style={styles.welcome}>
-          该页面正在施工
-        </Text>
-      </View>
+      <MusicDetailPage id={id}/>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
+
 
 export default MusicContainer;

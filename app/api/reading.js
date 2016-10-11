@@ -42,7 +42,7 @@ export function getEssayDetailInfo(id) {
   return get(`/essay/${id}`).then(detailData => {
     detailData.hp_content = detailData.hp_content.replace(regExp, replaceHTMLTag);
     return detailData;
-  })
+  });
 }
 
 //获取连载详细信息

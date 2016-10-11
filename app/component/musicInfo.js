@@ -13,16 +13,16 @@ import {
   Dimensions
 } from 'react-native';
 import commonStyle from '../style/commonStyle';
-import MovieKeywordsChart from './movieKeywordsChart';
 import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
-  grayViewContainer: {
-    paddingHorizontal: 10,
-    backgroundColor: commonStyle.LIGHT_GRAY_COLOR,
+  container: {
+    marginHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: commonStyle.GRAY_COLOR
   },
   lightGrayText: {
     color: commonStyle.TEXT_GRAY_COLOR,
@@ -36,44 +36,51 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
-  image: {
-    width: 150,
-    height: 150,
+  commonText: {
+    fontSize: 16,
+    color: commonStyle.TEXT_COLOR
   },
-  separatorView: {
-    width: 3
+  storyContainer: {
+    margin: 10
+  },
+  titleText: {
+    fontSize: 18,
+  },
+  authorNameText: {
+    marginVertical: 10,
+    color: commonStyle.LIGHT_BLUE_COLOR
   }
 });
 
 const TEXT = [
-  '一个.电影表',
-  '剧照',
-  '影片信息'
+  '音乐故事',
+  '歌词',
+  '歌曲信息'
 ];
 
 //TODO 图片跳动的问题
 const IMAGE_ARRAY = [
-  [require('../image/gross_default.png'), require('../image/gross_selected.png')],
-  [require('../image/still_default.png'), require('../image/still_selected.png')],
-  [require('../image/plot_default.png'), require('../image/plot_selected.png')]
+  [require('../image/music_story_default.png'), require('../image/music_story_selected.png')],
+  [require('../image/music_lyric_default.png'), require('../image/music_lyric_selected.png')],
+  [require('../image/music_about_default.png'), require('../image/music_about_selected.png')]
 ];
 
-class MovieInfo extends React.Component {
+class MusicInfo extends React.Component {
 
   constructor(props) {
     super(props);
     this.renderContent = this.renderContent.bind(this);
-    this.renderListItem = this.renderListItem.bind(this);
+    this.renderMusicStory = this.renderMusicStory.bind(this);
     this.renderTouchableOpacityImage = this.renderTouchableOpacityImage.bind(this);
     this.state = {
-      currentIndex: 0//0 , 1 , 2 //分别对应一个电影表/剧照/影片信息
+      currentIndex: 0//0 , 1 , 2 //分别对应音乐故事/歌词/歌曲信息
     };
   }
 
   render() {
     return (
       <View>
-        <View style={styles.grayViewContainer}>
+        <View style={styles.container}>
           <Text style={styles.lightGrayText}>{TEXT[this.state.currentIndex]}</Text>
           {this.renderTouchableOpacityImage()}
         </View>
@@ -104,59 +111,39 @@ class MovieInfo extends React.Component {
   }
 
   renderContent() {
-    const {detailMovieData} = this.props;
+    const {musicDetailData} = this.props;
     switch (this.state.currentIndex) {
       case 0:
-        let keywords = detailMovieData.keywords.split(';');
-        return (
-          <MovieKeywordsChart keywords={keywords}/>
-        );
+        return this.renderMusicStory();
       case 1:
-        let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(detailMovieData.photo);
         return (
-          <ListView
-            horizontal={true}
-            dataSource={dataSource}
-            renderRow={this.renderListItem}
-            renderSeparator={this.renderSeparator}
-          />
+          <Text style={[styles.commonText, {margin: 10}]}>{musicDetailData.lyric}</Text>
         );
       case 2:
         return (
-          <Text style={{marginLeft: 10, marginVertical: 3}}>{detailMovieData.info}</Text>
+          <Text style={[styles.commonText, {margin: 10}]}>{musicDetailData.info}</Text>
         );
       default:
         break;
     }
   }
 
-  renderListItem(uri, sectionID, rowID) {
+  renderMusicStory() {
+    const {musicDetailData} = this.props;
     return (
-      <TouchableOpacity key={rowID} onPress={() => this.onAvatarPressed(uri)}>
-        <Image style={styles.image} resizeMode="cover" source={{uri}}/>
-      </TouchableOpacity>
+      <View style={styles.storyContainer}>
+        <Text style={styles.titleText}>{musicDetailData.story_title}</Text>
+        <Text style={styles.authorNameText}>{musicDetailData.story_author.user_name}</Text>
+        <Text style={styles.commonText}>{musicDetailData.story}</Text>
+
+      </View>
     );
   }
-
-  renderSeparator(sectionID, rowID) {
-    return (
-      <View key={rowID} style={styles.separatorView}/>
-    );
-  }
-
-  onAvatarPressed(uri) {
-    getNavigator().push({
-      name: 'ImageViewer',
-      source: {uri}
-    });
-  }
-
-
 
 }
 
-MovieInfo.propTypes = {
-  detailMovieData: PropTypes.object.isRequired
+MusicInfo.propTypes = {
+  musicDetailData: PropTypes.object.isRequired
 };
 
-export default MovieInfo;
+export default MusicInfo;
