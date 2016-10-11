@@ -18,10 +18,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 10,
+    marginBottom: 10,
+    marginHorizontal: 10,
+    marginTop: -20,
     padding: 8,
     borderWidth: 1,
-    borderColor: commonStyle.GRAY_COLOR
+    borderColor: commonStyle.GRAY_COLOR,
+    backgroundColor: 'white'
   },
   leftContainer: {
     justifyContent: 'space-between',
