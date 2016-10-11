@@ -8,10 +8,13 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Text
 } from 'react-native';
 import {getMusicDetail} from '../api/music';
 import MusicInfo from './musicInfo';
+import MusicPlay from './musicPlay';
+import commonStyle from '../style/commonStyle';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -20,6 +23,11 @@ const styles = StyleSheet.create({
   topImage: {
     width: windowWidth,
     height: windowHeight / 3 * 1//暂时占屏幕高度三分之一
+  },
+  grayText: {
+    color: commonStyle.TEXT_GRAY_COLOR,
+    margin: 15,
+    fontSize: 12
   }
 });
 
@@ -53,7 +61,9 @@ class MusicDetailPage extends React.Component {
       <ScrollView>
         <View>
           <Image style={styles.topImage} resizeMode="cover" source={{uri: musicDetailData.cover}}/>
+          <MusicPlay musicDetailData={musicDetailData}/>
           <MusicInfo musicDetailData={musicDetailData}/>
+          <Text style={styles.grayText}>{musicDetailData.charge_edt}</Text>
         </View>
       </ScrollView>
     );
