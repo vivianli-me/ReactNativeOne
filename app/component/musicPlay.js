@@ -111,7 +111,7 @@ class MusicPlay extends React.Component {
         </View>
         <View style={styles.rightContainer}>
           <Image style={styles.xiamiImage}
-                 source={musicDetailData.platform == 1 ? require('../image/xiami_right.png') : null}
+                 source={musicDetailData.platform == 1 ? require('../image/xiami_right.png') : require('../image/white.png')}
                  resizeMode="contain"/>
           <TouchableOpacity>
             <Image style={styles.musicImage} source={require('../image/music_play.png')}/>
