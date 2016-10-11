@@ -12,7 +12,9 @@ import ReadingArticleList from './component/readingArticleList';
 import ReadingEssayDetail from './component/readingEssayDetail';
 import ReadingSerialDetail from './component/readingSerialDetail';
 import ReadingQuestionDetail from './component/readingQuestionDetail';
-import MovieDetailPage from './component/movieDetailPage'
+import MovieDetailPage from './component/movieDetailPage';
+import MusicListPage from './component/musicListPage';
+import MusicDetailPage from './component/musicDetailPage';
 
 let navigator;
 
@@ -30,6 +32,8 @@ routeMap.set('ReadingEssayDetail', ReadingEssayDetail);
 routeMap.set('ReadingSerialDetail', ReadingSerialDetail);
 routeMap.set('ReadingQuestionDetail', ReadingQuestionDetail);
 routeMap.set('MovieDetailPage', MovieDetailPage);
+routeMap.set('MusicListPage', MusicListPage);
+routeMap.set('MusicDetailPage', MusicDetailPage);
 
 
 export function registerNavigator(tempNavigator) {

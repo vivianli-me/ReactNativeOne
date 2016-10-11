@@ -70,7 +70,7 @@ class MusicContainer extends BaseComponent {
   renderPage(id) {
     id = parseInt(id);
     return (
-      <MusicDetailPage id={id}/>
+      <MusicDetailPage id={id} hideNav={true}/>
     );
   }
 
@@ -91,11 +91,11 @@ class MusicContainer extends BaseComponent {
     // rowData[0] year
     // rowData[1] month 0~11
     //跳转到新的页面
-    /*getNavigator().push({
-      name: 'BeforePictureList',
+    getNavigator().push({
+      name: 'MusicListPage',
       year: rowData[0],
       month: rowData[1]
-    });*/
+    });
   }
 }
 

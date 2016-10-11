@@ -15,6 +15,7 @@ import {getMusicDetail} from '../api/music';
 import MusicInfo from './musicInfo';
 import MusicPlay from './musicPlay';
 import commonStyle from '../style/commonStyle';
+import BaseComponent from '../base/baseComponent';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -31,13 +32,23 @@ const styles = StyleSheet.create({
   }
 });
 
-class MusicDetailPage extends React.Component {
+class MusicDetailPage extends BaseComponent {
 
   constructor(props) {
     super(props);
     this.fetchData = this.fetchData.bind(this);
     this.state = {
       musicDetailData: null
+    };
+  }
+
+  getNavigationBarProps() {
+    return {
+      hideNav: false,
+      hideLeftButton: false,
+      hideRightButton: true,
+      title: '单曲',
+      leftButtonImage: require('../image/return.png')
     };
   }
 
@@ -57,7 +68,7 @@ class MusicDetailPage extends React.Component {
     }
   }
 
-  render() {
+  renderBody() {
     const {musicDetailData} = this.state;
     //当数据还未请求到时, 不能直接返回null, 因为这里是作为ViewPager的子View
     //如果请求数据前后子View的大小宽高变化的话, 会产生跳动

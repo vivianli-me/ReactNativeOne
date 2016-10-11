@@ -23,3 +23,8 @@ export function getMusicDetail(id) {
 export function getMusicIdList() {
   return get(`/music/idlist/0`);
 }
+
+export function getMusicListByMonth(year, month) {
+  month = month + 1;
+  return get(`/music/bymonth/${year}-${month}`);
+}
