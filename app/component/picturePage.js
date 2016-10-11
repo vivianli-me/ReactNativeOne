@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
   bottomViewContainer: {
     flexDirection: 'row',
     marginVertical: 5,
-    alignItems: 'center'
-
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   smallIcon: {
     width: 45,
@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
     color: commonStyle.TEXT_GRAY_COLOR
   },
   shareImage: {
-    position: 'absolute',
-    right: 0,
+    marginLeft: 10
   }
 });
 
@@ -119,19 +118,21 @@ class PicturePage extends BaseComponent {
           </View>
           <View style={styles.bottomViewContainer}>
             {this.renderTouchableBlock(require('../image/diary.png'), '小记', this.toEditDiary)}
-            {this.renderTouchableBlock(require('../image/laud.png'), data.praisenum, this.praise, {marginLeft: 120})}
-            <TouchableOpacity style={styles.shareImage} activeOpacity={0} onPress={this.sharePicture}>
-              <Image style={styles.smallIcon} resizeMode="contain" source={require('../image/share_image.png')}/>
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {this.renderTouchableBlock(require('../image/laud.png'), data.praisenum, this.praise)}
+              <TouchableOpacity style={styles.shareImage} activeOpacity={0} onPress={this.sharePicture}>
+                <Image style={styles.smallIcon} resizeMode="contain" source={require('../image/share_image.png')}/>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
     );
   }
 
-  renderTouchableBlock(imageSource, text, onPress, style) {
+  renderTouchableBlock(imageSource, text, onPress) {
     return (
-      <TouchableOpacity style={[{flexDirection: 'row', alignItems: 'center'}, style]} activeOpacity={1} onPress={onPress}>
+      <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} activeOpacity={1} onPress={onPress}>
         <Image style={styles.smallIcon} source={imageSource}/>
         <Text style={styles.bottomText}>{text}</Text>
       </TouchableOpacity>
