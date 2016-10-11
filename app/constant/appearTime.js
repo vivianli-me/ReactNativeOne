@@ -21,5 +21,9 @@ var appearTime = {
     beginYear: 2012,
     beginMonth: 9
   },
+  music: {
+    beginYear: 2016,
+    beginMonth: 0
+  }
 };
 export default appearTime;

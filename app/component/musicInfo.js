@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   titleText: {
+    color: commonStyle.TEXT_COLOR,
     fontSize: 18,
   },
   authorNameText: {

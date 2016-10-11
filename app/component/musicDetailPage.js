@@ -42,19 +42,29 @@ class MusicDetailPage extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData(this.props.id);
   }
 
-  fetchData() {
-    getMusicDetail(this.props.id).then(musicDetailData => {
+  fetchData(id) {
+    getMusicDetail(id).then(musicDetailData => {
       this.setState({musicDetailData});
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.id !== nextProps.id) {
+      this.fetchData(nextProps.id);
+    }
+  }
+
   render() {
     const {musicDetailData} = this.state;
+    //当数据还未请求到时, 不能直接返回null, 因为这里是作为ViewPager的子View
+    //如果请求数据前后子View的大小宽高变化的话, 会产生跳动
     if (!musicDetailData) {
-      return null;
+      return (
+        <View style={{flex: 1}}/>
+      );
     }
     //TODO 如何在Android平台实现类似contentOffset这样的功能属性, 拒绝重新渲染滚动, 否则体验很差
     return (
