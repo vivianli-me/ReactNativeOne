@@ -16,6 +16,8 @@ import MovieDetailPage from './component/movieDetailPage';
 import MusicListPage from './component/musicListPage';
 import MusicDetailPage from './component/musicDetailPage';
 
+import MusicControlModal from './component/musicControlModal';
+
 let navigator;
 
 const routeMap = new Map();
@@ -34,6 +36,7 @@ routeMap.set('ReadingQuestionDetail', ReadingQuestionDetail);
 routeMap.set('MovieDetailPage', MovieDetailPage);
 routeMap.set('MusicListPage', MusicListPage);
 routeMap.set('MusicDetailPage', MusicDetailPage);
+routeMap.set('MusicControlModal', MusicControlModal);
 
 
 export function registerNavigator(tempNavigator) {

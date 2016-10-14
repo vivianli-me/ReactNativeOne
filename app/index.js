@@ -19,6 +19,7 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import * as MediaActions from './actions/media';
+import MusicControlModal from './component/musicControlModal';
 
 
 const styles = StyleSheet.create({
@@ -65,6 +66,7 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <MusicControlModal/>
         <StatusBar
           backgroundColor="black"
           barStyle="light-content"
