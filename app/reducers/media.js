@@ -11,27 +11,27 @@ const initState = {
   isPlayingMedia: false,//当前是否正在播放音频
   mediaList: [
     {
-      url: 'http://music.wufazhuce.com/music/514',
+      url: 'http://music.wufazhuce.com/lrueYR0Vv1_PFyB6nGMFbUn88AQm',
       type: 'music',
       id: 514
     },
     {
-      url: 'http://music.wufazhuce.com/essay/518',
+      url: 'http://m5.file.xiami.com/0/0/15748/193389_137421_l.mp3?auth_key=c24c9ae2c2cf5f0adcfaa2325228ba33-1477018800-0-null',
       type: 'essay',
       id: 518
     },
     {
-      url: 'http://music.wufazhuce.com/music/5144',
+      url: 'http://music.wufazhuce.com/ljObqE_KZ_wR1a43LPAKAiRj9Xvz',
       type: 'music',
       id: 5144
     },
     {
-      url: 'http://music.wufazhuce.com/essay/5254',
+      url: 'http://m5.file.xiami.com/347/106347/2100366528/1776259003_60409059_l.mp3?auth_key=48794401015d5e43fc742ff5e1d7b9ed-1477018800-0-null',
       type: 'essay',
       id: 5254
     }
   ],//
-  currentIndex: 0
+  currentIndex: 1
 };
 
 export default function mediaReducer(state = initState, action) {

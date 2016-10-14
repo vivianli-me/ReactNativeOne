@@ -2,25 +2,16 @@
  * Created by lipeiwei on 16/10/14.
  */
 import Toast from '../util/toast';
+import {
+  NativeModules,
+  DeviceEventEmitter
+} from 'react-native';
 
-const mediaPlayer = {
-  start(url) {
-    return new Promise((resolve, reject) => {
-      setTimeout(resolve, 2000);
-    });
-  },
-  stop() {
-    return new Promise((resolve, reject) => {
-      setTimeout(resolve, 1000);
-    });
-  },
-  pause() {
+const {MediaPlayer} = NativeModules;
 
-  },
-  resume() {
-
-  }
-};
+DeviceEventEmitter.addListener('ON_MEDIA_COMPLETION', () => {
+  console.warn('播放完成');
+});
 
 
 export const ACTIONS = {
@@ -33,7 +24,7 @@ export const ACTIONS = {
 
 export function stopPlayMedia() {
   return dispatch => {
-    mediaPlayer.stop().then(() => {
+    MediaPlayer.stop().then(() => {
       dispatch({
         type: ACTIONS.STOP_PLAY_MEDIA
       });
@@ -50,10 +41,12 @@ export function startPlayMedia() {
       return;
     }
     let url = mediaList[state.currentIndex].url;//音乐路径
-    mediaPlayer.start(url).then(() => {
+    MediaPlayer.start(url).then(() => {
       dispatch({
         type: ACTIONS.START_PLAY_MEDIA
       });
+    }).catch(() => {
+      console.warn('播放出错');
     });
   }
 }
@@ -75,19 +68,20 @@ export function turnToPreviousOne() {
     //此时一定要重新getState
     let currentIndex = getState().currentIndex;
     let url = getState().mediaList[currentIndex].url;//音乐路径
-    mediaPlayer.start(url).then(() => {
+    MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
       dispatch({
         type: ACTIONS.START_PLAY_MEDIA
       });
+    }).catch(() => {
+      console.warn('播放出错');
     });
   };
 }
 
 export function turnToNextOne() {
   return (dispatch, getState) => {
-    let state = getState();
-    let mediaList = state.mediaList;
+    let mediaList = getState().mediaList;
     let length = mediaList.length;
     if (length === 0) {
       Toast.show('当前列表无歌曲');
@@ -100,13 +94,15 @@ export function turnToNextOne() {
     dispatch({
       type: ACTIONS.TO_NEXT_ONE
     });
-    let currentIndex = state.currentIndex;
-    let url = state.mediaList[currentIndex].url;//音乐路径
-    mediaPlayer.start(url).then(() => {
+    let currentIndex = getState().currentIndex;
+    let url = getState().mediaList[currentIndex].url;//音乐路径
+    MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
       dispatch({
         type: ACTIONS.START_PLAY_MEDIA
       });
+    }).catch(() => {
+      console.warn('播放出错');
     });
   };
 }

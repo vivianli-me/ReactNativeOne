@@ -116,29 +116,29 @@ export default function globalInit() {
 
   //just for test
   //test begin
-  setTimeout(() => {
-    store.dispatch(MediaActions.startPlayMedia())
-  }, 1000);
+  // setTimeout(() => {
+  //   store.dispatch(MediaActions.startPlayMedia())
+  // }, 1000);
+  //
+  // setTimeout(() => {
+  //   store.dispatch(MediaActions.turnToNextOne())
+  // }, 30000);
+  //
+  // setTimeout(() => {
+  //   store.dispatch(MediaActions.stopPlayMedia())
+  // }, 70000);
 
-  setTimeout(() => {
-    store.dispatch(MediaActions.turnToNextOne())
-  }, 3000);
-
-  setTimeout(() => {
-    store.dispatch(MediaActions.stopPlayMedia())
-  }, 6000);
-
-  setTimeout(() => {
-    store.dispatch(MediaActions.startPlayMedia())
-  }, 9000);
-
-  setTimeout(() => {
-    store.dispatch(MediaActions.turnToPreviousOne())
-  }, 13000);
-
-  setTimeout(() => {
-    store.dispatch(MediaActions.stopPlayMedia())
-  }, 15000);
+  // setTimeout(() => {
+  //   store.dispatch(MediaActions.startPlayMedia())
+  // }, 9000);
+  //
+  // setTimeout(() => {
+  //   store.dispatch(MediaActions.turnToPreviousOne())
+  // }, 13000);
+  //
+  // setTimeout(() => {
+  //   store.dispatch(MediaActions.stopPlayMedia())
+  // }, 15000);
   //test end
 
   return () => {
