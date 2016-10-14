@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 25,
-    backgroundColor: commonStyle.LIGHT_BLUE_COLOR
   },
   dateText: {
     color: commonStyle.TEXT_GRAY_COLOR,

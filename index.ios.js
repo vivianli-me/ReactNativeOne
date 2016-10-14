@@ -6,4 +6,4 @@ import {
 } from 'react-native';
 import App from './app';
 
-AppRegistry.registerComponent('ReactNativeOne', () => App);
+AppRegistry.registerComponent('ReactNativeOne', App);

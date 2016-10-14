@@ -13,6 +13,13 @@ import {
   Platform
 } from 'react-native';
 import {getRouteMap, registerNavigator} from './route';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import createLogger from 'redux-logger';
+import thunk from 'redux-thunk';
+import reducers from './reducers';
+import * as MediaActions from './actions/media';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -48,6 +55,7 @@ class App extends React.Component {
       BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
   }
+  
   componentWillUnmount() {
     if (Platform.OS === 'android') {
       BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
@@ -101,7 +109,47 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default function globalInit() {
+  var loggerMiddleware = createLogger();
+  var store = applyMiddleware(thunk, loggerMiddleware)(createStore)(reducers);
+
+
+  //just for test
+  //test begin
+  setTimeout(() => {
+    store.dispatch(MediaActions.startPlayMedia())
+  }, 1000);
+
+  setTimeout(() => {
+    store.dispatch(MediaActions.turnToNextOne())
+  }, 3000);
+
+  setTimeout(() => {
+    store.dispatch(MediaActions.stopPlayMedia())
+  }, 6000);
+
+  setTimeout(() => {
+    store.dispatch(MediaActions.startPlayMedia())
+  }, 9000);
+
+  setTimeout(() => {
+    store.dispatch(MediaActions.turnToPreviousOne())
+  }, 13000);
+
+  setTimeout(() => {
+    store.dispatch(MediaActions.stopPlayMedia())
+  }, 15000);
+  //test end
+
+  return () => {
+    return (
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    );
+  };
+};
+
 
 
 
