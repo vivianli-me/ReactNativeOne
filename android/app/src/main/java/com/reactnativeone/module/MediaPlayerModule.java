@@ -37,13 +37,14 @@ public class MediaPlayerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void start(String path, final Promise promise) {
-        if (mPlayer != null && mPlayer.isPlaying()) {
-            mPlayer.stop();
-            mPlayer.release();
-            mPlayer = null;
+        if (mPlayer != null) {
+            if (mPlayer.isPlaying()) {
+                mPlayer.reset();
+            }
+        } else {
+            mPlayer = new MediaPlayer();
         }
         try {
-            mPlayer = new MediaPlayer();
             mPlayer.setDataSource(path);//Sets the data source (file-path or http/rtsp URL) to use.
             mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
@@ -64,6 +65,7 @@ public class MediaPlayerModule extends ReactContextBaseJavaModule {
             mPlayer.prepare();
             mPlayer.start();
         } catch (IOException e) {
+            mPlayer.reset();
             promise.reject(e.getMessage(), e);
         }
     }
@@ -74,9 +76,7 @@ public class MediaPlayerModule extends ReactContextBaseJavaModule {
             promise.resolve(null);
             return;
         }
-        mPlayer.stop();
-        mPlayer.release();
-        mPlayer = null;
+        mPlayer.reset();
         promise.resolve(null);
     }
 

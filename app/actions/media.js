@@ -41,12 +41,19 @@ export function startPlayMedia() {
       return;
     }
     let url = mediaList[state.currentIndex].url;//音乐路径
+    //UI先变化
+    dispatch({
+      type: ACTIONS.START_PLAY_MEDIA
+    });
+    //开始缓冲
     MediaPlayer.start(url).then(() => {
-      dispatch({
-        type: ACTIONS.START_PLAY_MEDIA
-      });
+      //加载完成
+      console.info('startPlayMedia 缓冲完毕');
     }).catch(() => {
       console.warn('播放出错');
+      dispatch({
+        type: ACTIONS.STOP_PLAY_MEDIA
+      });
     });
   }
 }
@@ -70,11 +77,12 @@ export function turnToPreviousOne() {
     let url = getState().mediaList[currentIndex].url;//音乐路径
     MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
-      dispatch({
-        type: ACTIONS.START_PLAY_MEDIA
-      });
+      console.info('turnToPreviousOne 缓冲完毕');
     }).catch(() => {
       console.warn('播放出错');
+      dispatch({
+        type: ACTIONS.STOP_PLAY_MEDIA
+      });
     });
   };
 }
@@ -98,11 +106,12 @@ export function turnToNextOne() {
     let url = getState().mediaList[currentIndex].url;//音乐路径
     MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
-      dispatch({
-        type: ACTIONS.START_PLAY_MEDIA
-      });
+      console.info('turnToNextOne 缓冲完毕');
     }).catch(() => {
       console.warn('播放出错');
+      dispatch({
+        type: ACTIONS.STOP_PLAY_MEDIA
+      });
     });
   };
 }

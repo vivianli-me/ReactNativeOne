@@ -13,21 +13,29 @@ const initState = {
     {
       url: 'http://music.wufazhuce.com/lrueYR0Vv1_PFyB6nGMFbUn88AQm',
       type: 'music',
+      musicName: '浪费',
+      authorName: '林宥嘉',
       id: 514
     },
     {
       url: 'http://m5.file.xiami.com/0/0/15748/193389_137421_l.mp3?auth_key=c24c9ae2c2cf5f0adcfaa2325228ba33-1477018800-0-null',
       type: 'essay',
+      musicName: '爱在离别时',
+      authorName: '梁静茹',
       id: 518
     },
     {
       url: 'http://music.wufazhuce.com/ljObqE_KZ_wR1a43LPAKAiRj9Xvz',
       type: 'music',
+      musicName: '不要告别',
+      authorName: '杨乃文',
       id: 5144
     },
     {
       url: 'http://m5.file.xiami.com/347/106347/2100366528/1776259003_60409059_l.mp3?auth_key=48794401015d5e43fc742ff5e1d7b9ed-1477018800-0-null',
       type: 'essay',
+      musicName: '哈哈哈',
+      authorName: '嘿嘿',
       id: 5254
     }
   ],//
@@ -46,15 +54,15 @@ export default function mediaReducer(state = initState, action) {
       }
       return Object.assign({}, state, {
         currentIndex: state.currentIndex <= 0 ? state.mediaList.length - 1 : state.currentIndex - 1,//不断循环
-        isPlayingMedia: false
+        isPlayingMedia: true
       });
     case ACTIONS.TO_NEXT_ONE:
-      if (state.mediaList.length <= 0) {
+      if (state.mediaList.length <= 1) {
         return state;
       }
       return Object.assign({}, state, {
         currentIndex: state.currentIndex >= state.mediaList.length - 1 ? 0 : state.currentIndex + 1,//不断循环
-        isPlayingMedia: false
+        isPlayingMedia: true
       });
     case ACTIONS.ADD_MEDIA:
       let mediaInfo = action.info;
@@ -63,7 +71,7 @@ export default function mediaReducer(state = initState, action) {
       return Object.assign({}, state, {
         mediaList,
         currentIndex: mediaList.length -1,
-        isPlayingMedia: false
+        isPlayingMedia: true
       });
     default:
       return state;
