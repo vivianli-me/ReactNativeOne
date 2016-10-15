@@ -3,5 +3,10 @@
  */
 
 import media from './media';
+import {combineReducers} from 'redux';
 
-export default media;
+
+
+export default combineReducers({
+  media
+});

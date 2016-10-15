@@ -9,9 +9,6 @@ import {
 
 const {MediaPlayer} = NativeModules;
 
-DeviceEventEmitter.addListener('ON_MEDIA_COMPLETION', () => {
-  console.warn('播放完成');
-});
 
 
 export const ACTIONS = {
@@ -19,7 +16,8 @@ export const ACTIONS = {
   START_PLAY_MEDIA: 'START_PLAY_MEDIA',//开始播放
   TO_PREVIOUS_ONE: 'TO_PREVIOUS_ONE',//上一首
   TO_NEXT_ONE: 'TO_NEXT_ONE',//下一首
-  ADD_MEDIA: 'ADD_MEDIA',//添加音频
+  ADD_MEDIA: 'ADD_MEDIA',//添加音频,
+  CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY: 'CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY'
 };
 
 export function stopPlayMedia() {
@@ -34,17 +32,17 @@ export function stopPlayMedia() {
 
 export function startPlayMedia() {
   return (dispatch, getState) => {
-    let state = getState();
-    let mediaList = state.mediaList;
+    let media = getState().media;
+    let mediaList = media.mediaList;
     if (mediaList.length === 0) {
       Toast.show('当前列表无歌曲');
       return;
     }
-    let url = mediaList[state.currentIndex].url;//音乐路径
     //UI先变化
     dispatch({
       type: ACTIONS.START_PLAY_MEDIA
     });
+    let url = mediaList[media.currentIndex].url;//音乐路径
     //开始缓冲
     MediaPlayer.start(url).then(() => {
       //加载完成
@@ -60,7 +58,7 @@ export function startPlayMedia() {
 
 export function turnToPreviousOne() {
   return (dispatch, getState) => {
-    let length = getState().mediaList.length;
+    let length = getState().media.mediaList.length;
     if (length === 0) {
       Toast.show('当前列表无歌曲');
       return;
@@ -73,8 +71,9 @@ export function turnToPreviousOne() {
       type: ACTIONS.TO_PREVIOUS_ONE
     });
     //此时一定要重新getState
-    let currentIndex = getState().currentIndex;
-    let url = getState().mediaList[currentIndex].url;//音乐路径
+    let media = getState().media;
+    let currentIndex = media.currentIndex;
+    let url = media.mediaList[currentIndex].url;//音乐路径
     MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
       console.info('turnToPreviousOne 缓冲完毕');
@@ -89,7 +88,7 @@ export function turnToPreviousOne() {
 
 export function turnToNextOne() {
   return (dispatch, getState) => {
-    let mediaList = getState().mediaList;
+    let mediaList = getState().media.mediaList;
     let length = mediaList.length;
     if (length === 0) {
       Toast.show('当前列表无歌曲');
@@ -102,8 +101,9 @@ export function turnToNextOne() {
     dispatch({
       type: ACTIONS.TO_NEXT_ONE
     });
-    let currentIndex = getState().currentIndex;
-    let url = getState().mediaList[currentIndex].url;//音乐路径
+    let media = getState().media;
+    let currentIndex = media.currentIndex;
+    let url = media.mediaList[currentIndex].url;//音乐路径
     MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
       console.info('turnToNextOne 缓冲完毕');
@@ -124,5 +124,12 @@ export function addMedia(info) {
       info,
     });
     startPlayMedia()(dispatch, getState);
+  };
+}
+
+export function changeMusicControlModalVisibility(visible) {
+  return {
+    type: ACTIONS.CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY,
+    visible
   };
 }

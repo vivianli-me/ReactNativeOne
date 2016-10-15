@@ -8,34 +8,35 @@ import {ACTIONS} from '../actions/media';
 
 //设计初始状态
 const initState = {
+  isMusicControlModalShow: false,
   isPlayingMedia: false,//当前是否正在播放音频
   mediaList: [
     {
       url: 'http://music.wufazhuce.com/lrueYR0Vv1_PFyB6nGMFbUn88AQm',
       type: 'music',
-      musicName: '浪费',
-      authorName: '林宥嘉',
+      musicName: '不知名',
+      authorName: '不知名',
       id: 514
     },
     {
-      url: 'http://m5.file.xiami.com/0/0/15748/193389_137421_l.mp3?auth_key=c24c9ae2c2cf5f0adcfaa2325228ba33-1477018800-0-null',
+      url: 'http://m5.file.xiami.com/836/1836/4279/1771128943_3578911_l.mp3?auth_key=4987c5d91b4fcffc57df1b21d88cf830-1477105200-0-null',
       type: 'essay',
-      musicName: '爱在离别时',
+      musicName: '爱久见人心',
       authorName: '梁静茹',
       id: 518
     },
     {
-      url: 'http://music.wufazhuce.com/ljObqE_KZ_wR1a43LPAKAiRj9Xvz',
+      url: 'http://m5.file.xiami.com/836/1836/32630/389561_2592175_l.mp3?auth_key=18652ad62aec10d79147a1201a7bf254-1477105200-0-null',
       type: 'music',
-      musicName: '不要告别',
-      authorName: '杨乃文',
+      musicName: '给未来的自己',
+      authorName: '梁静茹',
       id: 5144
     },
     {
-      url: 'http://m5.file.xiami.com/347/106347/2100366528/1776259003_60409059_l.mp3?auth_key=48794401015d5e43fc742ff5e1d7b9ed-1477018800-0-null',
+      url: 'http://m5.file.xiami.com/318/2318/12416/152571_69179_l.mp3?auth_key=11b095887c2ce8eb0f33681ce9e6b92d-1477105200-0-null',
       type: 'essay',
-      musicName: '哈哈哈',
-      authorName: '嘿嘿',
+      musicName: '最爱是v',
+      authorName: '徐若瑄',
       id: 5254
     }
   ],//
@@ -72,6 +73,10 @@ export default function mediaReducer(state = initState, action) {
         mediaList,
         currentIndex: mediaList.length -1,
         isPlayingMedia: true
+      });
+    case ACTIONS.CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY:
+      return Object.assign({} , state, {
+        isMusicControlModalShow: action.visible
       });
     default:
       return state;

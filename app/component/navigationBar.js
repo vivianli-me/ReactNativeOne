@@ -12,6 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 import commonStyle from '../style/commonStyle';
+import MusicControlButton from './musicControlButton'
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -26,30 +27,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: commonStyle.GRAY_COLOR
+    borderBottomColor: commonStyle.GRAY_COLOR,
+
+    flexDirection: 'row',
   },
   navigationBarTitle: {
     color: commonStyle.TEXT_COLOR,
     fontSize: 22,
     textAlign: 'center',
-    maxWidth: windowWidth - 40,
+    flex: 1,
     fontWeight: 'bold'
   },
   leftButton: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
+    height: defaultNavigationHeight,
     width: 55,
     // backgroundColor: 'red',//test
     justifyContent: 'center',//主轴
     alignItems: 'flex-end'//TODO why 这里如果设置flex-start时图片偏右, 设置flex-end时图片偏左, 原因不明
   },
   rightButton: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
+    height: defaultNavigationHeight,
     width: 55,
     // backgroundColor: 'red',//test
     justifyContent: 'center',//主轴
@@ -133,8 +130,9 @@ class NavigationBar extends Component {
     return (
       <View style={[styles.navigationBar, this.navigationBarProps.navigationBar]}>
         {this.renderLeftButton()}
-        {this.renderRightButton()}
         <Text numberOfLines={1} style={[styles.navigationBarTitle, this.navigationBarProps.navigationBarTitle]}>{title}</Text>
+        <MusicControlButton/>
+        {this.renderRightButton()}
       </View>
     );
   }

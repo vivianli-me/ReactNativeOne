@@ -3,7 +3,6 @@ package com.reactnativeone.module;
 import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -25,6 +24,10 @@ public class MediaPlayerModule extends ReactContextBaseJavaModule {
 
     private static String EVENT_NAME = "ON_MEDIA_COMPLETION";
 
+    private final static int STATE_NO_PLAYING = -1;
+    private final static int STATE_PLAYING = 1;
+    private int mState = STATE_NO_PLAYING;
+
     public MediaPlayerModule(ReactApplicationContext reactContext) {
         super(reactContext);
         mContext = reactContext;
@@ -35,22 +38,27 @@ public class MediaPlayerModule extends ReactContextBaseJavaModule {
         return "MediaPlayer";
     }
 
+    private boolean isPlaying() {
+        return (mState == STATE_PLAYING);
+    }
+
     @ReactMethod
-    public void start(String path, final Promise promise) {
+    public void start(final String url, final Promise promise) {
         if (mPlayer != null) {
-            if (mPlayer.isPlaying()) {
+            if (isPlaying()) {
                 mPlayer.reset();
             }
         } else {
             mPlayer = new MediaPlayer();
         }
         try {
-            mPlayer.setDataSource(path);//Sets the data source (file-path or http/rtsp URL) to use.
+            mPlayer.setDataSource(url);//Sets the data source (file-path or http/rtsp URL) to use.
             mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     //应该是开始播放了
                     promise.resolve("开始播放");
+                    mPlayer.start();
                 }
             });
             mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -58,13 +66,13 @@ public class MediaPlayerModule extends ReactContextBaseJavaModule {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     //播放完成, 通过sendEvent发送事件
-                    WritableMap params = Arguments.createMap();
-                    sendEvent(mContext, EVENT_NAME, params);
+                    sendEvent(mContext, EVENT_NAME, null);
                 }
             });
-            mPlayer.prepare();
-            mPlayer.start();
+            mPlayer.prepareAsync();//同步跟异步
+            mState = STATE_PLAYING;
         } catch (IOException e) {
+            mState = STATE_NO_PLAYING;
             mPlayer.reset();
             promise.reject(e.getMessage(), e);
         }
@@ -72,17 +80,16 @@ public class MediaPlayerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void stop(Promise promise) {
-        if (mPlayer == null || !mPlayer.isPlaying()) {
+        if (mPlayer == null || !isPlaying()) {
             promise.resolve(null);
             return;
         }
+        mState = STATE_NO_PLAYING;
         mPlayer.reset();
         promise.resolve(null);
     }
 
-    private void sendEvent(ReactContext reactContext,
-                           String eventName,
-                           @Nullable WritableMap params) {
+    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
