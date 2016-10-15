@@ -18,7 +18,7 @@ const absoluteUrl = id => `http://xiamirun.avosapps.com/run?song=http://www.xiam
 export function getXiamiMusicUrl(musicId) {
   return AsyncStorage.getItem(`${PREFIX}${musicId}`).then(url => {
     if (url) {
-      console.warn('get xiami music url from storage');
+      console.info('get xiami music url from storage');
       return url;
     } else {
       return getXiamiMusicUrlFromNetwork(musicId);
@@ -35,7 +35,7 @@ function getXiamiMusicUrlFromNetwork(musicId) {
       'Content-Type': 'application/json'
     }
   }).then(text => text.json()).then(response => {
-    console.warn('get xiami music url from network');
+    console.info('get xiami music url from network');
     if (response.url) {
       AsyncStorage.setItem(`${PREFIX}${musicId}`, response.url);//存储到map
       return response.url;

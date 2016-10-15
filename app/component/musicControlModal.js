@@ -51,7 +51,7 @@ class MusicControlModal extends React.Component {
       turnToNextOne
     } = this.props;
     DeviceEventEmitter.addListener(EVENT_NAME, () => {
-      console.warn('播放完成');
+      console.log('播放完成');
       turnToNextOne();//当前先实现顺序循环吧, 单曲循环跟随机播放以后再说
     });
   }
@@ -122,8 +122,17 @@ MusicControlModal.propTypes = {
 };
 
 const mapStateToProps = state => {
-  var media = state.media;
-  var currentMedia = media.mediaList[media.currentIndex];
+  let media = state.media;
+  let mediaList = media.mediaList;
+  if (mediaList.length === 0) {
+    return {
+      musicName: '',
+      authorName: '',
+      isPlayingMedia: false,
+      isMusicControlModalShow: false
+    };
+  }
+  let currentMedia = mediaList[media.currentIndex];
   return {
     musicName: currentMedia.musicName,
     authorName: currentMedia.authorName,

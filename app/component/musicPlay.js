@@ -84,14 +84,13 @@ class MusicPlay extends React.Component {
 
   constructor(props) {
     super(props);
-    this.addMediaAndPlay = this.addMediaAndPlay.bind(this);
+    this.onMediaPressed = this.onMediaPressed.bind(this);
   }
 
   render() {
     const {
       musicDetailData,
       isPlaying,//当前是否正在播放这一首音乐
-      stopPlayMedia,
     } = this.props;
     if (!musicDetailData) {
       return null;
@@ -120,7 +119,7 @@ class MusicPlay extends React.Component {
           <Image style={styles.xiamiImage}
                  source={musicDetailData.platform == 1 ? require('../image/xiami_right.png') : require('../image/white.png')}
                  resizeMode="contain"/>
-          <TouchableOpacity onPress={isPlaying ? stopPlayMedia : this.addMediaAndPlay}>
+          <TouchableOpacity onPress={this.onMediaPressed}>
             <Image style={styles.musicImage} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
           </TouchableOpacity>
           <Text style={styles.dateText}>{dateStr}</Text>
@@ -129,51 +128,61 @@ class MusicPlay extends React.Component {
     );
   }
 
-  addMediaAndPlay() {
-    const {musicDetailData, addMedia} = this.props;
+  onMediaPressed() {
     const {
-      id,
-      title,
-      platform,
-      music_id,
-      author
-    } = musicDetailData;
-    let getMusicUrlPromise;
-    //platform  '1'  虾米平台的
-    //platform  '2'  ONE平台的  直接使用music_id, music_id就是文件地址
-    if (platform == 1) {
-      getMusicUrlPromise = getXiamiMusicUrl(music_id);
-    } else if(platform == 2) {
-      getMusicUrlPromise = Promise.resolve(music_id);
+      musicDetailData,
+      stopPlayMedia,
+      startPlayMedia,
+      isPlaying,
+    } = this.props;
+    if (isPlaying) {
+      //停止播放
+      stopPlayMedia();
     } else {
-      console.warn(`暂时未能处理该平台的音乐 platform = ${platform}`);
-      return;
-    }
-
-    getMusicUrlPromise.then(url => {
-      addMedia({
+      const {
         id,
-        url,
-        type: 'music',
-        musicName: title,
-        authorName: author.user_name,
+        title,
+        platform,
+        music_id,
+        author
+      } = musicDetailData;
+      let getMusicUrlPromise;
+      //platform  '1'  虾米平台的
+      //platform  '2'  ONE平台的  直接使用music_id, music_id就是文件地址
+      if (platform == 1) {
+        getMusicUrlPromise = getXiamiMusicUrl(music_id);
+      } else if (platform == 2) {
+        getMusicUrlPromise = Promise.resolve(music_id);
+      } else {
+        console.warn(`暂时未能处理该平台的音乐 platform = ${platform}`);
+        return;
+      }
+      getMusicUrlPromise.then(url => {
+        startPlayMedia({
+          id,
+          url,
+          type: 'music',
+          musicName: title,
+          authorName: author.user_name,
+        });
       });
-    });
-
-
+    }
   }
 
 }
 
 MusicPlay.propTypes = {
-  musicDetailData: PropTypes.object.isRequired
+  musicDetailData: PropTypes.object.isRequired,
+  stopPlayMedia: PropTypes.func.isRequired,
+  startPlayMedia: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => {
   var media = state.media;
   var currentMedia = media.mediaList[media.currentIndex];
   return {
-    isPlaying: media.isPlayingMedia && currentMedia && currentMedia.type === 'essay' && currentMedia.id === props.musicDetailData.id
+    isPlaying: media.isPlayingMedia && currentMedia && currentMedia.type === 'music' && currentMedia.id === props.musicDetailData.id
   };
 };
 

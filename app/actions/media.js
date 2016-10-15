@@ -16,7 +16,6 @@ export const ACTIONS = {
   START_PLAY_MEDIA: 'START_PLAY_MEDIA',//开始播放
   TO_PREVIOUS_ONE: 'TO_PREVIOUS_ONE',//上一首
   TO_NEXT_ONE: 'TO_NEXT_ONE',//下一首
-  ADD_MEDIA: 'ADD_MEDIA',//添加音频,
   CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY: 'CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY'
 };
 
@@ -30,18 +29,23 @@ export function stopPlayMedia() {
   }
 }
 
-export function startPlayMedia() {
+export function startPlayMedia(info) {
   return (dispatch, getState) => {
     let media = getState().media;
     let mediaList = media.mediaList;
-    if (mediaList.length === 0) {
+    //当前列表为空且不添加歌曲
+    if (mediaList.length === 0 && !info) {
       Toast.show('当前列表无歌曲');
       return;
     }
     //UI先变化
     dispatch({
-      type: ACTIONS.START_PLAY_MEDIA
+      type: ACTIONS.START_PLAY_MEDIA,
+      info//添加media
     });
+    //dispatch之后得重新getState
+    media = getState().media;
+    mediaList = media.mediaList;
     let url = mediaList[media.currentIndex].url;//音乐路径
     //开始缓冲
     MediaPlayer.start(url).then(() => {
@@ -65,7 +69,6 @@ export function turnToPreviousOne() {
     }
     if (length === 1) {
       Toast.show('当前列表仅有一首歌曲');
-      return;
     }
     dispatch({
       type: ACTIONS.TO_PREVIOUS_ONE
@@ -96,7 +99,6 @@ export function turnToNextOne() {
     }
     if (length === 1) {
       Toast.show('当前列表仅有一首歌曲');
-      return;
     }
     dispatch({
       type: ACTIONS.TO_NEXT_ONE
@@ -113,17 +115,6 @@ export function turnToNextOne() {
         type: ACTIONS.STOP_PLAY_MEDIA
       });
     });
-  };
-}
-
-//mediaType (essay/music)
-export function addMedia(info) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: ACTIONS.ADD_MEDIA,
-      info,
-    });
-    startPlayMedia()(dispatch, getState);
   };
 }
 

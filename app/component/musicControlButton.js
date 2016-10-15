@@ -68,4 +68,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)( MusicControlButton);
+export default connect(mapStateToProps, mapDispatchToProps)(MusicControlButton);
