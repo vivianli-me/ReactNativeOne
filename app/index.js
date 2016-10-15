@@ -19,7 +19,9 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import MusicControlModal from './component/musicControlModal';
+import Toast from './util/toast';
 
+let lastClickTime = 0;
 
 const styles = StyleSheet.create({
   container: {
@@ -105,43 +107,19 @@ class App extends React.Component {
       this.navigator.pop();
       return true;
     }
-    BackAndroid.exitApp();
-    return false;
+    let now = new Date().getTime();
+    if (now - lastClickTime < 2500) {//2.5秒内点击后退键两次推出应用程序
+      return false;//控制权交给原生
+    }
+    lastClickTime = now;
+    Toast.show('再按一次退出一个');
+    return true;
   }
 }
 
 export default function globalInit() {
   var loggerMiddleware = createLogger();
   var store = applyMiddleware(thunk, loggerMiddleware)(createStore)(reducers);
-
-
-  //just for test
-  //test begin
-  // setTimeout(() => {
-  //   store.dispatch(MediaActions.startPlayMedia())
-  // }, 1000);
-  //
-  // setTimeout(() => {
-  //   store.dispatch(MediaActions.turnToNextOne())
-  // }, 30000);
-  //
-  // setTimeout(() => {
-  //   store.dispatch(MediaActions.stopPlayMedia())
-  // }, 70000);
-
-  // setTimeout(() => {
-  //   store.dispatch(MediaActions.startPlayMedia())
-  // }, 9000);
-  //
-  // setTimeout(() => {
-  //   store.dispatch(MediaActions.turnToPreviousOne())
-  // }, 13000);
-  //
-  // setTimeout(() => {
-  //   store.dispatch(MediaActions.stopPlayMedia())
-  // }, 15000);
-  //test end
-
   return () => {
     return (
       <Provider store={store}>

@@ -1,5 +1,6 @@
 package com.reactnativeone;
 
+import android.os.Process;
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -11,5 +12,10 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "ReactNativeOne";
+    }
+
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        Process.killProcess(Process.myPid());
     }
 }

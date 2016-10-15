@@ -13,6 +13,9 @@ import {
 import {parseDate} from '../util/dateUtil';
 import monthArray from '../constant/month';
 import commonStyle from '../style/commonStyle';
+import {connect} from 'react-redux';
+import * as MediaActions from '../actions/media';
+import {getXiamiMusicUrl} from '../util/musicUtil';
 
 const styles = StyleSheet.create({
   container: {
@@ -81,10 +84,15 @@ class MusicPlay extends React.Component {
 
   constructor(props) {
     super(props);
+    this.addMediaAndPlay = this.addMediaAndPlay.bind(this);
   }
 
   render() {
-    const {musicDetailData} = this.props;
+    const {
+      musicDetailData,
+      isPlaying,//当前是否正在播放这一首音乐
+      stopPlayMedia,
+    } = this.props;
     if (!musicDetailData) {
       return null;
     }
@@ -112,13 +120,47 @@ class MusicPlay extends React.Component {
           <Image style={styles.xiamiImage}
                  source={musicDetailData.platform == 1 ? require('../image/xiami_right.png') : require('../image/white.png')}
                  resizeMode="contain"/>
-          <TouchableOpacity>
-            <Image style={styles.musicImage} source={require('../image/music_play.png')}/>
+          <TouchableOpacity onPress={isPlaying ? stopPlayMedia : this.addMediaAndPlay}>
+            <Image style={styles.musicImage} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
           </TouchableOpacity>
           <Text style={styles.dateText}>{dateStr}</Text>
         </View>
       </View>
     );
+  }
+
+  addMediaAndPlay() {
+    const {musicDetailData, addMedia} = this.props;
+    const {
+      id,
+      title,
+      platform,
+      music_id,
+      author
+    } = musicDetailData;
+    let getMusicUrlPromise;
+    //platform  '1'  虾米平台的
+    //platform  '2'  ONE平台的  直接使用music_id, music_id就是文件地址
+    if (platform == 1) {
+      getMusicUrlPromise = getXiamiMusicUrl(music_id);
+    } else if(platform == 2) {
+      getMusicUrlPromise = Promise.resolve(music_id);
+    } else {
+      console.warn(`暂时未能处理该平台的音乐 platform = ${platform}`);
+      return;
+    }
+
+    getMusicUrlPromise.then(url => {
+      addMedia({
+        id,
+        url,
+        type: 'music',
+        musicName: title,
+        authorName: author.user_name,
+      });
+    });
+
+
   }
 
 }
@@ -127,4 +169,13 @@ MusicPlay.propTypes = {
   musicDetailData: PropTypes.object.isRequired
 };
 
-export default MusicPlay;
+const mapStateToProps = (state, props) => {
+  var media = state.media;
+  var currentMedia = media.mediaList[media.currentIndex];
+  return {
+    isPlaying: media.isPlayingMedia && currentMedia && currentMedia.type === 'essay' && currentMedia.id === props.musicDetailData.id
+  };
+};
+
+export default connect(mapStateToProps, MediaActions)(MusicPlay);
+

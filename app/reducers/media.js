@@ -68,10 +68,21 @@ export default function mediaReducer(state = initState, action) {
     case ACTIONS.ADD_MEDIA:
       let mediaInfo = action.info;
       let mediaList = state.mediaList;
-      mediaList.push(mediaInfo);//添加到尾部
+      let mediaInfoIndex = -1;
+      //查询并找出位置index, 列表中没有的时候才添加进去
+      for (let i = 0; i < mediaList.length; i++) {
+        if (mediaList[i].type === mediaInfo.type && mediaList[i].id === mediaInfo.id) {
+          mediaInfoIndex = i;
+          break;
+        }
+      }
+      if (mediaInfoIndex === -1) {
+        mediaList.push(mediaInfo);//添加到尾部
+        mediaInfoIndex = mediaList.length - 1;
+      }
       return Object.assign({}, state, {
         mediaList,
-        currentIndex: mediaList.length -1,
+        currentIndex: mediaInfoIndex,
         isPlayingMedia: true
       });
     case ACTIONS.CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY:
