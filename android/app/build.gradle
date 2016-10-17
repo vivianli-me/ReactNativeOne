@@ -121,6 +121,7 @@ android {
         }
         debug {
             getManifestPlaceholders().put("APP_NAME","一个(debug)");
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
@@ -139,6 +140,7 @@ android {
 }
 
 dependencies {
+    compile project(':RCTWeChat')
     compile project(':react-native-video')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

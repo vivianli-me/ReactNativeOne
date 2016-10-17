@@ -16,8 +16,8 @@ import MovieDetailPage from './component/movieDetailPage';
 import MusicListPage from './component/musicListPage';
 import MusicDetailPage from './component/musicDetailPage';
 import VideoPage from './component/videoPage';
-
 import MusicControlModal from './component/musicControlModal';
+import SharePage from './component/sharePage';
 
 let navigator;
 
@@ -39,6 +39,7 @@ routeMap.set('MusicListPage', MusicListPage);
 routeMap.set('MusicDetailPage', MusicDetailPage);
 routeMap.set('MusicControlModal', MusicControlModal);
 routeMap.set('VideoPage', VideoPage);
+routeMap.set('SharePage', SharePage);
 
 
 export function registerNavigator(tempNavigator) {

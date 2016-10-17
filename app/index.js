@@ -21,6 +21,7 @@ import reducers from './reducers';
 import MusicControlModal from './component/musicControlModal';
 import Toast from './util/toast';
 import Orientation from './util/orientation';
+import * as Wechat from 'react-native-wechat';
 
 let lastClickTime = 0;
 
@@ -59,6 +60,10 @@ class App extends React.Component {
       Orientation.registerOnOrientationChanged();
       BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
+  }
+
+  componentDidMount (){
+    Wechat.registerApp('wxd08e40eaa166e2cf');
   }
 
   componentWillUnmount() {

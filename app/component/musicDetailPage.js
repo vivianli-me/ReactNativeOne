@@ -16,6 +16,7 @@ import MusicInfo from './musicInfo';
 import MusicPlay from './musicPlay';
 import commonStyle from '../style/commonStyle';
 import BaseComponent from '../base/baseComponent';
+import BottomInfo from './bottomInfo';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -77,6 +78,7 @@ class MusicDetailPage extends BaseComponent {
         <View style={{flex: 1}}/>
       );
     }
+    const {praisenum, commentnum, sharenum} = musicDetailData;
     //TODO 如何在Android平台实现类似contentOffset这样的功能属性, 拒绝重新渲染滚动, 否则体验很差
     return (
       <ScrollView>
@@ -85,6 +87,7 @@ class MusicDetailPage extends BaseComponent {
           <MusicPlay musicDetailData={musicDetailData}/>
           <MusicInfo musicDetailData={musicDetailData}/>
           <Text style={styles.grayText}>{musicDetailData.charge_edt}</Text>
+          <BottomInfo praiseNum={praisenum} commentNum={commentnum} shareNum={sharenum}/>
         </View>
       </ScrollView>
     );

@@ -150,7 +150,9 @@ class PicturePage extends BaseComponent {
 
   sharePicture() {
     //分享
-    Toast.show('分享');
+    getNavigator().push({
+      name: 'SharePage'
+    });
   }
 
   onImagePress(uri) {
