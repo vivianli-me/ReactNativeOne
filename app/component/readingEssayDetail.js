@@ -20,6 +20,8 @@ import monthArray from '../constant/month';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {stopPlayMedia, startPlayMedia} from '../actions/media';
+import BottomInfo from './bottomInfo';
+import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +72,7 @@ class ReadingEssayDetail extends BaseComponent {
     this.onAvatarImagePress = this.onAvatarImagePress.bind(this);
     this.renderMediaButton = this.renderMediaButton.bind(this);
     this.onMediaPressed = this.onMediaPressed.bind(this);
+    this.onSharePressed = this.onSharePressed.bind(this);
     this.state = {
       detailData: null
     };
@@ -98,13 +101,23 @@ class ReadingEssayDetail extends BaseComponent {
   }
 
   renderBody() {
-    return this.renderArticleContent();
+    const {detailData} = this.state;
+    if (!detailData) {
+      return null;
+    }
+    return (
+      <View style={{flex: 1}}>
+        {this.renderArticleContent()}
+        <BottomInfo
+          praiseNum={detailData.praisenum}
+          commentNum={detailData.commentnum}
+          shareNum={detailData.sharenum}
+          onSharePressed={this.onSharePressed}/>
+      </View>
+    );
   }
 
   renderArticleContent() {
-    if (!this.state.detailData) {
-      return <View/>;
-    }
     const {detailData} = this.state;
     const date = parseDate(detailData.hp_makettime);
     var day = date.getDate();
@@ -113,7 +126,7 @@ class ReadingEssayDetail extends BaseComponent {
     }
     const dateStr = `${monthArray[date.getMonth()]} ${day}.${date.getFullYear()}`;
     return (
-      <ScrollView>
+      <ScrollView style={{flex: 1}}>
         <View style={styles.container}>
           <View style={styles.rowContainer}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -173,6 +186,20 @@ class ReadingEssayDetail extends BaseComponent {
     }
   }
 
+  onSharePressed() {
+    const {detailData} = this.state;
+    getNavigator().push({
+      name: 'SharePage',
+      shareData: {
+        type: 'news',
+        webpageUrl: detailData.web_url,
+        thumbImage: 'ic_launcher',
+        title: `《${detailData.hp_title}》` ,
+        description: `作者/ ${detailData.hp_author} ${detailData.guide_word}`
+      }
+    });
+  }
+
 }
 
 ReadingEssayDetail.propTypes = {
@@ -181,7 +208,6 @@ ReadingEssayDetail.propTypes = {
   stopPlayMedia: PropTypes.func.isRequired,
   startPlayMedia: PropTypes.func.isRequired
 };
-
 
 const mapStateToProps = (state, props) => {
   var media = state.media;

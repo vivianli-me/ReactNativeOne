@@ -14,6 +14,8 @@ import {parseDate} from '../util/dateUtil'
 import {getQuestionDetailInfo} from '../api/reading'
 import commonStyle from '../style/commonStyle';
 import monthArray from '../constant/month';
+import BottomInfo from './bottomInfo';
+import {getNavigator} from '../route';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -46,6 +48,7 @@ class ReadingQuestionDetail extends BaseComponent {
     super(props);
     this.fetchData = this.fetchData.bind(this);
     this.renderArticleContent = this.renderArticleContent.bind(this);
+    this.onSharePressed = this.onSharePressed.bind(this);
     this.state = {
       detailData: null
     };
@@ -74,13 +77,23 @@ class ReadingQuestionDetail extends BaseComponent {
   }
 
   renderBody() {
-    return this.renderArticleContent();
+    const {detailData} = this.state;
+    if (!detailData) {
+      return null;
+    }
+    return (
+      <View style={{flex: 1}}>
+        {this.renderArticleContent()}
+        <BottomInfo
+          praiseNum={detailData.praisenum}
+          commentNum={detailData.commentnum}
+          shareNum={detailData.sharenum}
+          onSharePressed={this.onSharePressed}/>
+      </View>
+    );
   }
 
   renderArticleContent() {
-    if (!this.state.detailData) {
-      return null;
-    }
     const {detailData} = this.state;
     const date = parseDate(detailData.question_makettime);
     var day = date.getDate();
@@ -102,6 +115,20 @@ class ReadingQuestionDetail extends BaseComponent {
         </View>
       </ScrollView>
     );
+  }
+
+  onSharePressed() {
+    const {detailData} = this.state;
+    getNavigator().push({
+      name: 'SharePage',
+      shareData: {
+        type: 'news',
+        webpageUrl: detailData.web_url,
+        thumbImage: 'ic_launcher',
+        title: `${detailData.question_title}`,
+        description: `${detailData.question_content}`
+      }
+    });
   }
 
 }

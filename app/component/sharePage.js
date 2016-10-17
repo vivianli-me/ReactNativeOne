@@ -9,7 +9,8 @@ import {
   Image,
   Text,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  Clipboard
 } from 'react-native';
 import commonStyle from '../style/commonStyle';
 import {getNavigator} from '../route';
@@ -51,6 +52,7 @@ class SharePage extends React.Component {
     super();
     this.shareToSession = this.shareToSession.bind(this);
     this.shareToTimeline = this.shareToTimeline.bind(this);
+    this.setToClipboard = this.setToClipboard.bind(this);
   }
 
   render() {
@@ -60,8 +62,8 @@ class SharePage extends React.Component {
           <Text style={styles.text}>分享 & 收藏</Text>
           <View style={styles.splitView}/>
           {this.renderTouchableOpacityImage(require('../image/wechat_fri.png'), this.shareToSession)}
-          {this.renderTouchableOpacityImage(require('../image/wechat_moments.png'))}
-          {this.renderTouchableOpacityImage(require('../image/copylink.png'))}
+          {this.renderTouchableOpacityImage(require('../image/wechat_moments.png'), this.shareToTimeline)}
+          {this.renderTouchableOpacityImage(require('../image/copylink.png'), this.setToClipboard)}
         </View>
       </TouchableOpacity>
     );
@@ -90,7 +92,22 @@ class SharePage extends React.Component {
   }
 
   shareToTimeline() {
+    Wechat.isWXAppInstalled()
+      .then((isInstalled) => {
+        if (isInstalled) {
+          Wechat.shareToTimeline(this.props.shareData)
+            .catch((error) => {
+              Toast.show(error.message);
+            });
+        } else {
+          Toast.show('没有安装微信软件，请您安装微信之后再试');
+        }
+      });
+  }
 
+  setToClipboard() {
+    Clipboard.setString(this.props.shareData.webpageUrl);
+    Toast.show('已复制到剪贴板');
   }
 
 }
