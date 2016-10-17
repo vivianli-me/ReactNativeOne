@@ -12,7 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 import commonStyle from '../style/commonStyle';
-import MusicControlButton from './musicControlButton'
+import MusicControlButton from './musicControlButton';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -24,30 +24,37 @@ const styles = StyleSheet.create({
   navigationBar: {
     backgroundColor: commonStyle.MAIN_COLOR,
     height: defaultNavigationHeight,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: commonStyle.GRAY_COLOR,
-
-    flexDirection: 'row',
+    flexDirection: 'row'
+  },
+  navigationBarTitleContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 80,
+    right: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   navigationBarTitle: {
     color: commonStyle.TEXT_COLOR,
     fontSize: 22,
     textAlign: 'center',
-    flex: 1,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   leftButton: {
+    paddingHorizontal: 8,
     height: defaultNavigationHeight,
-    width: 55,
     // backgroundColor: 'red',//test
     justifyContent: 'center',//主轴
     alignItems: 'flex-end'//TODO why 这里如果设置flex-start时图片偏右, 设置flex-end时图片偏左, 原因不明
   },
   rightButton: {
+    paddingHorizontal: 8,
     height: defaultNavigationHeight,
-    width: 55,
     // backgroundColor: 'red',//test
     justifyContent: 'center',//主轴
     alignItems: 'flex-start'//
@@ -58,6 +65,10 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontSize: 16,
     marginRight: 10
+  },
+  image: {
+    height: defaultButtonHeight,
+    width: defaultButtonHeight
   }
 });
 
@@ -75,6 +86,7 @@ class NavigationBar extends Component {
   constructor(props) {
     super(props);
     this.navigationBarProps = Object.assign({}, defaultNavigationBarProps, props.navigationBarProps);
+    this.renderRight = this.renderRight.bind(this);
     this.renderLeftButton = this.renderLeftButton.bind(this);
     this.renderRightButton = this.renderRightButton.bind(this);
   }
@@ -90,7 +102,7 @@ class NavigationBar extends Component {
     var {onLeftPressed} = this.props;
     return (
       <TouchableOpacity onPress={onLeftPressed} style={[styles.leftButton, this.navigationBarProps.leftButton]}>
-        <Image style={{height: defaultButtonHeight}} resizeMode="contain" source={this.navigationBarProps.leftButtonImage}/>
+        <Image style={styles.image} resizeMode="contain" source={this.navigationBarProps.leftButtonImage}/>
       </TouchableOpacity>
     );
   }
@@ -104,7 +116,7 @@ class NavigationBar extends Component {
     var component;
     if (this.navigationBarProps.rightButtonImage) {
       component = (
-        <Image style={{height: defaultButtonHeight}} resizeMode="contain" source={this.navigationBarProps.rightButtonImage}/>
+        <Image style={styles.image} resizeMode="contain" source={this.navigationBarProps.rightButtonImage}/>
       );
     }
     else if (this.navigationBarProps.rightTitle && this.navigationBarProps.rightTitle !== '') {
@@ -122,6 +134,16 @@ class NavigationBar extends Component {
     );
   }
 
+  //右侧, 包括音频控制按钮
+  renderRight() {
+    return (
+      <View style={{flexDirection: 'row'}}>
+        <MusicControlButton/>
+        {this.renderRightButton()}
+      </View>
+    );
+  }
+
   render() {
     var {hideNav, title} = this.navigationBarProps;
     if (hideNav) {
@@ -130,9 +152,10 @@ class NavigationBar extends Component {
     return (
       <View style={[styles.navigationBar, this.navigationBarProps.navigationBar]}>
         {this.renderLeftButton()}
-        <Text numberOfLines={1} style={[styles.navigationBarTitle, this.navigationBarProps.navigationBarTitle]}>{title}</Text>
-        <MusicControlButton/>
-        {this.renderRightButton()}
+        {this.renderRight()}
+        <View style={styles.navigationBarTitleContainer}>
+          <Text numberOfLines={1} style={[styles.navigationBarTitle, this.navigationBarProps.navigationBarTitle]}>{title}</Text>
+        </View>
       </View>
     );
   }
