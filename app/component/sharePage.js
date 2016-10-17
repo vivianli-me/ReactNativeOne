@@ -59,7 +59,7 @@ class SharePage extends React.Component {
         <View style={styles.container}>
           <Text style={styles.text}>分享 & 收藏</Text>
           <View style={styles.splitView}/>
-          {this.renderTouchableOpacityImage(require('../image/wechat_fri.png'))}
+          {this.renderTouchableOpacityImage(require('../image/wechat_fri.png'), this.shareToSession)}
           {this.renderTouchableOpacityImage(require('../image/wechat_moments.png'))}
           {this.renderTouchableOpacityImage(require('../image/copylink.png'))}
         </View>
@@ -69,7 +69,7 @@ class SharePage extends React.Component {
 
   renderTouchableOpacityImage(imageSource, onPress) {
     return (
-      <TouchableOpacity onPress={onPress} style={{marginTop: 10}}>
+      <TouchableOpacity onPress={onPress} style={{paddingTop: 10}}>
         <Image style={styles.image} resizeMode="contain" source={imageSource} />
       </TouchableOpacity>
     );
@@ -79,7 +79,7 @@ class SharePage extends React.Component {
     Wechat.isWXAppInstalled()
       .then((isInstalled) => {
         if (isInstalled) {
-          Wechat.shareToSession({type: 'text', description: '哈哈哈'})
+          Wechat.shareToSession(this.props.shareData)
             .catch((error) => {
               Toast.show(error.message);
             });
@@ -96,7 +96,7 @@ class SharePage extends React.Component {
 }
 
 SharePage.propTypes = {
-
+  shareData: PropTypes.object.isRequired
 };
 
 export default SharePage;

@@ -50,14 +50,14 @@ class BottomInfo extends React.Component {
   }
 
   render() {
-    const {praiseNum, commentNum, shareNum} = this.props;
+    const {praiseNum, commentNum, shareNum, onPraisePressed, onCommentPressed, onSharePressed} = this.props;
     return (
       <View style={styles.container}>
-        {this.renderTouchableOpacityView(praiseNum, require('../image/laud.png'))}
+        {this.renderTouchableOpacityView(praiseNum, require('../image/laud.png'), onPraisePressed)}
         <View style={styles.splitView}/>
-        {this.renderTouchableOpacityView(commentNum, require('../image/comment_image.png'))}
+        {this.renderTouchableOpacityView(commentNum, require('../image/comment_image.png'), onCommentPressed)}
         <View style={styles.splitView}/>
-        {this.renderTouchableOpacityView(shareNum, require('../image/share_image.png'))}
+        {this.renderTouchableOpacityView(shareNum, require('../image/share_image.png'), onSharePressed)}
       </View>
     );
   }

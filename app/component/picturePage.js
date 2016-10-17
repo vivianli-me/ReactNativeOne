@@ -150,8 +150,16 @@ class PicturePage extends BaseComponent {
 
   sharePicture() {
     //分享
+    const {data} = this.props;
     getNavigator().push({
-      name: 'SharePage'
+      name: 'SharePage',
+      shareData: {
+        type: 'news',
+        webpageUrl: data.web_url,
+        thumbImage: data.hp_img_url,
+        title: data.hp_title,
+        description: data.hp_content
+      }
     });
   }
 
@@ -163,6 +171,10 @@ class PicturePage extends BaseComponent {
   }
 
 }
+
+PicturePage.propTypes = {
+  data: React.PropTypes.object.isRequired
+};
 
 export default PicturePage;
 

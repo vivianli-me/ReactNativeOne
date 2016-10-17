@@ -17,6 +17,7 @@ import MusicPlay from './musicPlay';
 import commonStyle from '../style/commonStyle';
 import BaseComponent from '../base/baseComponent';
 import BottomInfo from './bottomInfo';
+import {getNavigator} from '../route';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -38,6 +39,7 @@ class MusicDetailPage extends BaseComponent {
   constructor(props) {
     super(props);
     this.fetchData = this.fetchData.bind(this);
+    this.onSharePressed = this.onSharePressed.bind(this);
     this.state = {
       musicDetailData: null
     };
@@ -87,10 +89,28 @@ class MusicDetailPage extends BaseComponent {
           <MusicPlay musicDetailData={musicDetailData}/>
           <MusicInfo musicDetailData={musicDetailData}/>
           <Text style={styles.grayText}>{musicDetailData.charge_edt}</Text>
-          <BottomInfo praiseNum={praisenum} commentNum={commentnum} shareNum={sharenum}/>
+          <BottomInfo
+            praiseNum={praisenum}
+            commentNum={commentnum}
+            shareNum={sharenum}
+            onSharePressed={this.onSharePressed}/>
         </View>
       </ScrollView>
     );
+  }
+
+  onSharePressed() {
+    const {musicDetailData} = this.state;
+    getNavigator().push({
+      name: 'SharePage',
+      shareData: {
+        type: 'news',
+        webpageUrl: musicDetailData.web_url,
+        thumbImage: musicDetailData.cover,
+        title: `${musicDetailData.author.user_name} 《${musicDetailData.title}》` ,
+        description: musicDetailData.story.slice(0, 100) + '...'//文字太长无法分享 进行截断
+      }
+    });
   }
 
 }
