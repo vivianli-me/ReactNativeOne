@@ -1,3 +1,5 @@
 rootProject.name = 'ReactNativeOne'
 
 include ':app'
+include ':react-native-video'
+project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android')

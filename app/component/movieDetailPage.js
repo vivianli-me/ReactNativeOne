@@ -17,6 +17,8 @@ import commonStyle from '../style/commonStyle';
 import {parseDate} from '../util/dateUtil';
 import monthArray from '../constant/month';
 import MovieInfo from './movieInfo';
+import {getNavigator} from '../route';
+import Toast from '../util/toast';
 
 const styles = StyleSheet.create({
   avatarImage: {
@@ -77,8 +79,9 @@ class MovieDetailPage extends BaseComponent {
 
   constructor(props) {
     super(props);
-    this.renderMovieDetail = this.renderMovieDetail.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.onTopImagePressed = this.onTopImagePressed.bind(this);
+    this.renderMovieDetail = this.renderMovieDetail.bind(this);
     this.state = {
       detailMovieData: null,
       movieStory: null
@@ -158,6 +161,15 @@ class MovieDetailPage extends BaseComponent {
   }
 
   onTopImagePressed() {
+    const {detailMovieData} = this.state;
+    if (detailMovieData && detailMovieData.video) {
+      getNavigator().push({
+        name: 'VideoPage',
+        uri: detailMovieData.video
+      });
+    } else {
+      Toast.show('该电影暂无预告片');
+    }
 
   }
 

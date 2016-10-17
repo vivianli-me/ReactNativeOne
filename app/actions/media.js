@@ -68,7 +68,7 @@ export function turnToPreviousOne() {
       return;
     }
     if (length === 1) {
-      Toast.show('当前列表仅有一首歌曲');
+      // Toast.show('当前列表仅有一首歌曲');
     }
     dispatch({
       type: ACTIONS.TO_PREVIOUS_ONE
@@ -98,7 +98,7 @@ export function turnToNextOne() {
       return;
     }
     if (length === 1) {
-      Toast.show('当前列表仅有一首歌曲');
+      // Toast.show('当前列表仅有一首歌曲');
     }
     dispatch({
       type: ACTIONS.TO_NEXT_ONE
