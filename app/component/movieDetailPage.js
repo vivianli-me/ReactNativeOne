@@ -165,7 +165,8 @@ class MovieDetailPage extends BaseComponent {
     if (detailMovieData && detailMovieData.video) {
       getNavigator().push({
         name: 'VideoPage',
-        uri: detailMovieData.video
+        uri: detailMovieData.video,
+        movieName: detailMovieData.title
       });
     } else {
       Toast.show('该电影暂无预告片');
