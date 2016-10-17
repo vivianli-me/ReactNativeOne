@@ -20,6 +20,7 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import MusicControlModal from './component/musicControlModal';
 import Toast from './util/toast';
+import Orientation from './util/orientation';
 
 let lastClickTime = 0;
 
@@ -53,11 +54,13 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    Orientation.lockToPortrait();
     if (Platform.OS === 'android') {
+      Orientation.registerOnOrientationChanged();
       BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
   }
-  
+
   componentWillUnmount() {
     if (Platform.OS === 'android') {
       BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);

@@ -1,6 +1,9 @@
 package com.reactnativeone;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Process;
+
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -17,5 +20,13 @@ public class MainActivity extends ReactActivity {
     @Override
     public void invokeDefaultOnBackPressed() {
         Process.killProcess(Process.myPid());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Intent intent = new Intent("onConfigurationChanged");
+        intent.putExtra("newConfig", newConfig);
+        this.sendBroadcast(intent);
     }
 }

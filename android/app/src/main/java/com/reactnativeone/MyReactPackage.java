@@ -6,6 +6,7 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.reactnativeone.module.MediaPlayerModule;
+import com.reactnativeone.module.OrientationModule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class MyReactPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new MediaPlayerModule(reactContext));
+        modules.add(new OrientationModule(reactContext));
         return modules;
     }
 

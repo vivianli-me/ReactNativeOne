@@ -12,6 +12,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import Video from 'react-native-video';
+import Orientation from '../util/orientation';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,6 +42,14 @@ class VideoPage extends React.Component {
     this.onLoadStart = this.onLoadStart.bind(this);
     this.onEnd = this.onEnd.bind(this);
     this.renderActivityIndicator = this.renderActivityIndicator.bind(this);
+  }
+  
+  componentDidMount() {
+    Orientation.lockToLandscape();
+  }
+
+  componentWillUnmount() {
+    Orientation.lockToPortrait();
   }
 
   onLoadStart() {
