@@ -88,7 +88,7 @@ class MusicControlModal extends React.Component {
             <TouchableOpacity style={styles.imageContainer} onPress={turnToPreviousOne}>
               <Image style={styles.image} resizeMode="contain" source={require('../image/last.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1} style={styles.imageContainer} onPress={isPlayingMedia ? stopPlayMedia : startPlayMedia}>
+            <TouchableOpacity activeOpacity={1} style={styles.imageContainer} onPress={isPlayingMedia ? stopPlayMedia : () => startPlayMedia()}>
               <Image style={styles.image} resizeMode="contain" source={isPlayingMedia ? require('../image/article_pause.png'): require('../image/article_play.png')}/>
             </TouchableOpacity>
             <TouchableOpacity style={styles.imageContainer} onPress={turnToNextOne}>
