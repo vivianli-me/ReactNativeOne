@@ -19,6 +19,8 @@ import BaseComponent from '../base/baseComponent';
 import BottomInfo from './bottomInfo';
 import {getNavigator} from '../route';
 import LoadingManagerView from './loadingManagerView';
+import CommentListView from './commentListView';
+import CommentType from '../constant/commentType';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -32,7 +34,19 @@ const styles = StyleSheet.create({
     color: commonStyle.TEXT_GRAY_COLOR,
     margin: 15,
     fontSize: 12
-  }
+  },
+  grayViewContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: commonStyle.LIGHT_GRAY_COLOR,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  lightGrayText: {
+    color: commonStyle.TEXT_GRAY_COLOR,
+    fontSize: 14
+  },
 });
 
 class MusicDetailPage extends BaseComponent {
@@ -41,6 +55,7 @@ class MusicDetailPage extends BaseComponent {
     super(props);
     this.fetchData = this.fetchData.bind(this);
     this.onSharePressed = this.onSharePressed.bind(this);
+    this.renderMusicDetail = this.renderMusicDetail.bind(this);
     this.state = {
       musicDetailData: null,
       loadingStatus: LoadingManagerView.Loading
@@ -90,24 +105,37 @@ class MusicDetailPage extends BaseComponent {
         <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
       );
     }
+
+    return (
+      <CommentListView
+        renderHeader={this.renderMusicDetail}
+        type={CommentType.MUSIC}
+        id={parseInt(musicDetailData.id)}/>
+    );
+
+  }
+
+  renderMusicDetail() {
+    const {musicDetailData} = this.state;
     //当数据还未请求到时, 不能直接返回null, 因为这里是作为ViewPager的子View
     //如果请求数据前后子View的大小宽高变化的话, 会产生跳动
     const {praisenum, commentnum, sharenum} = musicDetailData;
     //TODO 如何在Android平台实现类似contentOffset这样的功能属性, 拒绝重新渲染滚动, 否则体验很差
     return (
-      <ScrollView>
-        <View>
-          <Image style={styles.topImage} resizeMode="cover" source={{uri: musicDetailData.cover}}/>
-          <MusicPlay musicDetailData={musicDetailData}/>
-          <MusicInfo musicDetailData={musicDetailData}/>
-          <Text style={styles.grayText}>{musicDetailData.charge_edt}</Text>
-          <BottomInfo
-            praiseNum={praisenum}
-            commentNum={commentnum}
-            shareNum={sharenum}
-            onSharePressed={this.onSharePressed}/>
+      <View>
+        <Image style={styles.topImage} resizeMode="cover" source={{uri: musicDetailData.cover}}/>
+        <MusicPlay musicDetailData={musicDetailData}/>
+        <MusicInfo musicDetailData={musicDetailData}/>
+        <Text style={styles.grayText}>{musicDetailData.charge_edt}</Text>
+        <BottomInfo
+          praiseNum={praisenum}
+          commentNum={commentnum}
+          shareNum={sharenum}
+          onSharePressed={this.onSharePressed}/>
+        <View style={styles.grayViewContainer}>
+          <Text style={styles.lightGrayText}>评论列表</Text>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 
