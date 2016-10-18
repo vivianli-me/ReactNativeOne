@@ -20,6 +20,8 @@ import MovieInfo from './movieInfo';
 import {getNavigator} from '../route';
 import Toast from '../util/toast';
 import LoadingManagerView from './loadingManagerView';
+import CommentListView from './commentListView';
+import CommentType from '../constant/commentType';
 
 const styles = StyleSheet.create({
   avatarImage: {
@@ -126,9 +128,14 @@ class MovieDetailPage extends BaseComponent {
   }
 
   renderBody() {
-    const {loadingStatus} = this.state;
+    const {loadingStatus, detailMovieData} = this.state;
     if (loadingStatus === LoadingManagerView.LoadingSuccess) {
-      return this.renderMovieDetail();
+      return (
+        <CommentListView
+          renderHeader={this.renderMovieDetail}
+          type={CommentType.MOVIE}
+          id={parseInt(detailMovieData.id)}/>
+      );
     }
     return (
       <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
@@ -173,6 +180,9 @@ class MovieDetailPage extends BaseComponent {
           <Text style={styles.titleText}>{movieStory.title}</Text>
           <Text style={styles.contentText}>{movieStory.content}</Text>
           <MovieInfo detailMovieData={detailMovieData}/>
+          <View style={styles.grayViewContainer}>
+            <Text style={styles.lightGrayText}>评论列表</Text>
+          </View>
         </View>
       </ScrollView>
     );

@@ -73,7 +73,7 @@ class MovieContainer extends BaseComponent {
   //加载更多
   fetchMoreData() {
     this.fetchData(this.lastOneId).then(newMovieList => {
-      movieList = this.state.movieList.concat(newMovieList);//push只能传元素.concat才能传数组
+      let movieList = this.state.movieList.concat(newMovieList);//push只能传元素.concat才能传数组
       this.setState({
         movieList,
         hasMore: newMovieList.length != 0
