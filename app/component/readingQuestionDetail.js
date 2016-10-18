@@ -17,11 +17,12 @@ import monthArray from '../constant/month';
 import BottomInfo from './bottomInfo';
 import {getNavigator} from '../route';
 import LoadingManagerView from './loadingManagerView';
+import CommentListView from './commentListView';
+import CommentType from '../constant/commentType';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
   },
   questionTitle: {
     color: 'black',
@@ -41,7 +42,19 @@ const styles = StyleSheet.create({
     color: commonStyle.TEXT_COLOR,
     fontSize: 16,
     marginVertical: 10
-  }
+  },
+  grayViewContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: commonStyle.LIGHT_GRAY_COLOR,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  lightGrayText: {
+    color: commonStyle.TEXT_GRAY_COLOR,
+    fontSize: 14
+  },
 });
 
 class ReadingQuestionDetail extends BaseComponent {
@@ -93,14 +106,10 @@ class ReadingQuestionDetail extends BaseComponent {
     const {loadingStatus, detailData} = this.state;
     if (loadingStatus === LoadingManagerView.LoadingSuccess) {
       return (
-        <View style={{flex: 1}}>
-          {this.renderArticleContent()}
-          <BottomInfo
-            praiseNum={detailData.praisenum}
-            commentNum={detailData.commentnum}
-            shareNum={detailData.sharenum}
-            onSharePressed={this.onSharePressed}/>
-        </View>
+        <CommentListView
+          renderHeader={this.renderArticleContent}
+          type={CommentType.QUESTION}
+          id={parseInt(detailData.question_id)}/>
       );
     }
     return (
@@ -117,8 +126,8 @@ class ReadingQuestionDetail extends BaseComponent {
     }
     const dateStr = `${monthArray[date.getMonth()]} ${day}.${date.getFullYear()}`;
     return (
-      <ScrollView>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <View style={{margin: 10}}>
           <Text style={styles.questionTitle}>{detailData.question_title}</Text>
           <Text style={styles.contentText}>{detailData.question_content}</Text>
           <View style={styles.separatorLine}/>
@@ -128,7 +137,15 @@ class ReadingQuestionDetail extends BaseComponent {
           </View>
           <Text style={styles.contentText}>{detailData.answer_content}</Text>
         </View>
-      </ScrollView>
+        <BottomInfo
+          praiseNum={detailData.praisenum}
+          commentNum={detailData.commentnum}
+          shareNum={detailData.sharenum}
+          onSharePressed={this.onSharePressed}/>
+        <View style={styles.grayViewContainer}>
+          <Text style={styles.lightGrayText}>评论列表</Text>
+        </View>
+      </View>
     );
   }
 

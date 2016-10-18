@@ -23,16 +23,18 @@ import {stopPlayMedia, startPlayMedia} from '../actions/media';
 import BottomInfo from './bottomInfo';
 import {getNavigator} from '../route';
 import LoadingManagerView from './loadingManagerView';
+import CommentListView from './commentListView';
+import CommentType from '../constant/commentType';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
   },
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 10,
   },
   avatarImage: {
     height: 50,
@@ -52,16 +54,30 @@ const styles = StyleSheet.create({
   titleText: {
     marginVertical: 10,
     color: commonStyle.TEXT_COLOR,
-    fontSize: 20
+    fontSize: 20,
+    padding: 10,
   },
   contentText: {
     color: commonStyle.TEXT_COLOR,
     fontSize: 16,
+    padding: 10,
   },
   smallIcon: {
     width: 30,
     height: 30
-  }
+  },
+  grayViewContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: commonStyle.LIGHT_GRAY_COLOR,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  lightGrayText: {
+    color: commonStyle.TEXT_GRAY_COLOR,
+    fontSize: 14
+  },
 });
 
 class ReadingEssayDetail extends BaseComponent {
@@ -116,14 +132,10 @@ class ReadingEssayDetail extends BaseComponent {
     const {loadingStatus, detailData} = this.state;
     if (loadingStatus === LoadingManagerView.LoadingSuccess) {
       return (
-        <View style={{flex: 1}}>
-          {this.renderArticleContent()}
-          <BottomInfo
-            praiseNum={detailData.praisenum}
-            commentNum={detailData.commentnum}
-            shareNum={detailData.sharenum}
-            onSharePressed={this.onSharePressed}/>
-        </View>
+        <CommentListView
+          renderHeader={this.renderArticleContent}
+          type={CommentType.ESSAY}
+          id={parseInt(detailData.content_id)}/>
       );
     }
 
@@ -141,7 +153,6 @@ class ReadingEssayDetail extends BaseComponent {
     }
     const dateStr = `${monthArray[date.getMonth()]} ${day}.${date.getFullYear()}`;
     return (
-      <ScrollView style={{flex: 1}}>
         <View style={styles.container}>
           <View style={styles.rowContainer}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -157,8 +168,15 @@ class ReadingEssayDetail extends BaseComponent {
           </View>
           <Text style={styles.titleText}>{detailData.hp_title}</Text>
           <Text selectable={true} style={styles.contentText}>{detailData.hp_content}</Text>
+          <BottomInfo
+            praiseNum={detailData.praisenum}
+            commentNum={detailData.commentnum}
+            shareNum={detailData.sharenum}
+            onSharePressed={this.onSharePressed}/>
+          <View style={styles.grayViewContainer}>
+            <Text style={styles.lightGrayText}>评论列表</Text>
+          </View>
         </View>
-      </ScrollView>
     );
   }
 
