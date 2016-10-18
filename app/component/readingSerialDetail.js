@@ -12,6 +12,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {getSerialDetailInfo} from '../api/reading';
@@ -95,7 +96,7 @@ class ReadingSerialDetail extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

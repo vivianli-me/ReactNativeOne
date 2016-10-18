@@ -4,7 +4,8 @@
 
 import React, {PropsType, Component} from 'react';
 import {
-  StyleSheet
+  StyleSheet,
+  InteractionManager
 } from 'react-native';
 import ViewPager from 'react-native-viewpager';
 import {getLatestArticleList} from '../api/reading';
@@ -31,7 +32,7 @@ class ReadingBottomViewPager extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   refactorArray(data) {

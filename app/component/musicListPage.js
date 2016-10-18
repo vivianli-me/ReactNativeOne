@@ -10,7 +10,8 @@ import {
   View,
   Text,
   Image,
-  PixelRatio
+  PixelRatio,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {getMusicListByMonth} from '../api/music';
@@ -87,7 +88,7 @@ class MusicListPage extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

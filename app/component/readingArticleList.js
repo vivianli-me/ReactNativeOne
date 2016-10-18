@@ -5,7 +5,8 @@
 import React, {PropTypes, Component} from 'react';
 import {
   ListView,
-  StyleSheet
+  StyleSheet,
+  InteractionManager
 } from 'react-native';
 import ReadingArticleItem from './readingArticleItem'
 import {getSpecifiedTypeArticleList} from '../api/reading';
@@ -46,7 +47,7 @@ class ReadingArticleList extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

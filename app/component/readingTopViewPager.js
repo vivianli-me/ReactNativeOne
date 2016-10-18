@@ -9,7 +9,8 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image
+  Image,
+  InteractionManager
 } from 'react-native';
 import ViewPager from 'react-native-viewpager';
 import {getReadingImageList} from '../api/reading';
@@ -43,7 +44,7 @@ class ReadingTopViewPager extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

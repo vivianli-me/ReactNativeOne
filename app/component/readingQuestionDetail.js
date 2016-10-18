@@ -7,7 +7,8 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {parseDate} from '../util/dateUtil'
@@ -79,7 +80,7 @@ class ReadingQuestionDetail extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

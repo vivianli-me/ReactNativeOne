@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   ListView,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {getReadingImageDetail} from '../api/reading';
@@ -65,7 +66,7 @@ class ReadingCarouselDetail extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

@@ -9,7 +9,8 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  Text
+  Text,
+  InteractionManager
 } from 'react-native';
 import {getMusicDetail} from '../api/music';
 import MusicInfo from './musicInfo';
@@ -73,7 +74,9 @@ class MusicDetailPage extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData(this.props.id);
+    InteractionManager.runAfterInteractions(() => {
+      this.fetchData(this.props.id);
+    });
   }
 
   fetchData(id) {
@@ -102,7 +105,7 @@ class MusicDetailPage extends BaseComponent {
     const {loadingStatus, musicDetailData} = this.state;
     if (loadingStatus !== LoadingManagerView.LoadingSuccess) {
       return (
-        <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
+        <LoadingManagerView status={loadingStatus} onFetchData={() => this.fetchData(this.props.id)}/>
       );
     }
 

@@ -6,7 +6,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import MusicDetailPage from '../component/musicDetailPage';
@@ -44,7 +45,7 @@ class MusicContainer extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

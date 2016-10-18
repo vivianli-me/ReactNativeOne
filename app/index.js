@@ -82,7 +82,7 @@ class App extends React.Component {
         />
         <Navigator
           style={styles.navigator}
-          configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+          configureScene={this.configureScene}
           renderScene={this.renderScene}
           initialRoute={{
             name: 'MainContainer',//MainContainer
@@ -91,12 +91,22 @@ class App extends React.Component {
     );
   }
 
+  //出场动画
+  configureScene(route) {
+    let sceneAnimation = getRouteMap().get(route.name).sceneAnimation;
+    if (sceneAnimation) {
+      return sceneAnimation;
+    }
+    //默认
+    return Navigator.SceneConfigs.FloatFromRight
+  }
+
   renderScene(route, navigator) {
     this.navigator = navigator;
     registerNavigator(navigator);
     //Each component name should start with an uppercase letter
     //jsx中的组件都得是大写字母开头, 否则将报错, expected a component class, got [object Object]
-    let Component = getRouteMap().get(route.name);
+    let Component = getRouteMap().get(route.name).component;
     if (!Component) {
       return (
         <View style={styles.errorView}>

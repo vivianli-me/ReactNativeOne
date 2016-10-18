@@ -8,7 +8,8 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {getMovieDetail, getMovieStory} from '../api/movie';
@@ -102,7 +103,7 @@ class MovieDetailPage extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

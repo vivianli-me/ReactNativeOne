@@ -47,7 +47,6 @@ class GiftedListView extends React.Component {
       <ListView
         {...this.props}
         enableEmptySections
-        refreshControl={this.getRefreshControl()}
         onEndReached={this.onEndReached}
         renderFooter={this.renderFooter}
         OnEndReachedThreshold={defaultOnEndReachedThreshold}

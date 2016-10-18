@@ -10,7 +10,8 @@ import {
   Image,
   View,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {getEssayDetailInfo} from '../api/reading';
@@ -105,7 +106,7 @@ class ReadingEssayDetail extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

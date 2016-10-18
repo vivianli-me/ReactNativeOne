@@ -18,28 +18,80 @@ import MusicDetailPage from './component/musicDetailPage';
 import VideoPage from './component/videoPage';
 import MusicControlModal from './component/musicControlModal';
 import SharePage from './component/sharePage';
+import {
+  Navigator,
+} from 'react-native';
 
 let navigator;
 
+// PushFromRight
+// PushFromLeft
+// FloatFromRight
+// FloatFromLeft
+// FloatFromBottom
+// FloatFromBottomAndroid
+// FadeAndroid
+// HorizontalSwipeJump
+// HorizontalSwipeJumpFromRight
+// VerticalUpSwipeJump
+// VerticalDownSwipeJump
+
 const routeMap = new Map();
 
-routeMap.set('MainContainer', MainContainer);
-routeMap.set('BeforeMonthList', BeforeMonthList);
-routeMap.set('BeforePictureList', BeforePictureList);
-routeMap.set('PicturePage', PicturePage);
-routeMap.set('ImageViewer', ImageViewer);
-routeMap.set('ReadingCarouselDetail', ReadingCarouselDetail);
-routeMap.set('ReadingBeforeMonthList', ReadingBeforeMonthList);
-routeMap.set('ReadingArticleList', ReadingArticleList);
-routeMap.set('ReadingEssayDetail', ReadingEssayDetail);
-routeMap.set('ReadingSerialDetail', ReadingSerialDetail);
-routeMap.set('ReadingQuestionDetail', ReadingQuestionDetail);
-routeMap.set('MovieDetailPage', MovieDetailPage);
-routeMap.set('MusicListPage', MusicListPage);
-routeMap.set('MusicDetailPage', MusicDetailPage);
-routeMap.set('MusicControlModal', MusicControlModal);
-routeMap.set('VideoPage', VideoPage);
-routeMap.set('SharePage', SharePage);
+routeMap.set('MainContainer', {
+  component: MainContainer
+});
+routeMap.set('BeforeMonthList', {
+  component: BeforeMonthList
+});
+routeMap.set('BeforePictureList', {
+  component: BeforePictureList
+});
+routeMap.set('PicturePage', {
+  component: PicturePage
+});
+routeMap.set('ImageViewer', {
+  component: ImageViewer,
+  sceneAnimation: Navigator.SceneConfigs.FadeAndroid
+});
+routeMap.set('ReadingCarouselDetail', {
+  component: ReadingCarouselDetail
+});
+routeMap.set('ReadingBeforeMonthList', {
+  component: ReadingBeforeMonthList
+});
+routeMap.set('ReadingArticleList', {
+  component: ReadingArticleList
+});
+routeMap.set('ReadingEssayDetail', {
+  component: ReadingEssayDetail
+});
+routeMap.set('ReadingSerialDetail', {
+  component: ReadingSerialDetail
+});
+routeMap.set('ReadingQuestionDetail', {
+  component: ReadingQuestionDetail
+});
+routeMap.set('MovieDetailPage', {
+  component: MovieDetailPage
+});
+routeMap.set('MusicListPage', {
+  component: MusicListPage
+});
+routeMap.set('MusicDetailPage', {
+  component: MusicDetailPage
+});
+routeMap.set('MusicControlModal', {
+  component: MusicControlModal
+});
+routeMap.set('VideoPage', {
+  component: VideoPage,
+  sceneAnimation: Navigator.SceneConfigs.FadeAndroid
+});
+routeMap.set('SharePage', {
+  component: SharePage,
+  sceneAnimation: Navigator.SceneConfigs.FloatFromBottom
+});
 
 
 export function registerNavigator(tempNavigator) {

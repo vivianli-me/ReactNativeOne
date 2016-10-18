@@ -11,7 +11,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {getPictureList} from '../api/picture';
@@ -99,7 +100,7 @@ class BeforePictureList extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {

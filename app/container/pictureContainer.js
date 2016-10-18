@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  InteractionManager
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import Toast from '../util/toast';
@@ -45,7 +46,7 @@ class PictureContainer extends BaseComponent {
   }
 
   componentDidMount() {
-    this.fetchData();
+    InteractionManager.runAfterInteractions(this.fetchData);
   }
 
   fetchData() {
