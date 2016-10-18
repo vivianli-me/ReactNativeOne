@@ -19,6 +19,7 @@ import {parseDate} from '../util/dateUtil';
 import monthArray from '../constant/month';
 import {getNavigator} from '../route';
 import commonStyle from '../style/commonStyle';
+import LoadingManagerView from './loadingManagerView';
 
 const itemsPerRow = 2;
 const horizontalMargin = 10;
@@ -62,10 +63,12 @@ class BeforePictureList extends BaseComponent {
 
   constructor(props) {
     super(props);
+    this.fetchData = this.fetchData.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.renderSingleItem = this.renderSingleItem.bind(this);
     this.state = {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -96,20 +99,38 @@ class BeforePictureList extends BaseComponent {
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    this.setState({//加载
+      loadingStatus: LoadingManagerView.Loading
+    });
     getPictureList(this.props.year, this.props.month).then(dataList => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.refactorData(dataList))
+        dataSource: this.state.dataSource.cloneWithRows(this.refactorData(dataList)),
+        loadingStatus: LoadingManagerView.LoadingSuccess
+      });
+    }).catch(() => {
+      this.setState({//加载
+        loadingStatus: LoadingManagerView.LoadingError
       });
     });
   }
 
   renderBody() {
+    const {loadingStatus, dataSource} = this.state;
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
+      return (
+        <ListView
+          style={styles.listView}
+          dataSource={dataSource}
+          renderRow={this.renderRow}
+          renderSeparator={this.renderSeparator}/>
+      );
+    }
     return (
-      <ListView
-        style={styles.listView}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        renderSeparator={this.renderSeparator}/>
+      <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
     );
   }
 
