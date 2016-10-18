@@ -82,6 +82,7 @@ class MovieDetailPage extends BaseComponent {
     this.fetchData = this.fetchData.bind(this);
     this.onTopImagePressed = this.onTopImagePressed.bind(this);
     this.renderMovieDetail = this.renderMovieDetail.bind(this);
+    this.onSharePressed = this.onSharePressed.bind(this);
     this.state = {
       detailMovieData: null,
       movieStory: null
@@ -131,8 +132,10 @@ class MovieDetailPage extends BaseComponent {
       <ScrollView>
         <View>
           <MovieListItem imageStyle={{height: 200}} cover={detailMovieData.detailcover} score={detailMovieData.score} onPress={this.onTopImagePressed}/>
-          <View style={{height: 40}}>
-
+          <View style={{flexDirection: 'row', height: 50, justifyContent: 'flex-end', alignItems: 'center'}}>
+            <TouchableOpacity onPress={this.onSharePressed}>
+              <Image style={{width: 50, height: 50}} resizeMode="contain" source={require('../image/share_image.png')}/>
+            </TouchableOpacity>
           </View>
           <View style={styles.grayViewContainer}>
             <Text style={styles.lightGrayText}>电影故事</Text>
@@ -176,6 +179,20 @@ class MovieDetailPage extends BaseComponent {
 
   onAvatarImagePress() {
 
+  }
+
+  onSharePressed() {
+    const {detailMovieData} = this.state;
+    getNavigator().push({
+      name: 'SharePage',
+      shareData: {
+        type: 'news',
+        webpageUrl: detailMovieData.web_url,
+        thumbImage: detailMovieData.indexcover,
+        title: `《${detailMovieData.title}》` ,
+        description: `${detailMovieData.officialstory}`
+      }
+    });
   }
 
 }
