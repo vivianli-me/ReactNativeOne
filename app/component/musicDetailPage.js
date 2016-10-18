@@ -18,6 +18,7 @@ import commonStyle from '../style/commonStyle';
 import BaseComponent from '../base/baseComponent';
 import BottomInfo from './bottomInfo';
 import {getNavigator} from '../route';
+import LoadingManagerView from './loadingManagerView';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -41,7 +42,8 @@ class MusicDetailPage extends BaseComponent {
     this.fetchData = this.fetchData.bind(this);
     this.onSharePressed = this.onSharePressed.bind(this);
     this.state = {
-      musicDetailData: null
+      musicDetailData: null,
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -60,8 +62,18 @@ class MusicDetailPage extends BaseComponent {
   }
 
   fetchData(id) {
+    this.setState({//加载
+      loadingStatus: LoadingManagerView.Loading
+    });
     getMusicDetail(id).then(musicDetailData => {
-      this.setState({musicDetailData});
+      this.setState({
+        musicDetailData,
+        loadingStatus: LoadingManagerView.LoadingSuccess
+      });
+    }).catch(() => {
+      this.setState({//加载
+        loadingStatus: LoadingManagerView.LoadingError
+      });
     });
   }
 
@@ -72,14 +84,14 @@ class MusicDetailPage extends BaseComponent {
   }
 
   renderBody() {
-    const {musicDetailData} = this.state;
-    //当数据还未请求到时, 不能直接返回null, 因为这里是作为ViewPager的子View
-    //如果请求数据前后子View的大小宽高变化的话, 会产生跳动
-    if (!musicDetailData) {
+    const {loadingStatus, musicDetailData} = this.state;
+    if (loadingStatus !== LoadingManagerView.LoadingSuccess) {
       return (
-        <View style={{flex: 1}}/>
+        <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
       );
     }
+    //当数据还未请求到时, 不能直接返回null, 因为这里是作为ViewPager的子View
+    //如果请求数据前后子View的大小宽高变化的话, 会产生跳动
     const {praisenum, commentnum, sharenum} = musicDetailData;
     //TODO 如何在Android平台实现类似contentOffset这样的功能属性, 拒绝重新渲染滚动, 否则体验很差
     return (
