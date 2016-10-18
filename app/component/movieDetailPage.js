@@ -19,6 +19,7 @@ import monthArray from '../constant/month';
 import MovieInfo from './movieInfo';
 import {getNavigator} from '../route';
 import Toast from '../util/toast';
+import LoadingManagerView from './loadingManagerView';
 
 const styles = StyleSheet.create({
   avatarImage: {
@@ -85,7 +86,8 @@ class MovieDetailPage extends BaseComponent {
     this.onSharePressed = this.onSharePressed.bind(this);
     this.state = {
       detailMovieData: null,
-      movieStory: null
+      movieStory: null,
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -102,22 +104,35 @@ class MovieDetailPage extends BaseComponent {
   }
 
   fetchData() {
+    this.setState({//加载
+      loadingStatus: LoadingManagerView.Loading
+    });
     var movieDetailPromise = getMovieDetail(this.props.simpleMovieData.id);
     var movieStoryPromise = getMovieStory(this.props.simpleMovieData.id);
     Promise.all([movieDetailPromise, movieStoryPromise]).then(response => {
       var detailMovieData = response[0];
       var movieStory = response[1].data[0];
-      this.setState({detailMovieData, movieStory});
+      this.setState({
+        detailMovieData,
+        movieStory,
+        loadingStatus: LoadingManagerView.LoadingSuccess//加载成功
+      });
     }).catch(error => {
       //失败处理
+      this.setState({
+        loadingStatus: LoadingManagerView.LoadingError//加载失败
+      });
     });
   }
 
   renderBody() {
-    if (this.state.detailMovieData && this.state.movieStory) {
+    const {loadingStatus} = this.state;
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
       return this.renderMovieDetail();
     }
-    return null;
+    return (
+      <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
+    );
   }
 
   renderMovieDetail() {
