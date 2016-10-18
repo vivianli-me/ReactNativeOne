@@ -15,6 +15,7 @@ import {getPictureList} from '../api/picture';
 import ViewPager from 'react-native-viewpager';
 import {getNavigator} from '../route';
 import appearTime from '../constant/appearTime';
+import LoadingManagerView from '../component/loadingManagerView';
 
 const styles = StyleSheet.create({
 
@@ -24,12 +25,14 @@ class PictureContainer extends BaseComponent {
 
   constructor(props) {
     super(props);
+    this.fetchData = this.fetchData.bind(this);
     this.renderViewPagerItem = this.renderViewPagerItem.bind(this);
     this.onBeyondRange = this.onBeyondRange.bind(this);
     this.state = {
       dataSource: new ViewPager.DataSource({
         pageHasChanged: (p1, p2) => p1 !== p2,
-      })
+      }),
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -42,25 +45,40 @@ class PictureContainer extends BaseComponent {
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    this.setState({//加载
+      loadingStatus: LoadingManagerView.Loading
+    });
     var date = new Date();
     getPictureList(date.getFullYear(), date.getMonth()).then(dataList => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithPages(dataList)
+        dataSource: this.state.dataSource.cloneWithPages(dataList),
+        loadingStatus: LoadingManagerView.LoadingSuccess
+      });
+    }).catch(() => {
+      this.setState({//加载
+        loadingStatus: LoadingManagerView.LoadingError
       });
     });
   }
 
   renderBody() {
-    if (this.state.dataSource.getPageCount() == 0) {
-      return null;
+    const {loadingStatus, dataSource} = this.state;
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
+      return (
+        <ViewPager
+          style={{flex: 1}}
+          onBeyondRange={this.onBeyondRange}
+          dataSource={dataSource}
+          renderPage={this.renderViewPagerItem}
+          renderPageIndicator={false}/>
+      );
     }
     return (
-      <ViewPager
-        style={{flex: 1}}
-        onBeyondRange={this.onBeyondRange}
-        dataSource={this.state.dataSource}
-        renderPage={this.renderViewPagerItem}
-        renderPageIndicator={false}/>
+      <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
     );
   }
 

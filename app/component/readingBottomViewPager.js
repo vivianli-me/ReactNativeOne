@@ -11,6 +11,7 @@ import {getLatestArticleList} from '../api/reading';
 import ReadingArticleList from './readingArticleList'
 import Toast from '../util/toast';
 import {getNavigator} from '../route';
+import LoadingManagerView from './loadingManagerView';
 
 const styles = StyleSheet.create({
 
@@ -24,7 +25,8 @@ class ReadingBottomViewPager extends Component {
     this.state = {
       dataSource: new ViewPager.DataSource({
         pageHasChanged: (p1, p2) => p1 !== p2,
-      })
+      }),
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -42,20 +44,34 @@ class ReadingBottomViewPager extends Component {
   }
 
   fetchData() {
+    this.setState({//加载
+      loadingStatus: LoadingManagerView.Loading
+    });
     getLatestArticleList().then(articleList => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithPages(this.refactorArray(articleList))
+        dataSource: this.state.dataSource.cloneWithPages(this.refactorArray(articleList)),
+        loadingStatus: LoadingManagerView.LoadingSuccess
+      });
+    }).catch(() => {
+      this.setState({//加载
+        loadingStatus: LoadingManagerView.LoadingError
       });
     });
   }
 
   render() {
+    const {loadingStatus, dataSource} = this.state;
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
+      return (
+        <ViewPager
+          dataSource={dataSource}
+          renderPage={this.renderPage}
+          renderPageIndicator={false}
+          onBeyondRange={this.onBeyondRange}/>
+      );
+    }
     return (
-      <ViewPager
-        dataSource={this.state.dataSource}
-        renderPage={this.renderPage}
-        renderPageIndicator={false}
-        onBeyondRange={this.onBeyondRange}/>
+      <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
     );
   }
 

@@ -15,6 +15,7 @@ import ViewPager from 'react-native-viewpager';
 import Toast from '../util/toast';
 import {getNavigator} from '../route';
 import appearTime from '../constant/appearTime';
+import LoadingManagerView from '../component/loadingManagerView';
 
 const styles = StyleSheet.create({
 
@@ -29,7 +30,8 @@ class MusicContainer extends BaseComponent {
     this.state = {
       dataSource: new ViewPager.DataSource({
         pageHasChanged: (p1, p2) => p1 !== p2,
-      })
+      }),
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -46,24 +48,35 @@ class MusicContainer extends BaseComponent {
   }
 
   fetchData() {
+    this.setState({//加载
+      loadingStatus: LoadingManagerView.Loading
+    });
     getMusicIdList().then(idList => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithPages(idList)
+        dataSource: this.state.dataSource.cloneWithPages(idList),
+        loadingStatus: LoadingManagerView.LoadingSuccess
+      });
+    }).catch(() => {
+      this.setState({//加载
+        loadingStatus: LoadingManagerView.LoadingError
       });
     });
   }
 
   renderBody() {
-    if (this.state.dataSource.getPageCount() == 0) {
-      return null;
+    const {loadingStatus, dataSource} = this.state;
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
+      return (
+        <ViewPager
+          style={{flex: 1}}
+          onBeyondRange={this.onBeyondRange}
+          dataSource={dataSource}
+          renderPage={this.renderPage}
+          renderPageIndicator={false}/>
+      );
     }
     return (
-      <ViewPager
-        style={{flex: 1}}
-        onBeyondRange={this.onBeyondRange}
-        dataSource={this.state.dataSource}
-        renderPage={this.renderPage}
-        renderPageIndicator={false}/>
+      <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
     );
   }
 
