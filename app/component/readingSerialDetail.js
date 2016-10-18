@@ -123,10 +123,17 @@ class ReadingSerialDetail extends BaseComponent {
     const {loadingStatus, detailData} = this.state;
     if (loadingStatus === LoadingManagerView.LoadingSuccess) {
       return (
-        <CommentListView
-          renderHeader={this.renderArticleContent}
-          type={CommentType.SERIAL}
-          id={parseInt(detailData.id)}/>
+        <View style={{flex: 1}}>
+          <CommentListView
+            renderHeader={this.renderArticleContent}
+            type={CommentType.SERIAL}
+            id={parseInt(detailData.id)}/>
+          <BottomInfo
+            praiseNum={detailData.praisenum}
+            commentNum={detailData.commentnum}
+            shareNum={detailData.sharenum}
+            onSharePressed={this.onSharePressed}/>
+        </View>
       );
     }
     return (
@@ -155,11 +162,6 @@ class ReadingSerialDetail extends BaseComponent {
         </View>
         <Text style={styles.titleText}>{detailData.title}</Text>
         <Text style={styles.contentText}>{detailData.content}</Text>
-        <BottomInfo
-          praiseNum={detailData.praisenum}
-          commentNum={detailData.commentnum}
-          shareNum={detailData.sharenum}
-          onSharePressed={this.onSharePressed}/>
         <View style={styles.grayViewContainer}>
           <Text style={styles.lightGrayText}>评论列表</Text>
         </View>

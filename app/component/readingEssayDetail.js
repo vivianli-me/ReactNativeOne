@@ -133,10 +133,17 @@ class ReadingEssayDetail extends BaseComponent {
     const {loadingStatus, detailData} = this.state;
     if (loadingStatus === LoadingManagerView.LoadingSuccess) {
       return (
-        <CommentListView
-          renderHeader={this.renderArticleContent}
-          type={CommentType.ESSAY}
-          id={parseInt(detailData.content_id)}/>
+        <View style={{flex: 1}}>
+          <CommentListView
+            renderHeader={this.renderArticleContent}
+            type={CommentType.ESSAY}
+            id={parseInt(detailData.content_id)}/>
+          <BottomInfo
+            praiseNum={detailData.praisenum}
+            commentNum={detailData.commentnum}
+            shareNum={detailData.sharenum}
+            onSharePressed={this.onSharePressed}/>
+        </View>
       );
     }
 
@@ -169,11 +176,6 @@ class ReadingEssayDetail extends BaseComponent {
           </View>
           <Text style={styles.titleText}>{detailData.hp_title}</Text>
           <Text selectable={true} style={styles.contentText}>{detailData.hp_content}</Text>
-          <BottomInfo
-            praiseNum={detailData.praisenum}
-            commentNum={detailData.commentnum}
-            shareNum={detailData.sharenum}
-            onSharePressed={this.onSharePressed}/>
           <View style={styles.grayViewContainer}>
             <Text style={styles.lightGrayText}>评论列表</Text>
           </View>
