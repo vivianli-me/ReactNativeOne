@@ -36,8 +36,8 @@ class LoadingErrorView extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
-        <View style={styles.container}>
+      <TouchableOpacity activeOpacity={1} style={[styles.container, this.props.containerStyle]} onPress={this.props.onPress}>
+        <View style={[styles.container, this.props.containerStyle]}>
           <Image style={styles.image} resizeMode="contain" source={require('../image/loading_error_image.png')}/>
           <Text style={styles.text}>加载失败, 请点击重试</Text>
         </View>
@@ -48,6 +48,7 @@ class LoadingErrorView extends React.Component {
 
 LoadingErrorView.propTypes = {
   onPress: PropTypes.func,
+  containerStyle: PropTypes.object
 };
 
 export default LoadingErrorView;

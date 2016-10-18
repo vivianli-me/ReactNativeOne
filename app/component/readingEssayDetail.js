@@ -22,6 +22,7 @@ import {bindActionCreators} from 'redux';
 import {stopPlayMedia, startPlayMedia} from '../actions/media';
 import BottomInfo from './bottomInfo';
 import {getNavigator} from '../route';
+import LoadingManagerView from './loadingManagerView';
 
 const styles = StyleSheet.create({
   container: {
@@ -74,7 +75,8 @@ class ReadingEssayDetail extends BaseComponent {
     this.onMediaPressed = this.onMediaPressed.bind(this);
     this.onSharePressed = this.onSharePressed.bind(this);
     this.state = {
-      detailData: null
+      detailData: null,
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -92,8 +94,18 @@ class ReadingEssayDetail extends BaseComponent {
 
   fetchData() {
     if (this.props.id){
+      this.setState({//加载
+        loadingStatus: LoadingManagerView.Loading
+      });
       getEssayDetailInfo(this.props.id).then(detailData => {
-        this.setState({detailData});
+        this.setState({
+          detailData,
+          loadingStatus: LoadingManagerView.LoadingSuccess//加载成功
+        });
+      }).catch(() => {
+        this.setState({
+          loadingStatus: LoadingManagerView.LoadingError//加载失败
+        });
       });
     } else {
       console.warn(`the component 'ReadingEssayDetail' should has 'this.props.id'`);
@@ -101,19 +113,22 @@ class ReadingEssayDetail extends BaseComponent {
   }
 
   renderBody() {
-    const {detailData} = this.state;
-    if (!detailData) {
-      return null;
+    const {loadingStatus, detailData} = this.state;
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
+      return (
+        <View style={{flex: 1}}>
+          {this.renderArticleContent()}
+          <BottomInfo
+            praiseNum={detailData.praisenum}
+            commentNum={detailData.commentnum}
+            shareNum={detailData.sharenum}
+            onSharePressed={this.onSharePressed}/>
+        </View>
+      );
     }
+
     return (
-      <View style={{flex: 1}}>
-        {this.renderArticleContent()}
-        <BottomInfo
-          praiseNum={detailData.praisenum}
-          commentNum={detailData.commentnum}
-          shareNum={detailData.sharenum}
-          onSharePressed={this.onSharePressed}/>
-      </View>
+      <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
     );
   }
 

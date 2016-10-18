@@ -11,6 +11,7 @@ import ReadingArticleItem from './readingArticleItem'
 import {getSpecifiedTypeArticleList} from '../api/reading';
 import BaseComponent from '../base/baseComponent';
 import monthArray from '../constant/month';
+import LoadingManagerView from './loadingManagerView';
 
 const styles = StyleSheet.create({
   listView: {
@@ -25,10 +26,15 @@ class ReadingArticleList extends BaseComponent {
     this.renderRow = this.renderRow.bind(this);
     this.fetchData = this.fetchData.bind(this);
     let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let loadingStatus = LoadingManagerView.Loading;
     if (this.props.articleList) {
-      dataSource = dataSource.cloneWithRows(this.props.articleList)
+      dataSource = dataSource.cloneWithRows(this.props.articleList);
+      loadingStatus = LoadingManagerView.LoadingSuccess;
     }
-    this.state = {dataSource};
+    this.state = {
+      dataSource,
+      loadingStatus
+    };
   }
 
   getNavigationBarProps() {
@@ -46,10 +52,18 @@ class ReadingArticleList extends BaseComponent {
   fetchData() {
     //本来是用if(year && month && index)来判断, 但比如当index==0的时会有问题
     if ('year' in this.props && 'month' in this.props && 'index' in this.props) {
+      this.setState({//加载
+        loadingStatus: LoadingManagerView.Loading
+      });
       const {year, month, index} = this.props;
       getSpecifiedTypeArticleList(year, month, index).then(articleList => {
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(articleList)
+          dataSource: this.state.dataSource.cloneWithRows(articleList),
+          loadingStatus: LoadingManagerView.LoadingSuccess
+        });
+      }).catch(() => {
+        this.setState({
+          loadingStatus: LoadingManagerView.LoadingError
         });
       });
     }
@@ -69,12 +83,18 @@ class ReadingArticleList extends BaseComponent {
   //react-native-viewpager再嵌套ListView的情况下, 必须得加removeClippedSubviews={false}
   //否则ViewPager表现不正常 ,原因至今未明
   renderBody() {
+    const {loadingStatus, dataSource} = this.state;
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
+      return (
+        <ListView
+          removeClippedSubviews={false}
+          style={styles.listView}
+          dataSource={dataSource}
+          renderRow={this.renderRow}/>
+      );
+    }
     return (
-      <ListView
-        removeClippedSubviews={false}
-        style={styles.listView}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}/>
+      <LoadingManagerView status={loadingStatus} onFetchData={this.fetchData}/>
     );
   }
 

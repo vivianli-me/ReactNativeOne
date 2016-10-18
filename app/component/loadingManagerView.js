@@ -33,14 +33,15 @@ class LoadingManagerView extends React.Component {
   }
 
   render() {
+    const {containerStyle} = this.props;
     switch (this.props.status) {
       case LoadingManagerView.Loading:
         return (
-          <LoadingView/>
+          <LoadingView containerStyle={containerStyle}/>
         );
       case LoadingManagerView.LoadingError:
         return (
-          <LoadingErrorView onPress={this.props.onFetchData}/>
+          <LoadingErrorView containerStyle={containerStyle} onPress={this.props.onFetchData}/>
         );
       case LoadingManagerView.LoadingSuccess:
         return null;
@@ -60,7 +61,8 @@ LoadingManagerView.LoadingSuccess = 'LOADING_SUCCESS';//加载成功
 
 LoadingManagerView.propTypes = {
   onFetchData: PropTypes.func,
-  status: PropTypes.oneOf([LoadingManagerView.Loading, LoadingManagerView.LoadingError, LoadingManagerView.LoadingSuccess]).isRequired
+  status: PropTypes.oneOf([LoadingManagerView.Loading, LoadingManagerView.LoadingError, LoadingManagerView.LoadingSuccess]).isRequired,
+  containerStyle: PropTypes.object
 };
 
 export default LoadingManagerView;

@@ -32,13 +32,15 @@ class LoadingView extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, this.props.containerStyle]}>
         <Text style={styles.text}>加载中</Text>
       </View>
     );
   }
 }
 
-LoadingView.propTypes = {};
+LoadingView.propTypes = {
+  containerStyle: PropTypes.object
+};
 
 export default LoadingView;

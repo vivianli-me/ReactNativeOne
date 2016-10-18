@@ -16,7 +16,8 @@ import {
 import BaseComponent from '../base/baseComponent';
 import {getReadingImageDetail} from '../api/reading';
 import ReadingCarouselDetailItem from './readingCarouselDetailItem';
-import {getNavigator} from '../route'
+import {getNavigator} from '../route';
+import LoadingManagerView from './loadingManagerView';
 
 const windowWidth  = Dimensions.get('window').width;
 
@@ -48,7 +49,8 @@ class ReadingCarouselDetail extends BaseComponent {
     this.fetchData = this.fetchData.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.state = {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      loadingStatus: LoadingManagerView.Loading
     };
   }
 
@@ -67,27 +69,38 @@ class ReadingCarouselDetail extends BaseComponent {
   }
 
   fetchData() {
+    this.setState({//加载
+      loadingStatus: LoadingManagerView.Loading
+    });
     getReadingImageDetail(this.props.data.id).then(detailDataList => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(detailDataList)
+        dataSource: this.state.dataSource.cloneWithRows(detailDataList),
+        loadingStatus: LoadingManagerView.LoadingSuccess//加载成功
+      });
+    }).catch(() => {
+      this.setState({
+        loadingStatus: LoadingManagerView.LoadingError//加载失败
       });
     });
   }
 
   renderBody() {
+    const {loadingStatus, dataSource} = this.state;
     const {bgcolor} = this.props.data;
-    return (
-      <ListView
-        style={[styles.container, {backgroundColor: bgcolor}]}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        renderFooter={this.renderFooter}
+    if (loadingStatus === LoadingManagerView.LoadingSuccess) {
+      return (
+        <ListView
+          style={[styles.container, {backgroundColor: bgcolor}]}
+          dataSource={dataSource}
+          renderRow={this.renderRow}
+          renderFooter={this.renderFooter}
         />
-
+      );
+    }
+    return (
+      <LoadingManagerView containerStyle={{backgroundColor: bgcolor}} status={loadingStatus} onFetchData={this.fetchData}/>
     );
   }
-
-  
 
   renderRow(detailData, sectionID, rowID) {
     return (
