@@ -151,40 +151,38 @@ class MovieDetailPage extends BaseComponent {
     }
     const dateStr = `${monthArray[date.getMonth()]} ${day}.${date.getFullYear()}`;
     return (
-      <ScrollView>
-        <View>
-          <MovieListItem imageStyle={{height: 200}} cover={detailMovieData.detailcover} score={detailMovieData.score} onPress={this.onTopImagePressed}/>
-          <View style={{flexDirection: 'row', height: 50, justifyContent: 'flex-end', alignItems: 'center'}}>
-            <TouchableOpacity onPress={this.onSharePressed}>
-              <Image style={{width: 50, height: 50}} resizeMode="contain" source={require('../image/share_image.png')}/>
+      <View>
+        <MovieListItem imageStyle={{height: 200}} cover={detailMovieData.detailcover} score={detailMovieData.score} onPress={this.onTopImagePressed}/>
+        <View style={{flexDirection: 'row', height: 50, justifyContent: 'flex-end', alignItems: 'center'}}>
+          <TouchableOpacity onPress={this.onSharePressed}>
+            <Image style={{width: 50, height: 50}} resizeMode="contain" source={require('../image/share_image.png')}/>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.grayViewContainer}>
+          <Text style={styles.lightGrayText}>电影故事</Text>
+        </View>
+        <View style={styles.rowContainer}>
+          <View style={styles.authorInfoContainer}>
+            <TouchableOpacity onPress={this.onAvatarImagePress}>
+              <Image style={styles.avatarImage} source={{uri: movieStory.user.web_url}}/>
             </TouchableOpacity>
-          </View>
-          <View style={styles.grayViewContainer}>
-            <Text style={styles.lightGrayText}>电影故事</Text>
-          </View>
-          <View style={styles.rowContainer}>
-            <View style={styles.authorInfoContainer}>
-              <TouchableOpacity onPress={this.onAvatarImagePress}>
-                <Image style={styles.avatarImage} source={{uri: movieStory.user.web_url}}/>
-              </TouchableOpacity>
-              <View style={styles.authorInfo}>
-                <Text style={styles.authorName}>{movieStory.user.user_name}</Text>
-                <Text style={styles.timeText}>{dateStr}</Text>
-              </View>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image style={styles.smallIcon} resizeMode="contain" source={require('../image/laud.png')}/>
-              <Text style={{color: commonStyle.TEXT_GRAY_COLOR}}>{movieStory.praisenum}</Text>
+            <View style={styles.authorInfo}>
+              <Text style={styles.authorName}>{movieStory.user.user_name}</Text>
+              <Text style={styles.timeText}>{dateStr}</Text>
             </View>
           </View>
-          <Text style={styles.titleText}>{movieStory.title}</Text>
-          <Text style={styles.contentText}>{movieStory.content}</Text>
-          <MovieInfo detailMovieData={detailMovieData}/>
-          <View style={styles.grayViewContainer}>
-            <Text style={styles.lightGrayText}>评论列表</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image style={styles.smallIcon} resizeMode="contain" source={require('../image/laud.png')}/>
+            <Text style={{color: commonStyle.TEXT_GRAY_COLOR}}>{movieStory.praisenum}</Text>
           </View>
         </View>
-      </ScrollView>
+        <Text style={styles.titleText}>{movieStory.title}</Text>
+        <Text style={styles.contentText}>{movieStory.content}</Text>
+        <MovieInfo detailMovieData={detailMovieData}/>
+        <View style={styles.grayViewContainer}>
+          <Text style={styles.lightGrayText}>评论列表</Text>
+        </View>
+      </View>
     );
   }
 
