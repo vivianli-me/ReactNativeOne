@@ -17,7 +17,7 @@
     + 缓存api接口数据，充分节省流量，增强用户体验
 
 ## APP截图
-![图文详情][./screenshots/picture_detail.png]
+![图文详情](./screenshots/picture_detail.png)
 
 
 ## 整体思路
