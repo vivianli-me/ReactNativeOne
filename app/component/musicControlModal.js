@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as MediaActions from '../actions/media';
+import {getNavigator} from '../route';
 
 const EVENT_NAME = 'ON_MEDIA_COMPLETION';
 
@@ -44,6 +45,7 @@ class MusicControlModal extends React.Component {
   constructor(props) {
     super(props);
     this.closeModal = this.closeModal.bind(this);
+    this.goToDetailPage = this.goToDetailPage.bind(this);
   }
   
   componentDidMount() {
@@ -105,8 +107,18 @@ class MusicControlModal extends React.Component {
       </Modal>
     );
   }
-
   goToDetailPage() {
+    const {currentMedia} = this.props;
+    if (!currentMedia) {
+      return;
+    }
+    //type 'essay' 'music'
+    const {type, id} = currentMedia;
+    this.closeModal();
+    getNavigator().push({
+      name: type === 'essay' ? 'ReadingEssayDetail': 'MusicDetailPage',
+      id: parseInt(id)
+    });
 
   }
 
@@ -118,7 +130,8 @@ MusicControlModal.propTypes = {
   authorName: PropTypes.string.isRequired,
   isPlayingMedia: PropTypes.bool.isRequired,//当前是否正在播放音乐
   isMusicControlModalShow: PropTypes.bool.isRequired,
-  changeMusicControlModalVisibility: PropTypes.func.isRequired
+  changeMusicControlModalVisibility: PropTypes.func.isRequired,
+  currentMedia: PropTypes.object
 };
 
 const mapStateToProps = state => {
@@ -134,6 +147,7 @@ const mapStateToProps = state => {
   }
   let currentMedia = mediaList[media.currentIndex];
   return {
+    currentMedia,
     musicName: currentMedia.musicName,
     authorName: currentMedia.authorName,
     isPlayingMedia: media.isPlayingMedia,
