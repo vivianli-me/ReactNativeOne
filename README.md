@@ -39,7 +39,8 @@
 ### Android
 1. Debug版本下的音乐版块，ViewPager嵌套ListView出现问题，Release版本正常
 2. Image组件uri为空时完全不占位
-3. 暂时没能在Android上实现iOS ScrollView的contentOffset这样的属性，具体效果请查看ONE APP音乐版块
+3. 暂时没能在Android上实现iOS ScrollView的contentOffset这样的属性，具体效果请查看[「ONE·一个」](http://www.wandoujia.com/apps/one.hh.oneclient)的音乐版块
+
 ### iOS
 1. 由于本人对iOS原生不熟悉，所以第三方库 [react-native-video](https://github.com/react-native-community/react-native-video)跟[react-native-wechat](https://github.com/weflex/react-native-wechat)都没能导入成功，所以iOS端暂时不能播放电影预告片跟进行微信分享
 2. 音频播放用的是原生的接口，Android我已写完了，iOS端还没有写，所以暂时无法播放音频
