@@ -101,11 +101,13 @@ class CommentListView extends React.Component {
     });
   }
 
+  //TODO removeClippedSubviews
   render() {
     //pageSize代表一个event loop绘制多少个row
     let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(this.state.commentList);
     return (
       <GiftedListView
+        removeClippedSubviews={false}
         initialListSize={20}
         pageSize={20}
         refreshing={this.state.refreshing}
