@@ -121,7 +121,6 @@ android {
         }
         debug {
             getManifestPlaceholders().put("APP_NAME","一个(debug)");
-            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
