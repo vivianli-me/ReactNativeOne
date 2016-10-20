@@ -262,49 +262,4 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReadingEssayDetail);
 
-const data = {
-  "content_id": "1548",
-  "hp_title": "寂寞芳心俱乐部",
-  "hp_makettime": "2016-10-05 21:00:00",
-  "guide_word": "我们相识的时候，就像两个走了很久的赶路人，突然在一个岔口相遇。我们疲惫得只想就地坐下，连去谈论身后的那条路的力气也没有。",
-  "author": [
-    {
-      "user_id": "4814812",
-      "user_name": "林西拿",
-      "web_url": "http://image.wufazhuce.com/FsTtJA_RBWpXIPoKIKUcYch57P1V",
-      "desc": "学生、90后写作者。",
-      "wb_name": "@林西拿"
-    }
-  ],
-  "has_audio": true
-};
-
-const detailData = {
-  "content_id": "1548",
-  "hp_title": "寂寞芳心俱乐部",
-  "sub_title": "",
-  "hp_author": "林西拿",
-  "auth_it": "学生、90后写作者。",
-  "hp_author_introduce": "（责任编辑：金子棋 jinziqi@wufazhuce.com）",
-  "hp_makettime": "2016-10-05 23:00:00",
-  "wb_name": "",
-  "wb_img_url": "",
-  "last_update_date": "2016-10-05 20:09:13",
-  "web_url": "http://m.wufazhuce.com/article/1548",
-  "guide_word": "我们相识的时候，就像两个走了很久的赶路人，突然在一个岔口相遇。我们疲惫得只想就地坐下，连去谈论身后的那条路的力气也没有。",
-  "audio": "http://music.wufazhuce.com/lo_yf1EITIDHpAUYCs5xgwXo0dTc",
-  "author": [
-    {
-      "user_id": "4814812",
-      "user_name": "林西拿",
-      "web_url": "http://image.wufazhuce.com/FsTtJA_RBWpXIPoKIKUcYch57P1V",
-      "desc": "学生、90后写作者。",
-      "wb_name": "@林西拿"
-    }
-  ],
-  "praisenum": 628,
-  "sharenum": 105,
-  "commentnum": 198
-};
-
 

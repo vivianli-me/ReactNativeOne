@@ -46,7 +46,7 @@ class ReadingContainer extends BaseComponent {
   }
 
   onLeftPressed() {
-    Toast.show('搜索');
+    
   }
 }
 

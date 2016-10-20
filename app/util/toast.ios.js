@@ -3,7 +3,6 @@
  */
 import toast from '@remobile/react-native-toast';
 
-//TODO 引入iOS react-native-toast https://github.com/remobile/react-native-toast
 function show(message) {
   toast.showShortBottom(message);
 }

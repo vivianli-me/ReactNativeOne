@@ -51,7 +51,6 @@ const TEXT = [
   '影片信息'
 ];
 
-//TODO 图片跳动的问题
 const IMAGE_ARRAY = [
   [require('../image/gross_default.png'), require('../image/gross_selected.png')],
   [require('../image/still_default.png'), require('../image/still_selected.png')],

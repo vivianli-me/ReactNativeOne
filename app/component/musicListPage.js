@@ -169,17 +169,4 @@ MusicListPage.propTypes = {
 
 export default MusicListPage;
 
-const music = {
-    "id": "588",
-    "title": "好想大声说爱你",
-    "cover": "http://image.wufazhuce.com/FtVQSHjwOF6GnHFgZ2SNAkDVvLc3",
-    "platform": "2",
-    "music_id": "http://music.wufazhuce.com/lgpnLvQEyHPXnKoaS1MuhRculQil",
-    "author": {
-      "user_id": "6848467",
-      "user_name": "BAAD",
-      "web_url": "http://image.wufazhuce.com/FqH3f45fqHAObLQ9sQXoB3pjArs6",
-      "desc": "J-Rock乐队"
-    }
-};
 

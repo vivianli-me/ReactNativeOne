@@ -120,17 +120,12 @@ class PictureContainer extends BaseComponent {
     );
   }
 
-  onBackPressed() {//按下后退键
-
-  }
-
   onLeftPressed() {
-    Toast.show('搜索');
+
   }
 
   onRightPressed() {
-    console.log('onRightPressed');
-    Toast.show('个人中心');
+    
   }
 }
 

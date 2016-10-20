@@ -131,16 +131,3 @@ class MovieContainer extends BaseComponent {
 }
 
 export default MovieContainer;
-
-const movieData = {
-  "id": "97",
-  "title": "惊天大逆转",
-  "verse": "",
-  "verse_en": "",
-  "score": "76",
-  "revisedscore": "0",
-  "releasetime": "2016-07-15 00:00:00",
-  "scoretime": "2016-07-16 00:00:00",
-  "cover": "http://image.wufazhuce.com/FiOZo99ewwotKWQbng8Hu-eA4Fec",
-  "servertime": 1475936097
-};

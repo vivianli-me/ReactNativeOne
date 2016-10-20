@@ -26,7 +26,6 @@ class BaseComponent extends Component {
     this.getNavigationBarProps = this.getNavigationBarProps.bind(this);
     this.renderNavigationBar = this.renderNavigationBar.bind(this);
     this.renderBody = this.renderBody.bind(this);
-    this.onBackPressed = this.onBackPressed.bind(this);
     this.onLeftPressed = this.onLeftPressed.bind(this);
     this.onRightPressed = this.onRightPressed.bind(this);
   }
@@ -66,10 +65,6 @@ class BaseComponent extends Component {
 
   componentWillUnmount() {
 
-  }
-
-  onBackPressed() {//按下后退键
-    this.onLeftPressed();
   }
 
   onLeftPressed() {

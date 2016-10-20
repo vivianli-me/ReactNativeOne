@@ -18,29 +18,8 @@ const initState = {
     //   authorName: '不知名',
     //   id: 514
     // },
-    // {
-    //   url: 'http://m5.file.xiami.com/836/1836/4279/1771128943_3578911_l.mp3?auth_key=4987c5d91b4fcffc57df1b21d88cf830-1477105200-0-null',
-    //   type: 'essay',
-    //   musicName: '爱久见人心',
-    //   authorName: '梁静茹',
-    //   id: 518
-    // },
-    // {
-    //   url: 'http://m5.file.xiami.com/836/1836/32630/389561_2592175_l.mp3?auth_key=18652ad62aec10d79147a1201a7bf254-1477105200-0-null',
-    //   type: 'music',
-    //   musicName: '给未来的自己',
-    //   authorName: '梁静茹',
-    //   id: 5144
-    // },
-    // {
-    //   url: 'http://m5.file.xiami.com/318/2318/12416/152571_69179_l.mp3?auth_key=11b095887c2ce8eb0f33681ce9e6b92d-1477105200-0-null',
-    //   type: 'essay',
-    //   musicName: '最爱是v',
-    //   authorName: '徐若瑄',
-    //   id: 5254
-    // }
-  ],//
-  currentIndex: 1
+  ],
+  currentIndex: 0
 };
 
 export default function mediaReducer(state = initState, action) {
