@@ -17,8 +17,14 @@
     + 缓存api接口数据，充分节省流量，增强用户体验
 
 ## APP截图
-![图文详情](./screenshots/picture_detail.png)
-
+![picture_detail](./screenshots/picture_detail.png) ![picture_list](./screenshots/picture_list.png)
+![reading_container](./screenshots/reading_container.png) ![article_list](./screenshots/article_list.png)
+![article_list1](./screenshots/article_list1.png) ![article_list2](./screenshots/article_list2.png)
+![essay_detail](./screenshots/essay_detail.png) ![essay_comment](./screenshots/essay_comment.png)
+![music_detail](./screenshots/music_detail.png) ![music_list](./screenshots/music_list.png)
+![movie_list](./screenshots/movie_list.png) ![movie_detail1](./screenshots/movie_detail1.png)
+![movie_detail2](./screenshots/movie_detail2.png) ![movie_detail3](./screenshots/movie_detail3.png)
+![movie_video](./screenshots/movie_video.png) ![movie_comment](./screenshots/movie_comment.png)
 
 ## 整体思路
 1. 分析「ONE·一个」APP的业务逻辑结构，将整体业务按重要程度进行划分，安排整体开发流程
@@ -52,7 +58,7 @@
 3. 在音频视频中加入可拖动的进度条
 4. api接口数据缓存
 
-##将来也许会做的功能点
+## 将来也许会做的功能点
 1. 搜索
 2. 音频视频缓存
 3. javascript热更新
@@ -64,8 +70,19 @@
 2. npm install
 3. react-native run-android or react-native run-ios
 
+## 第三方库
+1. [redux](https://github.com/reactjs/redux)
+2. [react-redux](https://github.com/reactjs/react-redux)
+3. [redux-thunk](https://github.com/gaearon/redux-thunk)
+4. [redux-logger](https://github.com/evgenyrodionov/redux-logger)
+5. [react-native-video](https://github.com/react-native-community/react-native-video)
+6. [react-native-toast](https://github.com/remobile/react-native-toast)
+7. [react-native-wechat](https://github.com/weflex/react-native-wechat)
+8. [react-native-orientation](https://github.com/yamill/react-native-orientation)
+9. [react-native-scrollable-tab-view](https://github.com/skv-headless/react-native-scrollable-tab-view)
+10. [lipeiwei-szu/react-native-viewpager](https://github.com/lipeiwei-szu/react-native-viewpager)  which is fork [race604/react-native-viewpager](https://github.com/race604/react-native-viewpager)
 
 
+## My WeChat code
 
-
-
+![my_wechat_code](./screenshots/my_wechat_code.jpg)
