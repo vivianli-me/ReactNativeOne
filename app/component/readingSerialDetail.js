@@ -12,7 +12,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  InteractionManager
+  InteractionManager,
+  Platform
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
 import {getSerialDetailInfo} from '../api/reading';
@@ -85,6 +86,10 @@ class ReadingSerialDetail extends BaseComponent {
       detailData: null,
       loadingStatus: LoadingManagerView.Loading
     };
+    if (Platform.OS === 'ios') {
+      console.warn('iOS端连载文章detail页面有问题, 可能是文本过长显示不出来, 或者文本中带有特殊字符导致渲染失败' +
+        '如果有解决方案, 欢迎PR, android端一切正常');
+    }
   }
 
   getNavigationBarProps() {

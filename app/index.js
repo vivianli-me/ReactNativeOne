@@ -21,7 +21,8 @@ import reducers from './reducers';
 import MusicControlModal from './component/musicControlModal';
 import Toast from './util/toast';
 import Orientation from './util/orientation';
-import * as Wechat from 'react-native-wechat';
+//iOS平台未能成功导入react-native-wechat模块, 所以暂时注释掉
+// import * as Wechat from 'react-native-wechat';
 
 let lastClickTime = 0;
 
@@ -63,7 +64,8 @@ class App extends React.Component {
   }
 
   componentDidMount (){
-    Wechat.registerApp('wxd08e40eaa166e2cf');
+    //iOS平台未能成功导入react-native-wechat模块, 所以暂时注释掉
+    // Wechat.registerApp('wxd08e40eaa166e2cf');
   }
 
   componentWillUnmount() {

@@ -4,11 +4,25 @@
 import Toast from '../util/toast';
 import {
   NativeModules,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  Platform
 } from 'react-native';
 
-const {MediaPlayer} = NativeModules;
+var MediaPlayer;
 
+if (Platform.OS === 'ios') {
+  MediaPlayer = {
+    start() {
+      return new Promise((resolve, reject) => {
+        reject();
+        console.warn('暂时还没写好iOS端播放音频的原生代码');
+      });
+    },
+    stop() {}
+  };
+} else {
+  MediaPlayer = NativeModules.MediaPlayer;
+}
 
 
 export const ACTIONS = {
