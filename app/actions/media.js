@@ -28,6 +28,7 @@ if (Platform.OS === 'ios') {
 export const ACTIONS = {
   STOP_PLAY_MEDIA: 'STOP_PLAY_MEDIA',//停止播放
   START_PLAY_MEDIA: 'START_PLAY_MEDIA',//开始播放
+  LOADING_MEDIA_SUCCESS: 'LOADING_MEDIA_SUCCESS',//缓冲成功
   TO_PREVIOUS_ONE: 'TO_PREVIOUS_ONE',//上一首
   TO_NEXT_ONE: 'TO_NEXT_ONE',//下一首
   CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY: 'CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY'
@@ -64,7 +65,9 @@ export function startPlayMedia(info) {
     //开始缓冲
     MediaPlayer.start(url).then(() => {
       //加载完成
-      console.info('startPlayMedia 缓冲完毕');
+      dispatch({
+        type: ACTIONS.LOADING_MEDIA_SUCCESS
+      });
     }).catch(() => {
       console.warn('播放出错');
       dispatch({
@@ -93,7 +96,9 @@ export function turnToPreviousOne() {
     let url = media.mediaList[currentIndex].url;//音乐路径
     MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
-      console.info('turnToPreviousOne 缓冲完毕');
+      dispatch({
+        type: ACTIONS.LOADING_MEDIA_SUCCESS
+      });
     }).catch(() => {
       console.warn('播放出错');
       dispatch({
@@ -122,7 +127,9 @@ export function turnToNextOne() {
     let url = media.mediaList[currentIndex].url;//音乐路径
     MediaPlayer.start(url).then(() => {
       //缓冲完成, 开始播放
-      console.info('turnToNextOne 缓冲完毕');
+      dispatch({
+        type: ACTIONS.LOADING_MEDIA_SUCCESS
+      });
     }).catch(() => {
       console.warn('播放出错');
       dispatch({

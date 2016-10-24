@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Text,
   Image,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 import {parseDate} from '../util/dateUtil';
 import monthArray from '../constant/month';
@@ -85,6 +86,7 @@ class MusicPlay extends React.Component {
   constructor(props) {
     super(props);
     this.onMediaPressed = this.onMediaPressed.bind(this);
+    this.renderPlayButton = this.renderPlayButton.bind(this);
   }
 
   render() {
@@ -120,12 +122,28 @@ class MusicPlay extends React.Component {
                  source={musicDetailData.platform == 1 ? require('../image/xiami_right.png') : require('../image/white.png')}
                  resizeMode="contain"/>
           <TouchableOpacity onPress={this.onMediaPressed}>
-            <Image style={styles.musicImage} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
+            {this.renderPlayButton()}
           </TouchableOpacity>
           <Text style={styles.dateText}>{dateStr}</Text>
         </View>
       </View>
     );
+  }
+
+  renderPlayButton() {
+    const {isPlaying, isLoadingMedia} = this.props;
+    if (!isPlaying || (isPlaying && !isLoadingMedia)) {
+      return (
+        <Image style={styles.musicImage} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
+      );
+    } else {
+      return (
+        <View>
+          <Image style={styles.musicImage} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
+          <ActivityIndicator color="gray" size="large" style={{position: 'absolute', left: 0, top: 0, right: 0, bottom: 0}}/>
+        </View>
+      );
+    }
   }
 
   onMediaPressed() {
@@ -175,14 +193,16 @@ MusicPlay.propTypes = {
   musicDetailData: PropTypes.object.isRequired,
   stopPlayMedia: PropTypes.func.isRequired,
   startPlayMedia: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool.isRequired
+  isPlaying: PropTypes.bool.isRequired,
+  isLoadingMedia: PropTypes.bool.isRequired,//当前是否正在加载缓冲音乐
 };
 
 const mapStateToProps = (state, props) => {
   var media = state.media;
   var currentMedia = media.mediaList[media.currentIndex];
   return {
-    isPlaying: media.isPlayingMedia && currentMedia && currentMedia.type === 'music' && currentMedia.id === props.musicDetailData.id
+    isPlaying: media.isPlayingMedia && currentMedia && currentMedia.type === 'music' && currentMedia.id === props.musicDetailData.id,
+    isLoadingMedia: media.isLoadingMedia
   };
 };
 
