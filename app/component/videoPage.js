@@ -156,8 +156,7 @@ class VideoPage extends React.Component {
             onLoad={this.onLoad}
             onProgress={this.onProgress}
             onEnd={this.onEnd}
-            repeat={false}
-            fullscreen={true}/>
+            repeat={false}/>
         </TouchableOpacity>
         {this.renderNavigationBar()}
         {this.renderBottomControlView()}

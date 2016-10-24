@@ -191,17 +191,11 @@ class MovieDetailPage extends BaseComponent {
   onTopImagePressed() {
     const {detailMovieData} = this.state;
     if (detailMovieData && detailMovieData.video) {
-      //TODO 导入react-native-video模块
-      if (Platform.OS === 'ios') {
-        console.warn('//iOS平台未能成功导入react-native-video模块, 所以暂时注释掉, 待跟进');
-        return;
-      } else {
-        getNavigator().push({
-          name: 'VideoPage',
-          uri: detailMovieData.video,
-          movieName: detailMovieData.title
-        });
-      }
+      getNavigator().push({
+        name: 'VideoPage',
+        uri: detailMovieData.video,
+        movieName: detailMovieData.title
+      });
     } else {
       Toast.show('该电影暂无预告片');
     }

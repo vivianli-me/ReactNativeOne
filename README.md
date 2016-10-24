@@ -48,9 +48,9 @@
 3. 暂时没能在Android上实现iOS ScrollView的contentOffset这样的属性，具体效果请查看[「ONE·一个」](http://www.wandoujia.com/apps/one.hh.oneclient)的音乐版块
 
 ### iOS
-1. 由于本人对iOS原生不熟悉，所以第三方库 [react-native-video](https://github.com/react-native-community/react-native-video)跟[react-native-wechat](https://github.com/weflex/react-native-wechat)都没能导入成功，所以iOS端暂时不能播放电影预告片跟进行微信分享
+1. ~~由于本人对iOS原生不熟悉，所以第三方库 [react-native-video](https://github.com/react-native-community/react-native-video)跟[react-native-wechat](https://github.com/weflex/react-native-wechat)都没能导入成功，所以iOS端暂时不能播放电影预告片跟进行微信分享~~
 2. 音频播放用的是原生的接口，Android我已写完了，iOS端还没有写，所以暂时无法播放音频
-3. 阅读版块中有三种类型的文章，分别是短篇、连载、问答，在Android端显示时一切正常，但是在iOS端有的显示不出来，可能性有两点：文本有特殊字符导致整体无法显示、文字超长时Text标签无法正常显示
+3. 阅读版块中有三种类型的文章，分别是短篇、连载、问答，在Android端显示时一切正常，但是在iOS端有的连载文章显示不出来，可能性有两点：文本有特殊字符导致整体无法显示、文字超长时Text标签无法正常显示
 
 ### 共同问题
 1. 音乐播放得加多一个中间状态，也就是缓冲状态，否则加载缓冲音频时间有可能太长，UI上全然无展示，体验太差

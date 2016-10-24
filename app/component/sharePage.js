@@ -14,8 +14,7 @@ import {
 } from 'react-native';
 import commonStyle from '../style/commonStyle';
 import {getNavigator} from '../route';
-//iOS平台未能成功导入react-native-wechat模块, 所以暂时注释掉
-// import * as Wechat from 'react-native-wechat';
+import * as Wechat from 'react-native-wechat';
 import Toast from '../util/toast';
 
 const windowWidth = Dimensions.get('window').width;
@@ -79,8 +78,6 @@ class SharePage extends React.Component {
   }
 
   shareToSession() {
-    console.warn('//iOS平台未能成功导入react-native-wechat模块, 所以暂时注释掉');
-    return;
     Wechat.isWXAppInstalled()
       .then((isInstalled) => {
         if (isInstalled) {
@@ -95,8 +92,6 @@ class SharePage extends React.Component {
   }
 
   shareToTimeline() {
-    console.warn('//iOS平台未能成功导入react-native-wechat模块, 所以暂时注释掉');
-    return;
     Wechat.isWXAppInstalled()
       .then((isInstalled) => {
         if (isInstalled) {

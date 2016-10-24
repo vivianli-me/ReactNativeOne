@@ -21,8 +21,7 @@ import reducers from './reducers';
 import MusicControlModal from './component/musicControlModal';
 import Toast from './util/toast';
 import Orientation from './util/orientation';
-//iOS平台未能成功导入react-native-wechat模块, 所以暂时注释掉
-// import * as Wechat from 'react-native-wechat';
+import * as Wechat from 'react-native-wechat';
 
 let lastClickTime = 0;
 
@@ -64,8 +63,8 @@ class App extends React.Component {
   }
 
   componentDidMount (){
-    //iOS平台未能成功导入react-native-wechat模块, 所以暂时注释掉
-    // Wechat.registerApp('wxd08e40eaa166e2cf');
+    //想要使用微信分享, 你必须到微信分享平台 https://open.weixin.qq.com/ 申请appid
+    Wechat.registerApp('your wechat appid');
   }
 
   componentWillUnmount() {
