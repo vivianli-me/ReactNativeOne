@@ -7,6 +7,7 @@ import {
   DeviceEventEmitter,
   Platform
 } from 'react-native';
+import {getXiamiMusicUrl} from '../util/musicUtil';
 
 var MediaPlayer;
 
@@ -143,5 +144,21 @@ export function changeMusicControlModalVisibility(visible) {
   return {
     type: ACTIONS.CHANGE_MUSIC_CONTROL_MODAL_VISIBILITY,
     visible
+  };
+}
+
+export function getXiamiMusicUrlAndPlay(info, musicId) {
+  return (dispatch, getState) => {
+    //UI先变化
+    dispatch({
+      type: ACTIONS.START_PLAY_MEDIA
+    });
+    getXiamiMusicUrl(musicId).then(url => {
+      startPlayMedia(Object.assign({}, info, {url}))(dispatch, getState);
+    }).catch(() => {
+      dispatch({
+        type: ACTIONS.STOP_PLAY_MEDIA
+      });
+    });
   };
 }

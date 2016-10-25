@@ -109,6 +109,16 @@ class MusicDetailPage extends BaseComponent {
       );
     }
 
+    if (process.env.NODE_ENV !== 'production') {
+      return (
+        <ScrollView>
+          {this.renderMusicDetail()}
+        </ScrollView>
+      );
+    }
+
+    
+    //以下在测试环境下滑动不正常, release版本正常
     return (
       <CommentListView
         renderHeader={this.renderMusicDetail}

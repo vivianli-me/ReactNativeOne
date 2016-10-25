@@ -16,7 +16,6 @@ import monthArray from '../constant/month';
 import commonStyle from '../style/commonStyle';
 import {connect} from 'react-redux';
 import * as MediaActions from '../actions/media';
-import {getXiamiMusicUrl} from '../util/musicUtil';
 
 const styles = StyleSheet.create({
   container: {
@@ -92,7 +91,6 @@ class MusicPlay extends React.Component {
   render() {
     const {
       musicDetailData,
-      isPlaying,//当前是否正在播放这一首音乐
     } = this.props;
     if (!musicDetailData) {
       return null;
@@ -131,19 +129,10 @@ class MusicPlay extends React.Component {
   }
 
   renderPlayButton() {
-    const {isPlaying, isLoadingMedia} = this.props;
-    if (!isPlaying || (isPlaying && !isLoadingMedia)) {
-      return (
-        <Image style={styles.musicImage} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
-      );
-    } else {
-      return (
-        <View>
-          <Image style={styles.musicImage} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
-          <ActivityIndicator color="gray" size="large" style={{position: 'absolute', left: 0, top: 0, right: 0, bottom: 0}}/>
-        </View>
-      );
-    }
+    const {isPlaying} = this.props;
+    return (
+      <Image style={[styles.musicImage, {alignItems: 'center', justifyContent: 'center'}]} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
+    );
   }
 
   onMediaPressed() {
@@ -152,6 +141,7 @@ class MusicPlay extends React.Component {
       stopPlayMedia,
       startPlayMedia,
       isPlaying,
+      getXiamiMusicUrlAndPlay
     } = this.props;
     if (isPlaying) {
       //停止播放
@@ -164,26 +154,21 @@ class MusicPlay extends React.Component {
         music_id,
         author
       } = musicDetailData;
-      let getMusicUrlPromise;
       //platform  '1'  虾米平台的
       //platform  '2'  ONE平台的  直接使用music_id, music_id就是文件地址
+      var info = {
+        id,
+        type: 'music',
+        musicName: title,
+        authorName: author.user_name,
+      };
       if (platform == 1) {
-        getMusicUrlPromise = getXiamiMusicUrl(music_id);
+        getXiamiMusicUrlAndPlay(info, music_id);
       } else if (platform == 2) {
-        getMusicUrlPromise = Promise.resolve(music_id);
+        startPlayMedia(Object.assign({}, info, {url: music_id}));
       } else {
         console.warn(`暂时未能处理该平台的音乐 platform = ${platform}`);
-        return;
       }
-      getMusicUrlPromise.then(url => {
-        startPlayMedia({
-          id,
-          url,
-          type: 'music',
-          musicName: title,
-          authorName: author.user_name,
-        });
-      });
     }
   }
 
@@ -193,16 +178,16 @@ MusicPlay.propTypes = {
   musicDetailData: PropTypes.object.isRequired,
   stopPlayMedia: PropTypes.func.isRequired,
   startPlayMedia: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  isLoadingMedia: PropTypes.bool.isRequired,//当前是否正在加载缓冲音乐
+  isPlaying: PropTypes.bool,
+  getXiamiMusicUrlAndPlay: PropTypes.func.isRequired
 };
+
 
 const mapStateToProps = (state, props) => {
   var media = state.media;
   var currentMedia = media.mediaList[media.currentIndex];
   return {
     isPlaying: media.isPlayingMedia && currentMedia && currentMedia.type === 'music' && currentMedia.id === props.musicDetailData.id,
-    isLoadingMedia: media.isLoadingMedia
   };
 };
 
