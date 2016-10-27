@@ -2,6 +2,8 @@
  * Created by lipeiwei on 16/10/3.
  */
 
+import apiCache from './apiCache'
+
 const baseUrl = 'http://v3.wufazhuce.com:8000/api';
 
 const showLog = __DEV__;
@@ -9,18 +11,21 @@ const showLog = __DEV__;
 /**
  * @param url 完整路径
  */
-const getFetch = url => {
-  return fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: '*/*',
-      'Content-Type': 'application/json'
-    }
-  }).then(convertRespToJson).then(defaultAnalyse);
+const getFetch = (url, cached) => {
+  const fetchFunc = () => {
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then(convertRespToJson)
+  };
+  return apiCache(url, fetchFunc, cached).then(defaultAnalyse);
 };
 
 /**
- * @param url 绝对路径
+ * @param url 完整路径
  */
 const postFetch = url => jsonData => {
   return fetch(url, {
@@ -40,17 +45,17 @@ const getParam = data => {
   }).join('&');
 };
 
-
 /**
+ * @param cached 是否优先本地缓存
  * @param path 相对路径
  */
-export const get = (path, data) => {
+const get = cached => (path, data) => {
   let url = `${baseUrl}${path}`;
   if (data) {
     url.append(`?${getParam(data)}`)
   }
   return loggerWrap(`GET  ${url}`)(() => {
-    return getFetch(url);
+    return getFetch(url, cached);
   });
 };
 
@@ -66,7 +71,7 @@ export const post = path => data => {
 };
 
 /**
- * 日志插件
+ * 日志打印
  * @param requestInfo
  */
 const loggerWrap = requestInfo => fetchFunc => {
@@ -95,3 +100,6 @@ const defaultAnalyse = response => {
     throw response.msg;
   }
 };
+
+export const getFetchFromCache = get(true);//缓存
+export const getFetchNeverCached = get(false);//不缓存

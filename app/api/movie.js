@@ -2,16 +2,17 @@
  * Created by lipeiwei on 16/10/9.
  */
 
-import {get} from './apiHelper';
+import {getFetchNeverCached, getFetchFromCache} from './apiHelper';
 
+//这个总是不断更新的
 export function getMovieList(id) {
-  return get(`/movie/list/${id}`);
+  return getFetchNeverCached(`/movie/list/${id}`);
 }
 
 export function getMovieDetail(id) {
-  return get(`/movie/detail/${id}`);
+  return getFetchFromCache(`/movie/detail/${id}`);
 }
 
 export function getMovieStory(id) {
-  return get(`/movie/${id}/story/1/0`);
+  return getFetchFromCache(`/movie/${id}/story/1/0`);
 }
