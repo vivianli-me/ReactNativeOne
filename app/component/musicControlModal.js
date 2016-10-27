@@ -10,13 +10,21 @@ import {
   Text,
   Image,
   StyleSheet,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  Slider,
+  Dimensions,
+  NativeModules
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as MediaActions from '../actions/media';
 import {getNavigator} from '../route';
 
-const EVENT_NAME = 'ON_MEDIA_COMPLETION';
+const ON_MEDIA_COMPLETION = 'ON_MEDIA_COMPLETION';
+const MEDIA_PROGRESS_UPDATE = 'MEDIA_PROGRESS_UPDATE';
+
+const {MediaPlayer} = NativeModules;
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   authorName: {
@@ -44,22 +52,40 @@ class MusicControlModal extends React.Component {
 
   constructor(props) {
     super(props);
+    this.seekTo = this.seekTo.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.goToDetailPage = this.goToDetailPage.bind(this);
+    this.state = {
+      currentPosition: 0,
+      totalDuration: 0
+    };
   }
   
   componentDidMount() {
     const {
       turnToNextOne
     } = this.props;
-    DeviceEventEmitter.addListener(EVENT_NAME, () => {
+    DeviceEventEmitter.addListener(ON_MEDIA_COMPLETION, () => {
       console.log('播放完成');
       turnToNextOne();//当前先实现顺序循环吧, 单曲循环跟随机播放以后再说
+    });
+    //进度更新
+    DeviceEventEmitter.addListener(MEDIA_PROGRESS_UPDATE, info => {
+      this.setState(info);
     });
   }
 
   componentWillUnmount() {
-    DeviceEventEmitter.removeAllListeners(EVENT_NAME);
+    DeviceEventEmitter.removeAllListeners(ON_MEDIA_COMPLETION);
+    DeviceEventEmitter.removeAllListeners(MEDIA_PROGRESS_UPDATE);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentMedia !== this.props.currentMedia) {
+      this.setState({
+        currentPosition: 0,
+      });
+    }
   }
 
   //隐藏modal
@@ -75,8 +101,10 @@ class MusicControlModal extends React.Component {
       stopPlayMedia,
       startPlayMedia,
       turnToPreviousOne,
-      turnToNextOne
+      turnToNextOne,
+      isLoadingMedia
     } = this.props;
+    const {currentPosition, totalDuration} = this.state;
     return (
       <Modal
         animationType="fade"
@@ -85,6 +113,15 @@ class MusicControlModal extends React.Component {
         onRequestClose={() => {}}>
         <View style={{backgroundColor: 'white', alignItems: 'center', padding: 10}}>
           <Text>{musicName}</Text>
+          {/*如何改变进度条颜色*/}
+          <Slider
+            value={currentPosition}
+            step={1}
+            disabled={!isPlayingMedia || isLoadingMedia}
+            minimumValue={0}
+            maximumValue={totalDuration}
+            onSlidingComplete={this.seekTo}
+            style={{width: windowWidth - 30}}/>
           <Text style={styles.authorName}>{authorName}</Text>
           <View style={styles.rowContainer}>
             <TouchableOpacity style={styles.imageContainer} onPress={turnToPreviousOne}>
@@ -107,6 +144,7 @@ class MusicControlModal extends React.Component {
       </Modal>
     );
   }
+
   goToDetailPage() {
     const {currentMedia} = this.props;
     if (!currentMedia) {
@@ -122,7 +160,10 @@ class MusicControlModal extends React.Component {
 
   }
 
-
+  seekTo(position) {
+    this.setState({currentPosition: position});
+    MediaPlayer.seekTo(position);
+  }
 }
 
 MusicControlModal.propTypes = {
@@ -131,7 +172,8 @@ MusicControlModal.propTypes = {
   isPlayingMedia: PropTypes.bool.isRequired,//当前是否正在播放音乐
   isMusicControlModalShow: PropTypes.bool.isRequired,
   changeMusicControlModalVisibility: PropTypes.func.isRequired,
-  currentMedia: PropTypes.object
+  currentMedia: PropTypes.object,
+  isLoadingMedia: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
@@ -142,7 +184,8 @@ const mapStateToProps = state => {
       musicName: '',
       authorName: '',
       isPlayingMedia: false,
-      isMusicControlModalShow: false
+      isMusicControlModalShow: false,
+      isLoadingMedia: false
     };
   }
   let currentMedia = mediaList[media.currentIndex];
@@ -151,7 +194,8 @@ const mapStateToProps = state => {
     musicName: currentMedia.musicName,
     authorName: currentMedia.authorName,
     isPlayingMedia: media.isPlayingMedia,
-    isMusicControlModalShow: media.isMusicControlModalShow
+    isMusicControlModalShow: media.isMusicControlModalShow,
+    isLoadingMedia: media.isLoadingMedia
   };
 };
 
