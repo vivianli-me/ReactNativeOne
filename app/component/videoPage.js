@@ -10,7 +10,8 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
-  Image
+  Image,
+  Slider
 } from 'react-native';
 import Video from 'react-native-video';
 import Orientation from '../util/orientation';
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: defaultNavigationHeight,
-    backgroundColor: '#00000088'//rrggbbaa
+    backgroundColor: '#00000088'
   },
   navigationBarText: {
     color: 'white',
@@ -79,8 +80,8 @@ class VideoPage extends React.Component {
       muted: false,//是否静音
       paused: false,
       resizeMode: 'contain',
-      duration: 0.0,//总时长
-      currentTime: 0.0,//当前播放位置
+      duration: 0.0,//总时长 单位秒
+      currentTime: 0.0,//当前播放位置 单位秒
     };
     this.onLoad = this.onLoad.bind(this);
     this.onProgress = this.onProgress.bind(this);
@@ -101,9 +102,9 @@ class VideoPage extends React.Component {
   componentWillUnmount() {
     //竖屏
     Orientation.lockToPortrait();
-    if (this.timeOutId) {
+    /*if (this.timeOutId) {
       clearTimeout(this.timeOutId);
-    }
+    }*/
   }
 
   onLoadStart() {
@@ -188,7 +189,7 @@ class VideoPage extends React.Component {
     return (
       <View style={{backgroundColor: '#00000088', paddingTop: 10}}>
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          {this.renderTouchableOpacityImage(require('../image/movie_review_previous.png'), () => {this.seekTo(-5)})}
+          {this.renderTouchableOpacityImage(require('../image/movie_review_previous.png'), () => {this.seekTo(this.state.currentTime - 5)})}
           {
             paused ?
             this.renderTouchableOpacityImage(require('../image/movie_review_play.png'), () => this.setState({
@@ -198,11 +199,18 @@ class VideoPage extends React.Component {
               paused: true
             }))
           }
-          {this.renderTouchableOpacityImage(require('../image/movie_review_next.png'), () => {this.seekTo(5)})}
+          {this.renderTouchableOpacityImage(require('../image/movie_review_next.png'), () => {this.seekTo(this.state.currentTime + 5)})}
         </View>
         <View style={styles.bottomProgressContainer}>
           <Text style={styles.bottomText}>{this.getTimeStr(currentTime)}</Text>
-          <View style={{backgroundColor: 'white', flex: 1, height: 2, marginHorizontal: 10}}/>
+          {/*如何改变进度条颜色*/}
+          <Slider
+            value={currentTime}
+            step={1}
+            minimumValue={0}
+            maximumValue={duration}
+            onSlidingComplete={currentTime => this.seekTo(currentTime)}
+            style={{flex: 1, marginHorizontal: 10}}/>
           <Text style={styles.bottomText}>{this.getTimeStr(duration)}</Text>
         </View>
       </View>
@@ -225,17 +233,16 @@ class VideoPage extends React.Component {
     return `${complete(minute)}:${complete(second)}`
   }
 
-  seekTo(absoluteTime) {
-    let currentTime = this.state.currentTime + absoluteTime;
+  seekTo(currentTime) {
     this.videoRef.seek(currentTime);
     this.setState({
-      currentTime,
+      currentTime: currentTime ,
       paused: false
     });
   }
 
   changeVideoFullScreen(isFullScreen) {
-    if (this.timeOutId) {
+    /*if (this.timeOutId) {
       clearTimeout(this.timeOutId);
       this.timeOutId = undefined;
     }
@@ -249,7 +256,10 @@ class VideoPage extends React.Component {
           isFullScreen: true
         });
       } ,2000);
-    }
+    }*/
+    this.setState({
+      isFullScreen
+    });
   }
 
 }
