@@ -18,6 +18,7 @@ import MusicDetailPage from './component/musicDetailPage';
 import VideoPage from './component/videoPage';
 import MusicControlModal from './component/musicControlModal';
 import SharePage from './component/sharePage';
+import MyGithubPage from './component/myGithubPage';
 import {
   Navigator,
 } from 'react-native';
@@ -90,6 +91,11 @@ routeMap.set('VideoPage', {
 });
 routeMap.set('SharePage', {
   component: SharePage,
+  sceneAnimation: Navigator.SceneConfigs.FloatFromBottom
+});
+
+routeMap.set('MyGithubPage', {
+  component: MyGithubPage,
   sceneAnimation: Navigator.SceneConfigs.FloatFromBottom
 });
 

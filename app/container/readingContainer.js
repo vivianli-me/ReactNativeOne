@@ -10,11 +10,9 @@ import {
   Dimensions
 } from 'react-native';
 import BaseComponent from '../base/baseComponent';
-import Toast from '../util/toast';
 import ReadingTopViewPager from '../component/readingTopViewPager';
 import ReadingBottomViewPager from '../component/readingBottomViewPager'
-
-const windowWidth = Dimensions.get('window').width;
+import {getNavigator} from '../route';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +45,12 @@ class ReadingContainer extends BaseComponent {
 
   onLeftPressed() {
     
+  }
+
+  onRightPressed() {
+    getNavigator().push({
+      name: 'MyGithubPage'
+    });
   }
 }
 

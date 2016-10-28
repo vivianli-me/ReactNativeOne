@@ -128,6 +128,12 @@ class MovieContainer extends BaseComponent {
       />
     );
   }
+
+  onRightPressed() {
+    getNavigator().push({
+      name: 'MyGithubPage'
+    });
+  }
 }
 
 export default MovieContainer;

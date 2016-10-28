@@ -111,6 +111,12 @@ class MusicContainer extends BaseComponent {
       month: rowData[1]
     });
   }
+
+  onRightPressed() {
+    getNavigator().push({
+      name: 'MyGithubPage'
+    });
+  }
 }
 
 

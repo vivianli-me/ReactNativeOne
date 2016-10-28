@@ -124,7 +124,9 @@ class PictureContainer extends BaseComponent {
   }
 
   onRightPressed() {
-    
+    getNavigator().push({
+      name: 'MyGithubPage'
+    });
   }
 }
 
