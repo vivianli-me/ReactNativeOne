@@ -176,7 +176,7 @@ class PicturePage extends BaseComponent {
 
   sharePicture() {
     //分享
-    const {data} = this.props;
+    const {data} = this.state;
     getNavigator().push({
       name: 'SharePage',
       shareData: {
