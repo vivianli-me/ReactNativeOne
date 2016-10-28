@@ -84,6 +84,4 @@
 10. [lipeiwei-szu/react-native-viewpager](https://github.com/lipeiwei-szu/react-native-viewpager)  which is fork [race604/react-native-viewpager](https://github.com/race604/react-native-viewpager)
 
 
-## My WeChat code
 
-![my_wechat_code](./screenshots/my_wechat_code.jpg)
