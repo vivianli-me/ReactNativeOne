@@ -129,9 +129,14 @@ class MusicPlay extends React.Component {
   }
 
   renderPlayButton() {
-    const {isPlaying} = this.props;
+    const {isPlaying, isLoadingMedia} = this.props;
+    let animating = isPlaying && isLoadingMedia;
     return (
-      <Image style={[styles.musicImage, {alignItems: 'center', justifyContent: 'center'}]} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}/>
+      <Image style={[styles.musicImage, {alignItems: 'center', justifyContent: 'center'}]} source={isPlaying ? require('../image/music_pause.png') :require('../image/music_play.png')}>
+        {
+          animating ? <ActivityIndicator size="large" color="white"/> : null
+        }
+      </Image>
     );
   }
 
@@ -178,7 +183,8 @@ MusicPlay.propTypes = {
   musicDetailData: PropTypes.object.isRequired,
   stopPlayMedia: PropTypes.func.isRequired,
   startPlayMedia: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool,
+  isPlaying: PropTypes.bool,//是否正在播放当前这一首歌曲
+  isLoadingMedia: PropTypes.bool.isRequired,//是否正在加载
   getXiamiMusicUrlAndPlay: PropTypes.func.isRequired
 };
 
@@ -188,6 +194,7 @@ const mapStateToProps = (state, props) => {
   var currentMedia = media.mediaList[media.currentIndex];
   return {
     isPlaying: media.isPlayingMedia && currentMedia && currentMedia.type === 'music' && currentMedia.id === props.musicDetailData.id,
+    isLoadingMedia: media.isLoadingMedia
   };
 };
 
