@@ -12,12 +12,12 @@ import {
   ScrollView
 } from 'react-native';
 import commonStyle from '../style/commonStyle';
-import Toast from '../util/toast';
 import weekArray from '../constant/week';
 import monthArray from '../constant/month';
 import { parseDate } from '../util/dateUtil';
 import BaseComponent from '../base/baseComponent';
 import {getNavigator} from '../route';
+import {getPictureDetail} from '../api/picture';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -79,6 +79,10 @@ class PicturePage extends BaseComponent {
     this.toEditDiary = this.toEditDiary.bind(this);
     this.praise = this.praise.bind(this);
     this.sharePicture = this.sharePicture.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.state = {
+      data: this.props.data
+    };
   }
 
   getNavigationBarProps() {
@@ -91,8 +95,30 @@ class PicturePage extends BaseComponent {
     };
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    if (this.state.data) {//已经通过props传递数据了
+      return;
+    }
+    const {id} = this.props;//通过网络请求获取
+    if (id) {
+      getPictureDetail(id).then(data => {
+        this.setState({
+          data
+        });
+      }).catch(() => {
+        console.warn('加载失败');
+      });
+    } else {
+      console.warn('The Component PicturePage error because of the props');
+    }
+  }
+
   renderBody() {
-    var {data} = this.props;
+    var {data} = this.state;
     if (!data) {
       return null;
     }
@@ -173,7 +199,8 @@ class PicturePage extends BaseComponent {
 }
 
 PicturePage.propTypes = {
-  data: React.PropTypes.object.isRequired
+  data: React.PropTypes.object,
+  id: React.PropTypes.number
 };
 
 export default PicturePage;

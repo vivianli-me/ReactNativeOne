@@ -16,3 +16,11 @@ export function getPictureList(year, month) {
   month = month + 1;
   return get(`/hp/bymonth/${year}-${month}`);
 }
+
+export function getLatestPictureIdList() {
+  return getFetchNeverCached('/hp/idlist/0');
+}
+
+export function getPictureDetail(id) {
+  return getFetchFromCache(`/hp/detail/${id}`);
+}

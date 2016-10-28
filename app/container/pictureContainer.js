@@ -12,7 +12,7 @@ import {
 import BaseComponent from '../base/baseComponent';
 import Toast from '../util/toast';
 import PicturePage from '../component/picturePage';
-import {getPictureList} from '../api/picture';
+import {getLatestPictureIdList} from '../api/picture';
 import ViewPager from 'react-native-viewpager';
 import {getNavigator} from '../route';
 import appearTime from '../constant/appearTime';
@@ -27,7 +27,7 @@ class PictureContainer extends BaseComponent {
   constructor(props) {
     super(props);
     this.fetchData = this.fetchData.bind(this);
-    this.renderViewPagerItem = this.renderViewPagerItem.bind(this);
+    this.renderPage = this.renderPage.bind(this);
     this.onBeyondRange = this.onBeyondRange.bind(this);
     this.state = {
       dataSource: new ViewPager.DataSource({
@@ -53,10 +53,9 @@ class PictureContainer extends BaseComponent {
     this.setState({//加载
       loadingStatus: LoadingManagerView.Loading
     });
-    var date = new Date();
-    getPictureList(date.getFullYear(), date.getMonth()).then(dataList => {
+    getLatestPictureIdList().then(idList => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithPages(dataList),
+        dataSource: this.state.dataSource.cloneWithPages(idList),
         loadingStatus: LoadingManagerView.LoadingSuccess
       });
     }).catch(() => {
@@ -74,7 +73,7 @@ class PictureContainer extends BaseComponent {
           style={{flex: 1}}
           onBeyondRange={this.onBeyondRange}
           dataSource={dataSource}
-          renderPage={this.renderViewPagerItem}
+          renderPage={this.renderPage}
           renderPageIndicator={false}/>
       );
     }
@@ -114,9 +113,9 @@ class PictureContainer extends BaseComponent {
    * @param pageID string类型
    * @returns {XML}
    */
-  renderViewPagerItem(data, pageID) {
+  renderPage(id, pageID) {
     return (
-      <PicturePage data={data} hideNav={true}/>
+      <PicturePage key={id} id={parseInt(id)} hideNav={true}/>
     );
   }
 
