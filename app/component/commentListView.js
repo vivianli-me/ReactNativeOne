@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Dimensions,
   ListView,
-  PixelRatio
+  PixelRatio,
+  Platform
 } from 'react-native';
 import GiftedListView from '../widget/giftedListView';
 import CommentType from '../constant/commentType';
@@ -105,9 +106,14 @@ class CommentListView extends React.Component {
   render() {
     //pageSize代表一个event loop绘制多少个row
     let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(this.state.commentList);
+    let removeClippedSubviews = true;
+    if (Platform.OS === 'ios' && 'removeClippedSubviews' in this.props
+            && typeof this.props.removeClippedSubviews === 'boolean') {
+      removeClippedSubviews = this.props.removeClippedSubviews;//该bug只在iOS下出现
+    }
     return (
       <GiftedListView
-        removeClippedSubviews={false}
+        removeClippedSubviews={removeClippedSubviews}
         initialListSize={20}
         pageSize={20}
         refreshing={this.state.refreshing}

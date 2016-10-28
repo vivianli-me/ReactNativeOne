@@ -116,11 +116,11 @@ class MusicDetailPage extends BaseComponent {
         </ScrollView>
       );
     }
-
     
     //以下在测试环境下滑动不正常, release版本正常
     return (
       <CommentListView
+        removeClippedSubviews={false}
         renderHeader={this.renderMusicDetail}
         type={CommentType.MUSIC}
         id={parseInt(musicDetailData.id)}/>
