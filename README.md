@@ -16,6 +16,9 @@
     + 微信好友分享、微信朋友圈分享
     + 缓存api接口数据，充分节省流量，增强用户体验
 
+## 接口文档
+请到[ONE-API](https://github.com/lipeiwei-szu/ONE-API)查看
+
 ## APP截图
 ![picture_detail](./screenshots/picture_detail.png) ![picture_list](./screenshots/picture_list.png)
 ![reading_container](./screenshots/reading_container.png) ![article_list](./screenshots/article_list.png)
@@ -82,6 +85,6 @@
 8. [react-native-orientation](https://github.com/yamill/react-native-orientation)
 9. [react-native-scrollable-tab-view](https://github.com/skv-headless/react-native-scrollable-tab-view)
 10. [lipeiwei-szu/react-native-viewpager](https://github.com/lipeiwei-szu/react-native-viewpager)  which is fork [race604/react-native-viewpager](https://github.com/race604/react-native-viewpager)
-
+11. [react-native-simple-store](https://github.com/search?utf8=%E2%9C%93&q=react-native-simple-store)
 
 
