@@ -39,19 +39,35 @@ const styles = StyleSheet.create({
 });
 
 class MovieListItem extends React.Component {
+  constructor() {
+    super();
+    this.renderBottomText = this.renderBottomText.bind(this);
+  }
+
   render() {
-    const {rowID, cover, score} = this.props;
+    const {rowID, cover} = this.props;
     return (
       <TouchableOpacity rowID={rowID} onPress={() => this.props.onPress && this.props.onPress()}>
         <View>
           <Image style={[styles.image, this.props.imageStyle]} resizeMode="cover" source={{uri: cover}}/>
-          <View style={styles.bottomTextContainer}>
-            <Text style={styles.bottomText}>{score}</Text>
-            <Image resizeMode="cover" style={styles.bottomImage} source={require('../image/score_line.png')}/>
-          </View>
+          {this.renderBottomText()}
         </View>
       </TouchableOpacity>
     );
+  }
+
+  renderBottomText() {
+    const {score} = this.props;
+    if (score) {
+      return (
+        <View style={styles.bottomTextContainer}>
+          <Text style={styles.bottomText}>{score}</Text>
+          <Image resizeMode="cover" style={styles.bottomImage} source={require('../image/score_line.png')}/>
+        </View>
+      );
+    } else {
+      return null;
+    }
   }
 }
 
