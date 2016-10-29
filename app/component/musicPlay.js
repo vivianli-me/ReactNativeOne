@@ -20,7 +20,6 @@ import * as MediaActions from '../actions/media';
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginBottom: 10,
     marginHorizontal: 10,
     marginTop: -20,
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     justifyContent: 'space-between',
+    flex: 1
   },
   rightContainer: {
     justifyContent: 'space-between',
@@ -187,7 +187,6 @@ MusicPlay.propTypes = {
   isLoadingMedia: PropTypes.bool.isRequired,//是否正在加载
   getXiamiMusicUrlAndPlay: PropTypes.func.isRequired
 };
-
 
 const mapStateToProps = (state, props) => {
   var media = state.media;
