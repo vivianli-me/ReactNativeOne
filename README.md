@@ -19,9 +19,12 @@
 ## 接口文档
 请到[ONE-API](https://github.com/lipeiwei-szu/ONE-API)查看
 
-## 下载
+## Android App下载
 ![one_download](./screenshots/one_download.png)
 [ReactNativeOne-Android-V0.1 下载地址](http://fir.im/reactnativeone)
+
+## iOS App下载
+无苹果开发者账号, 暂时无法打包APP, 请亲自进行编译并在模拟器或手机上运行
 
 ## APP截图
 ![picture_detail](./screenshots/picture_detail.png) ![picture_list](./screenshots/picture_list.png)
