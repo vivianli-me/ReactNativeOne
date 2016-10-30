@@ -19,6 +19,10 @@
 ## 接口文档
 请到[ONE-API](https://github.com/lipeiwei-szu/ONE-API)查看
 
+## 下载
+![one_download](./screenshots/one_download.png)
+[ReactNativeOne-Android-V0.1 下载地址](http://fir.im/reactnativeone)
+
 ## APP截图
 ![picture_detail](./screenshots/picture_detail.png) ![picture_list](./screenshots/picture_list.png)
 ![reading_container](./screenshots/reading_container.png) ![article_list](./screenshots/article_list.png)
@@ -30,18 +34,16 @@
 ![movie_video](./screenshots/movie_video.png) ![movie_comment](./screenshots/movie_comment.png)
 
 ## 整体思路
-1. 分析「ONE·一个」APP的业务逻辑结构，将整体业务按重要程度进行划分，安排整体开发流程
-2. 在Mac环境下使用Charles软件抓包，抓取「ONE·一个」的网络接口数据，并整理接口文档
-3. 封装apiHelper网络请求基础函数，使用日志打印系统logger进行包装，易于调试，根据接口文档编写业务接口函数，便于代码调用
-4. 编写通用的导航栏NavigationBar以及组件基类BaseComponent，实现代码的复用
-5. 使用官方的Navigator管理全局路由，可自由配置Scene的出场动画，处理Android端的后退键事件
-6. 使用FlexBox进行布局，并封装了一系列通用的组件，比如GridView、带上下拉功能的ListView、ImageViewer等，便于全局复用
-7. 在Android原生端实现音频播放功能，并导出Native Api给javascript使用
-8. 导入Video Native Api，自定义界面并实现电影预告片的加载播放
-9. 导入GitHub第三方库react-native-wechat实现图文、阅读、音乐、电影的微信分享
-10. 处理了APP加载网络数据时的各种状态，比如加载中、加载成功、加载失败、点击屏幕重新进行加载等
-11. 使用InteractionManager，保证每个页面都在转场动画结束时才进行耗时操作，使得切换页面时不卡顿，尽量减少View的层级，优化渲染性能
-12. 在深刻理解的前提下引入redux相关功能，包括redux/react-redux/redux-thunk/redux-logger，设计与音频相关的全局state结构，使用redux管理与音频state相关的组件
+1. 分析「ONE·一个」App的业务逻辑结构，将整体业务按重要程度进行划分，安排整体开发流程
+2. 在Mac环境下使用Charles软件抓包，抓取「ONE·一个」的网络接口数据，并整理接口文档，文档地址是[https://github.com/lipeiwei-szu/ONE-API](https://github.com/lipeiwei-szu/ONE-API)
+3. 使用官方的Navigator管理全局路由，可自由配置Scene的出场动画，处理Android端的后退键事件
+4. 使用FlexBox和jsx语法进行布局，并封装了一系列通用的组件，比如GridView、带上下拉功能的ListView、ImageViewer等，便于全局复用
+5. 在Android原生端实现音频播放功能，并导出Native Api给React Native使用
+6. 导入Video Native Api，自定义界面并实现电影预告片的加载播放
+7. 导入GitHub第三方库react-native-wechat实现图文、阅读、音乐、电影的微信分享
+8. 处理了App加载网络数据时的各种状态，比如加载中、加载成功、加载失败、点击屏幕重新进行加载等
+9. 使用InteractionManager，保证每个页面都在转场动画结束时才进行耗时操作，使得切换页面时不卡顿，尽量减少View的层级，优化渲染性能
+10. 在深刻理解的前提下引入redux相关功能，包括redux/react-redux/redux-thunk/redux-logger，设计与音频相关的全局state结构，使用redux管理与音频state相关的组件
 
 ## 目前所发现的bug以及尚未完成的功能点
 
