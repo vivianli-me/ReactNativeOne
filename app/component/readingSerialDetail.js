@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   },
   contentText: {
     color: commonStyle.TEXT_COLOR,
-    fontSize: 16,
+    //iOS上字体过大时文本显示不出来 暂未解决该问题
+    fontSize: Platform.OS === 'ios' ? 10 : 16,
     padding: 10
   },
   grayViewContainer: {
@@ -88,7 +89,7 @@ class ReadingSerialDetail extends BaseComponent {
     };
     if (Platform.OS === 'ios') {
       console.warn('iOS端连载文章detail页面有问题, 可能是文本过长显示不出来, 或者文本中带有特殊字符导致渲染失败' +
-        '如果有解决方案, 欢迎PR, android端一切正常');
+        '如果有解决方案, 欢迎PR, android端一切正常. 所以目前的办法是缩小字体, 才能显示出来');
     }
   }
 

@@ -66,7 +66,7 @@ class TabBar extends React.Component {
 };
 
 TabBar.propTypes = {
-  tabBarResources: React.PropTypes.array,//图片资源二维数组
+  tabBarResources: React.PropTypes.array.isRequired,//图片资源二维数组
   activeTab: React.PropTypes.number,
   tabs: React.PropTypes.array
 };

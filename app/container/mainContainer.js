@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 //tabbar图片资源
-const tabBarResources = [
+const TAB_BAR_RESOURCES = [
   [require('../image/home.png'), require('../image/home_active.png')],
   [require('../image/reading.png'), require('../image/reading_active.png')],
   [require('../image/music.png'), require('../image/music_active.png')],
@@ -44,8 +44,10 @@ class MainContainer extends React.Component {
         tabBarPosition="bottom"
         locked={true}
         scrollWithoutAnimation={true}
+        prerenderingSiblingsNumber={4}
         renderTabBar={() => {
-          return <TabBar tabBarResources={tabBarResources}/>
+          /*使用自定义tabbar*/
+          return <TabBar tabBarResources={TAB_BAR_RESOURCES}/>
         }}>
         <PictureContainer style={styles.subView}/>
         <ReadingContainer style={styles.subView}/>
@@ -55,9 +57,5 @@ class MainContainer extends React.Component {
     );
   }
 }
-
-MainContainer.propTypes = {
-
-};
 
 export default MainContainer;
