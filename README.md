@@ -29,13 +29,14 @@
 无苹果开发者账号, 暂时无法打包APP, 请亲自进行编译并在模拟器或手机上运行
 
 ## APP截图
-![picture_detail](./screenshots/picture_detail.png)
-![reading_container](./screenshots/reading_container.png)
-![music_detail](./screenshots/music_detail.png)
-![music_list](./screenshots/music_list.png)
-![movie_list](./screenshots/movie_list.png)
-![movie_detail1](./screenshots/movie_detail1.png)
-![movie_detail2](./screenshots/movie_detail2.png)
+![picture_detail](./screenshots/picture_detail.png) ![picture_list](./screenshots/picture_list.png)
+![reading_container](./screenshots/reading_container.png) ![article_list](./screenshots/article_list.png)
+![article_list1](./screenshots/article_list1.png) ![article_list2](./screenshots/article_list2.png)
+![essay_detail](./screenshots/essay_detail.png) ![essay_comment](./screenshots/essay_comment.png)
+![music_detail](./screenshots/music_detail.png) ![music_list](./screenshots/music_list.png)
+![movie_list](./screenshots/movie_list.png) ![movie_detail1](./screenshots/movie_detail1.png)
+![movie_detail2](./screenshots/movie_detail2.png) ![movie_detail3](./screenshots/movie_detail3.png)
+![movie_video](./screenshots/movie_video.png) ![movie_comment](./screenshots/movie_comment.png)
 
 ## 整体思路
 1. 分析「ONE·一个」App的业务逻辑结构，将整体业务按重要程度进行划分，安排整体开发流程
