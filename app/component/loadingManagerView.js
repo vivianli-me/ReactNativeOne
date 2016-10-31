@@ -26,38 +26,42 @@ const styles = StyleSheet.create({
   }
 });
 
+const LOADING = 'LOADING';
+const LOADING_ERROR = 'LOADING_ERROR';
+const LOADING_SUCCESS = 'LOADING_SUCCESS';
 class LoadingManagerView extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
-
   render() {
     const {containerStyle} = this.props;
     switch (this.props.status) {
-      case LoadingManagerView.Loading:
+      case LOADING:
         return (
           <LoadingView containerStyle={containerStyle}/>
         );
-      case LoadingManagerView.LoadingError:
+      case LOADING_ERROR:
         return (
           <LoadingErrorView containerStyle={containerStyle} onPress={this.props.onFetchData}/>
         );
-      case LoadingManagerView.LoadingSuccess:
+      case LOADING_SUCCESS:
         return null;
-      default:
+      default:{
+        console.log(this.props.status,'fuck',LoadingManagerView.Loading);
         return (
-          <View style={styles.container}>
-            <Text style={styles.errorText}>状态定义错误</Text>
-          </View>
+            <View style={styles.container}>
+              <Text style={styles.errorText}>状态定义错误</Text>
+            </View>
         );
+      }
     }
   }
 }
 
-LoadingManagerView.Loading = 'LOADING';//加载中
-LoadingManagerView.LoadingError = 'LOADING_ERROR';//加载失败
-LoadingManagerView.LoadingSuccess = 'LOADING_SUCCESS';//加载成功
+LoadingManagerView.Loading = LOADING;//加载中
+LoadingManagerView.LoadingError = LOADING_ERROR;//加载失败
+LoadingManagerView.LoadingSuccess = LOADING_SUCCESS;//加载成功
 
 LoadingManagerView.propTypes = {
   onFetchData: PropTypes.func,
