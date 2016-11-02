@@ -60,7 +60,7 @@
 ### iOS
 1. ~~由于本人对iOS原生不熟悉，所以第三方库 [react-native-video](https://github.com/react-native-community/react-native-video)跟[react-native-wechat](https://github.com/weflex/react-native-wechat)都没能导入成功，所以iOS端暂时不能播放电影预告片跟进行微信分享~~(done)
 2. 音频播放用的是原生的接口，Android我已写完了，iOS端还没有写，所以暂时无法播放音频
-3. 阅读版块中有三种类型的文章，分别是短篇、连载、问答，在Android端显示时一切正常，但是在iOS端有的连载文章显示不出来，可能性有两点：文本有特殊字符导致整体无法显示、文字超长时Text标签无法正常显示
+3. 阅读版块中有三种类型的文章，分别是短篇、连载、问答，在Android端显示时一切正常，但是在iOS端有的连载文章显示不出来，可能性有两点：文本有特殊字符导致整体无法显示、文字超长时Text标签无法正常显示(真机上运行一切正常, 所以应该是模拟器的问题)
 
 ### 共同问题
 1. ~~音乐播放得加多一个中间状态，也就是缓冲状态，否则加载缓冲音频时间有可能太长，UI上全然无展示，体验太差~~
@@ -68,6 +68,7 @@
 3. ~~在音频视频中加入可拖动的进度条~~(done)
 4. ~~api接口数据缓存~~(done)
 5. 音乐播放已经加多了缓冲状态, 但是在Android端, ActivityIndicator总是有问题, 特别是嵌套在Modal组件中的时候, 有时候会直接不旋转. iOS端正常
+6. 首页中使用了很多个[ViewPager](https://github.com/lipeiwei-szu/react-native-viewpager), 没有实现重用和懒加载, 很耗费性能
 
 ## 将来也许会做的功能点
 1. 搜索
