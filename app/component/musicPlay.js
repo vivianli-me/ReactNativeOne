@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   authorInfo: {
+    flex: 1,
     marginLeft: 10
   },
   authorName: {
@@ -109,8 +110,8 @@ class MusicPlay extends React.Component {
               <Image style={styles.avatarImage} source={{uri: musicDetailData.author.web_url}}/>
             </TouchableOpacity>
             <View style={styles.authorInfo}>
-              <Text style={styles.authorName}>{musicDetailData.author.user_name}</Text>
-              <Text style={styles.authorDesc}>{musicDetailData.author.desc}</Text>
+              <Text numberOfLines={2} style={styles.authorName}>{musicDetailData.author.user_name}</Text>
+              <Text numberOfLines={2} style={styles.authorDesc}>{musicDetailData.author.desc}</Text>
             </View>
           </View>
           <Text style={styles.titleText}>{musicDetailData.title}</Text>
