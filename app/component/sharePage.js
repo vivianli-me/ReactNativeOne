@@ -40,8 +40,7 @@ const styles = StyleSheet.create({
   splitView: {
     height: 1,
     width: windowWidth - 30,
-    backgroundColor:
-    commonStyle.GRAY_COLOR,
+    backgroundColor: commonStyle.GRAY_COLOR,
     marginTop: 10
   }
 });

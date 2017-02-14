@@ -99,7 +99,7 @@ class App extends React.Component {
       return sceneAnimation;
     }
     //默认
-    return Navigator.SceneConfigs.FloatFromRight
+    return Navigator.SceneConfigs.PushFromRight
   }
 
   renderScene(route, navigator) {
