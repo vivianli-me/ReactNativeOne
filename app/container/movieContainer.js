@@ -82,7 +82,7 @@ class MovieContainer extends BaseComponent {
   }
 
   fetchData(id) {
-    return getMovieList(id).then(movieList => {
+    return getMovieList(id).then(movieList => movieList.filter(movie => !!movie.cover)).then(movieList => {
       if (movieList && movieList.length > 0) {
         this.lastOneId = movieList[movieList.length - 1].id;//记录下来
       } else {
