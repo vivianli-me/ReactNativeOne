@@ -49,7 +49,7 @@ class GiftedListView extends React.Component {
         enableEmptySections
         onEndReached={this.onEndReached}
         renderFooter={this.renderFooter}
-        OnEndReachedThreshold={defaultOnEndReachedThreshold}
+        onEndReachedThreshold={defaultOnEndReachedThreshold}
       />
     );
   }

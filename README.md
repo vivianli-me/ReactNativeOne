@@ -7,10 +7,6 @@
 ## 声明
 该APP所用到的API均由 [「ONE · 一个」](http://wufazhuce.com/)提供，[本人](https://github.com/lipeiwei-szu)采取非正常手段获取。获取跟共享的行为或许有侵犯权益的嫌疑。请您了解相关情况，并保证不侵犯[「ONE · 一个」](http://wufazhuce.com/)的利益，并遵守开源协议
 
-## 技术交流
-请添加qq群 436338753
-![picture_qq](./screenshots/ReactNativeOne交流群群二维码.png)
-
 ## 项目描述
 1. 基于React-Native框架开发，能同时运行在Android、iOS环境下，实现80%的代码复用，GitHub地址：[https://github.com/lipeiwei-szu/ReactNativeOne](https://github.com/lipeiwei-szu/ReactNativeOne)
 2. 到目前为止，该项目均由本人独立完成，希望能有更多的小伙伴来一起完善这个项目。实现了「ONE·一个」绝大部分的功能点，涵盖了图文、阅读、音乐、电影四大版块，以下是功能列表
