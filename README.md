@@ -70,7 +70,7 @@
 5. 音乐播放已经加多了缓冲状态, 但是在Android端, ActivityIndicator总是有问题, 特别是嵌套在Modal组件中的时候, 有时候会直接不旋转. iOS端正常
 6. 首页中使用了很多个[ViewPager](https://github.com/lipeiwei-szu/react-native-viewpager), 没有实现重用和懒加载, 很耗费性能
 
-## 将来也许会做的功能点
+## 接下来会做的功能点
 1. 搜索
 2. 音频视频缓存
 3. javascript热更新
